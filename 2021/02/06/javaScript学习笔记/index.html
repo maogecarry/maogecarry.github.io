@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","version":"8.2.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
+<meta name="description" content="javascript对象引用和复制与原始类型相比，对象的根本区别之一是对象是“通过引用”被存储和复制的，与原始类型值相反：字符串，数字，布尔值等 —— 始终是以“整体值”的形式被复制的。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="javaScript学习笔记">
+<meta property="og:url" content="http://example.com/2021/02/06/javaScript%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="Colorfuls-Blogs">
+<meta property="og:description" content="javascript对象引用和复制与原始类型相比，对象的根本区别之一是对象是“通过引用”被存储和复制的，与原始类型值相反：字符串，数字，布尔值等 —— 始终是以“整体值”的形式被复制的。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="e:/Markdown图片/image-20210128140346440.png">
+<meta property="article:published_time" content="2021-02-06T08:50:00.000Z">
+<meta property="article:modified_time" content="2021-03-17T01:35:18.404Z">
+<meta property="article:author" content="Colorfuls">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="e:/Markdown图片/image-20210128140346440.png">
+
+
+<link rel="canonical" href="http://example.com/2021/02/06/javaScript%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>javaScript学习笔记 | Colorfuls-Blogs</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Colorfuls-Blogs</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">追风去</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-article"><a href="/article" rel="section"><i class="fa fa-newspaper fa-fw"></i>文章</a></li>
+        <li class="menu-item menu-item-teach"><a href="/teach" rel="section"><i class="fa fa-address-card fa-fw"></i>教程</a></li>
+        <li class="menu-item menu-item-site"><a href="/site" rel="section"><i class="fa fa-star fa-fw"></i>站点</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#javascript"><span class="nav-number">1.</span> <span class="nav-text">javascript</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E5%BC%95%E7%94%A8%E5%92%8C%E5%A4%8D%E5%88%B6"><span class="nav-number">1.1.</span> <span class="nav-text">对象引用和复制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%8B%E9%9A%86%E4%B8%8E%E5%90%88%E5%B9%B6%EF%BC%8CObject-assign"><span class="nav-number">1.1.1.</span> <span class="nav-text">克隆与合并，Object.assign</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Symbol-%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.1.2.</span> <span class="nav-text">Symbol 类型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.2.</span> <span class="nav-text">对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E5%A7%8B%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">1.2.1.</span> <span class="nav-text">原始类型的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E5%AD%97%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.2.2.</span> <span class="nav-text">数字类型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">1.3.</span> <span class="nav-text">字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#str"><span class="nav-number">1.3.1.</span> <span class="nav-text">str</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-str-indexOf-substr-pos-%E3%80%82"><span class="nav-number">1.3.2.</span> <span class="nav-text">1. str.indexOf(substr, pos)。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%8C%89%E4%BD%8D%EF%BC%88bitwise%EF%BC%89NOT-%E6%8A%80%E5%B7%A7"><span class="nav-number">1.3.3.</span> <span class="nav-text">2. 按位（bitwise）NOT 技巧</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E8%8E%B7%E5%8F%96%E5%AD%90%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">1.3.4.</span> <span class="nav-text">3. 获取子字符串</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E7%BB%84"><span class="nav-number">1.4.</span> <span class="nav-text">数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Map-and-Set%EF%BC%88%E6%98%A0%E5%B0%84%E5%92%8C%E9%9B%86%E5%90%88%EF%BC%89"><span class="nav-number">1.5.</span> <span class="nav-text">Map and Set（映射和集合）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Map"><span class="nav-number">1.5.1.</span> <span class="nav-text">Map</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Map-%E8%BF%AD%E4%BB%A3"><span class="nav-number">1.5.2.</span> <span class="nav-text">Map 迭代</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Object-entries%EF%BC%9A%E4%BB%8E%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA-Map"><span class="nav-number">1.5.3.</span> <span class="nav-text">Object.entries：从对象创建 Map</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Object-fromEntries%EF%BC%9A%E4%BB%8E-Map-%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.5.4.</span> <span class="nav-text">Object.fromEntries：从 Map 创建对象</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Set"><span class="nav-number">1.6.</span> <span class="nav-text">Set</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%84%E8%B5%8B%E5%80%BC"><span class="nav-number">1.7.</span> <span class="nav-text">解构赋值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A5%E6%9C%9F%E5%92%8C%E6%97%B6%E9%97%B4"><span class="nav-number">1.8.</span> <span class="nav-text">日期和时间</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA"><span class="nav-number">1.8.1.</span> <span class="nav-text">创建</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JSON-%E6%96%B9%E6%B3%95%EF%BC%8CtoJSON"><span class="nav-number">1.9.</span> <span class="nav-text">JSON 方法，toJSON</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JSON-stringify"><span class="nav-number">1.9.1.</span> <span class="nav-text">JSON.stringify</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Rest-%E5%8F%82%E6%95%B0%E4%B8%8E-Spread-%E8%AF%AD%E6%B3%95"><span class="nav-number">1.10.</span> <span class="nav-text">Rest 参数与 Spread 语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Rest-%E5%8F%82%E6%95%B0-%E2%80%A6"><span class="nav-number">1.10.1.</span> <span class="nav-text">Rest 参数 …</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spread-%E8%AF%AD%E6%B3%95"><span class="nav-number">1.10.2.</span> <span class="nav-text">Spread 语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E4%BD%9C%E7%94%A8%E5%9F%9F%EF%BC%8C%E9%97%AD%E5%8C%85"><span class="nav-number">1.11.</span> <span class="nav-text">变量作用域，闭包</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Step-1-%E5%8F%98%E9%87%8F"><span class="nav-number">1.11.1.</span> <span class="nav-text">Step 1. 变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step-2-%E5%87%BD%E6%95%B0%E5%A3%B0%E6%98%8E"><span class="nav-number">1.11.2.</span> <span class="nav-text">Step 2. 函数声明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step-3-%E5%86%85%E9%83%A8%E5%92%8C%E5%A4%96%E9%83%A8%E7%9A%84%E8%AF%8D%E6%B3%95%E7%8E%AF%E5%A2%83"><span class="nav-number">1.11.3.</span> <span class="nav-text">Step 3. 内部和外部的词法环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step-4-%E8%BF%94%E5%9B%9E%E5%87%BD%E6%95%B0"><span class="nav-number">1.11.4.</span> <span class="nav-text">Step 4. 返回函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AD%E5%8C%85"><span class="nav-number">1.11.5.</span> <span class="nav-text">闭包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86"><span class="nav-number">1.11.6.</span> <span class="nav-text">垃圾收集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E9%99%85%E5%BC%80%E5%8F%91%E4%B8%AD%E7%9A%84%E4%BC%98%E5%8C%96"><span class="nav-number">1.11.7.</span> <span class="nav-text">实际开发中的优化</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E5%AF%B9%E8%B1%A1-NFE"><span class="nav-number">2.</span> <span class="nav-text">函数对象, NFE</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7-%E2%80%9Cname%E2%80%9D"><span class="nav-number">2.1.</span> <span class="nav-text">属性 “name”</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7-%E2%80%9Clength%E2%80%9D"><span class="nav-number">2.2.</span> <span class="nav-text">属性 “length”</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7"><span class="nav-number">2.3.</span> <span class="nav-text">自定义属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E5%90%8D%E5%87%BD%E6%95%B0%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">2.4.</span> <span class="nav-text">命名函数表达式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%EF%BC%88%E5%BE%85%E8%A7%A3%E5%86%B3%EF%BC%89"><span class="nav-number">2.5.</span> <span class="nav-text">问题（待解决）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%BB%E6%84%8F%E6%95%B0%E9%87%8F%E7%9A%84%E6%8B%AC%E5%8F%B7%E6%B1%82%E5%92%8C"><span class="nav-number">2.5.1.</span> <span class="nav-text">任意数量的括号求和</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">2.6.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B0%83%E5%BA%A6%EF%BC%9AsetTimeout-%E5%92%8C-setInterval"><span class="nav-number">3.</span> <span class="nav-text">调度：setTimeout 和 setInterval</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#setTimeout"><span class="nav-number">3.1.</span> <span class="nav-text">setTimeout</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B5%8C%E5%A5%97%E7%9A%84-setTimeout"><span class="nav-number">3.2.</span> <span class="nav-text">嵌套的 setTimeout</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8-clearTimeout-%E6%9D%A5%E5%8F%96%E6%B6%88%E8%B0%83%E5%BA%A6"><span class="nav-number">3.2.1.</span> <span class="nav-text">用 clearTimeout 来取消调度</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#setInterval"><span class="nav-number">3.3.</span> <span class="nav-text">setInterval</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9B%B6%E5%BB%B6%E6%97%B6%E7%9A%84-setTimeout"><span class="nav-number">3.4.</span> <span class="nav-text">零延时的 setTimeout</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-1"><span class="nav-number">3.5.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E7%BB%91%E5%AE%9A"><span class="nav-number">4.</span> <span class="nav-text">函数绑定</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A2%E5%A4%B1-%E2%80%9Cthis%E2%80%9D"><span class="nav-number">4.1.</span> <span class="nav-text">丢失 “this”</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88-1%EF%BC%9A%E5%8C%85%E8%A3%85%E5%99%A8"><span class="nav-number">4.2.</span> <span class="nav-text">解决方案 1：包装器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88-2%EF%BC%9Abind"><span class="nav-number">4.3.</span> <span class="nav-text">解决方案 2：bind</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E6%B2%A1%E6%9C%89%E4%B8%8A%E4%B8%8B%E6%96%87%E6%83%85%E5%86%B5%E4%B8%8B%E7%9A%84-partial"><span class="nav-number">4.4.</span> <span class="nav-text">在没有上下文情况下的 partial</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-2"><span class="nav-number">4.5.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0"><span class="nav-number">5.</span> <span class="nav-text">深入理解箭头函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0%E6%B2%A1%E6%9C%89-%E2%80%9Cthis%E2%80%9D"><span class="nav-number">5.1.</span> <span class="nav-text">箭头函数没有 “this”</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0%E6%B2%A1%E6%9C%89-%E2%80%9Carguments%E2%80%9D"><span class="nav-number">5.2.</span> <span class="nav-text">箭头函数没有 “arguments”</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-3"><span class="nav-number">5.3.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Mixin-%E6%A8%A1%E5%BC%8F"><span class="nav-number">6.</span> <span class="nav-text">Mixin 模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#EventMixin"><span class="nav-number">6.1.</span> <span class="nav-text">EventMixin</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-4"><span class="nav-number">6.2.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B%EF%BC%9A%E5%9B%9E%E8%B0%83"><span class="nav-number">7.</span> <span class="nav-text">简介：回调</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Promise"><span class="nav-number">8.</span> <span class="nav-text">Promise</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Promise-%E9%93%BE"><span class="nav-number">9.</span> <span class="nav-text">Promise 链</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-5"><span class="nav-number">9.1.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-promise-%E8%BF%9B%E8%A1%8C%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86"><span class="nav-number">10.</span> <span class="nav-text">使用 promise 进行错误处理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9A%90%E5%BC%8F-try%E2%80%A6catch"><span class="nav-number">10.1.</span> <span class="nav-text">隐式 try…catch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%8D%E6%AC%A1%E6%8A%9B%E5%87%BA%EF%BC%88Rethrowing%EF%BC%89"><span class="nav-number">10.2.</span> <span class="nav-text">再次抛出（Rethrowing）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-6"><span class="nav-number">10.3.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Promise-API"><span class="nav-number">11.</span> <span class="nav-text">Promise API</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Promise-all"><span class="nav-number">11.1.</span> <span class="nav-text">Promise.all</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Promise-allSettled"><span class="nav-number">11.2.</span> <span class="nav-text">Promise.allSettled</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Promise-race"><span class="nav-number">11.3.</span> <span class="nav-text">Promise.race</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BE%AE%E4%BB%BB%E5%8A%A1%EF%BC%88Microtask%EF%BC%89"><span class="nav-number">12.</span> <span class="nav-text">微任务（Microtask）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%AE%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97%EF%BC%88Microtask-queue%EF%BC%89"><span class="nav-number">12.1.</span> <span class="nav-text">微任务队列（Microtask queue）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-7"><span class="nav-number">12.2.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Async-await"><span class="nav-number">13.</span> <span class="nav-text">Async&#x2F;await</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Async-function"><span class="nav-number">13.1.</span> <span class="nav-text">Async function</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Await"><span class="nav-number">13.2.</span> <span class="nav-text">Await</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Generator"><span class="nav-number">14.</span> <span class="nav-text">Generator</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Generator-%E5%87%BD%E6%95%B0"><span class="nav-number">14.1.</span> <span class="nav-text">Generator 函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%80%9Cyield%E2%80%9D-%E6%98%AF%E4%B8%80%E6%9D%A1%E5%8F%8C%E5%90%91%E8%B7%AF"><span class="nav-number">14.2.</span> <span class="nav-text">“yield” 是一条双向路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#generator-throw"><span class="nav-number">14.3.</span> <span class="nav-text">generator.throw</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-8"><span class="nav-number">14.4.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%82%E6%AD%A5%E8%BF%AD%E4%BB%A3%E5%92%8C-generator"><span class="nav-number">15.</span> <span class="nav-text">异步迭代和 generator</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97-Module-%E7%AE%80%E4%BB%8B"><span class="nav-number">16.</span> <span class="nav-text">模块 (Module) 简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%A8%A1%E5%9D%97%EF%BC%9F"><span class="nav-number">16.1.</span> <span class="nav-text">什么是模块？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97%E6%A0%B8%E5%BF%83%E5%8A%9F%E8%83%BD"><span class="nav-number">16.2.</span> <span class="nav-text">模块核心功能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A7%8B%E7%BB%88%E4%BD%BF%E7%94%A8-%E2%80%9Cuse-strict%E2%80%9D"><span class="nav-number">16.2.1.</span> <span class="nav-text">始终使用 “use strict”</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97%E7%BA%A7%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="nav-number">16.2.2.</span> <span class="nav-text">模块级作用域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97%E4%BB%A3%E7%A0%81%E4%BB%85%E5%9C%A8%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%AF%BC%E5%85%A5%E6%97%B6%E8%A2%AB%E8%A7%A3%E6%9E%90"><span class="nav-number">16.2.3.</span> <span class="nav-text">模块代码仅在第一次导入时被解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E4%B8%80%E4%B8%AA%E6%A8%A1%E5%9D%97%E4%B8%AD%EF%BC%8C%E2%80%9Cthis%E2%80%9D-%E6%98%AF-undefined"><span class="nav-number">16.2.4.</span> <span class="nav-text">在一个模块中，“this” 是 undefined</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#import-meta"><span class="nav-number">16.2.5.</span> <span class="nav-text">import.meta</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97%E8%84%9A%E6%9C%AC%E6%98%AF%E5%BB%B6%E8%BF%9F%E7%9A%84"><span class="nav-number">16.2.6.</span> <span class="nav-text">模块脚本是延迟的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8D%E5%85%81%E8%AE%B8%E8%A3%B8%E6%A8%A1%E5%9D%97%EF%BC%88%E2%80%9Cbare%E2%80%9D-module%EF%BC%89"><span class="nav-number">16.2.7.</span> <span class="nav-text">不允许裸模块（“bare” module）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%BC%E5%AE%B9%E6%80%A7%EF%BC%8C%E2%80%9Cnomodule%E2%80%9D"><span class="nav-number">16.2.8.</span> <span class="nav-text">兼容性，“nomodule”</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7"><span class="nav-number">16.3.</span> <span class="nav-text">构建工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-9"><span class="nav-number">16.4.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Colorfuls</p>
+  <div class="site-description" itemprop="description">前路浩浩荡荡，万事皆可期待。</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/maogecarry" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;maogecarry" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/02/06/javaScript%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Colorfuls">
+      <meta itemprop="description" content="前路浩浩荡荡，万事皆可期待。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Colorfuls-Blogs">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          javaScript学习笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-02-06 16:50:00" itemprop="dateCreated datePublished" datetime="2021-02-06T16:50:00+08:00">2021-02-06</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-03-17 09:35:18" itemprop="dateModified" datetime="2021-03-17T09:35:18+08:00">2021-03-17</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="javascript"><a href="#javascript" class="headerlink" title="javascript"></a>javascript</h1><h2 id="对象引用和复制"><a href="#对象引用和复制" class="headerlink" title="对象引用和复制"></a>对象引用和复制</h2><p>与原始类型相比，对象的根本区别之一是对象是“通过引用”被存储和复制的，与原始类型值相反：字符串，数字，布尔值等 —— 始终是以“整体值”的形式被复制的。</p>
+<a id="more"></a>
+
+<h3 id="克隆与合并，Object-assign"><a href="#克隆与合并，Object-assign" class="headerlink" title="克隆与合并，Object.assign"></a>克隆与合并，Object.assign</h3><p>Object.assign(dest, [src1, src2, src3…])</p>
+<ul>
+<li>第一个参数 dest 是指目标对象。</li>
+<li>更后面的参数 src1, …, srcN（可按需传递多个参数）是源对象。</li>
+<li>该方法将所有源对象的属性拷贝到目标对象 dest 中。换句话说，从第二个开始的所有参数的属性都被拷贝到第一个参数的对象中。</li>
+<li>调用结果返回 dest。</li>
+<li>可以用它来合并多个对象</li>
+</ul>
+<p>​ 对象方法,”this”</p>
+<ul>
+<li>对象方法的调用时基于“引用类型”的调用</li>
+</ul>
+<h3 id="Symbol-类型"><a href="#Symbol-类型" class="headerlink" title="Symbol 类型"></a>Symbol 类型</h3><pre><code>  1. 防止自己在对象中写的属性被其他人篡改，隐藏该属性
+  2. 用for..in.., Object.keys(obj)访问不到，但是使用Object.assign是可以复制过来的</code></pre>
+<h2 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h2><pre><code>  1. 对象是具有一些特殊特性的关联数组。
+  2. 它们存储属性（键值对），其中：
+       1. 属性的键必须是字符串或者 symbol（通常是字符串）。
+       2. 值可以是任何类型。
+  3. 下面的方法访问属性
+       1. 点符号: obj.property。
+       2. 方括号 obj[&quot;property&quot;]，方括号允许从变量中获取键，例如 obj[varWithKey]。
+  4. 其他操作：
+       1. 删除属性：delete obj.prop。
+       2. 检查是否存在给定键的属性：&quot;key&quot; in obj。
+       3. 遍历对象：for(let key in obj) 循环。</code></pre>
+<h3 id="原始类型的方法"><a href="#原始类型的方法" class="headerlink" title="原始类型的方法"></a>原始类型的方法</h3><ul>
+<li>基本类型不是对象。</li>
+<li>基本类型不能存储数据。</li>
+<li>所有的属性/方法操作都是在临时对象的帮助下执行的。</li>
+</ul>
+<h3 id="数字类型"><a href="#数字类型" class="headerlink" title="数字类型"></a>数字类型</h3><p>​ parseInt(str, radix)` 的第二个参数</p>
+<ul>
+<li>parseInt() 函数具有可选的第二个参数。它指定了数字系统的基数，因此 parseInt 还可以解析十六进制数字、二进制数字等的字符串：</li>
+<li>alert( parseInt(‘0xff’, 16) ); // 255</li>
+<li>alert( parseInt(‘ff’, 16) ); // 255，没有 0x 仍然有效</li>
+<li>alert( parseInt(‘2n9c’, 36) ); // 123456</li>
+</ul>
+<p>​ prompt</p>
+<ul>
+<li>注意在 prompt 前面的一元加号 +。它将立即把值转换成数字。</li>
+<li>否则，a 和 b 将会是字符串，它们的总和将是它们的连接，即：”1” + “2” = “12”。</li>
+</ul>
+<h2 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h2><h3 id="str"><a href="#str" class="headerlink" title="str"></a>str</h3><h3 id="1-str-indexOf-substr-pos-。"><a href="#1-str-indexOf-substr-pos-。" class="headerlink" title="1. str.indexOf(substr, pos)。"></a>1. str.indexOf(substr, pos)。</h3><p>​ 1. 它从给定位置 pos 开始，在 str 中查找 substr，如果没有找到，则返回 -1，否则返回匹配成功的位置。<br>​ 2. 还有一个类似的方法 str.lastIndexOf(substr, position)，它从字符串的末尾开始搜索到开头。</p>
+<h3 id="2-按位（bitwise）NOT-技巧"><a href="#2-按位（bitwise）NOT-技巧" class="headerlink" title="2. 按位（bitwise）NOT 技巧"></a>2. 按位（bitwise）NOT 技巧</h3><p>​ 1. 它将数字转换为 32-bit 整数（如果存在小数部分，则删除小数部分），然后对其二进制表示形式中的所有位均取反。</p>
+<h3 id="3-获取子字符串"><a href="#3-获取子字符串" class="headerlink" title="3. 获取子字符串"></a>3. 获取子字符串</h3><pre><code> 1.  JavaScript 中有三种获取字符串的方法：substring、substr 和 slice。
+             1.  str.slice(start [, end])，返回字符串从 start 到（但不包括）end 的部分。
+             2.  如果没有第二个参数，slice 会一直运行到字符串末尾：
+                    1.  let str = &quot;stringify&quot;;
+                               alert( str.slice(0, 5) ); // &#39;strin&#39;，从 0 到 5 的子字符串（不包括 5）
+                               alert( str.slice(0, 1) ); // &#39;s&#39;，从 0 到 1，但不包括 1，所以只有在 0 处的字符
+                               let str = &quot;stringify&quot;;
+                               alert( str.slice(2) ); // 从第二个位置直到结束
+                       2.  str.substring(start [, end])返回字符串在 start 和 end 之间 的部分。这与 slice 几乎相同，但它允许 start 大于 end。
+                               et str = &quot;stringify&quot;;
+                                      // 这些对于 substring 是相同的
+                                      alert( str.substring(2, 6) ); // &quot;ring&quot;
+                                      alert( str.substring(6, 2) ); // &quot;ring&quot;
+                                      // ……但对 slice 是不同的：
+                                      alert( str.slice(2, 6) ); // &quot;ring&quot;（一样）
+                                      alert( str.slice(6, 2) ); // &quot;&quot;（空字符串）
+           3.  str.substr(start [, length]) 返回字符串从 start 开始的给定 length 的部分。与以前的方法相比，这个允许我们指定 length 而不是结束位置：
+                   . let str = &quot;stringify&quot;;
+                          alert( str.substr(2, 4) ); // &#39;ring&#39;，从位置 2 开始，获取 4 个字符
+                          2. 第一个参数可能是负数，从结尾算起：
+                                 let str = &quot;stringify&quot;;
+                                 alert( str.substr(-4, 2) ); // &#39;gi&#39;，从第 4 位获取 2 个字符</code></pre>
+<p>​ 方法 选择方式…… 负值参数<br>​ - slice(start, end) 从 start 到 end（不含 end） 允许<br>​ - substring(start, end) start 与 end 之间（包括 start，但不包括 end） 负值代表 0<br>​ - substr(start, length) 从 start 开始获取长为 length 的字符串 允许 start 为负数</p>
+<p>​</p>
+<h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><ul>
+<li>数组, 声明, pop/push, shift/unshift 方法, 内部, 性能, 循环, 关于 “length”, new Array(), 多维数组, toString, 不要使用 == 比较数组</li>
+</ul>
+<p>​ Iterable object（可迭代对象）</p>
+<ul>
+<li>可迭代（Iterable） 对象是数组的泛化。这个概念是说任何对象都可以被定制为可在 for..of 循环中使用的对象。</li>
+</ul>
+<h2 id="Map-and-Set（映射和集合）"><a href="#Map-and-Set（映射和集合）" class="headerlink" title="Map and Set（映射和集合）"></a>Map and Set（映射和集合）</h2><h3 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h3><ul>
+<li>Map 是一个带键的数据项的集合，就像一个 Object 一样。 但是它们最大的差别是 Map 允许任何类型的键（key）。</li>
+</ul>
+<p>它的方法和属性如下：</p>
+<ul>
+<li>new Map() —— 创建 map。</li>
+<li>map.set(key, value) —— 根据键存储值。</li>
+<li>map.get(key) —— 根据键来返回值，如果 map 中不存在对应的 key，则返回 undefined。</li>
+<li>map.has(key) —— 如果 key 存在则返回 true，否则返回 false。</li>
+<li>map.delete(key) —— 删除指定键的值。</li>
+<li>map.clear() —— 清空 map。</li>
+<li>map.size —— 返回当前元素个数。</li>
+</ul>
+<h3 id="Map-迭代"><a href="#Map-迭代" class="headerlink" title="Map 迭代"></a>Map 迭代</h3><p>如果要在 map 里使用循环，可以使用以下三个方法：</p>
+<ul>
+<li>map.keys() —— 遍历并返回所有的键（returns an iterable for keys），</li>
+<li>map.values() —— 遍历并返回所有的值（returns an iterable for values），</li>
+<li>map.entries() —— 遍历并返回所有的实体（returns an iterable for entries）[key, value]，for..of 在默认情况下使用的就是这个。</li>
+</ul>
+<h3 id="Object-entries：从对象创建-Map"><a href="#Object-entries：从对象创建-Map" class="headerlink" title="Object.entries：从对象创建 Map"></a>Object.entries：从对象创建 Map</h3><p>如果我们想从一个已有的普通对象（plain object）来创建一个 Map，那么我们可以使用内建方法 Object.entries(obj)，该返回对象的键/值对数组，该数组格式完全按照 Map 所需的格式。</p>
+<h3 id="Object-fromEntries：从-Map-创建对象"><a href="#Object-fromEntries：从-Map-创建对象" class="headerlink" title="Object.fromEntries：从 Map 创建对象"></a>Object.fromEntries：从 Map 创建对象</h3><p>Object.fromEntries 方法的作用是相反的：给定一个具有 [key, value] 键值对的数组，它会根据给定数组创建一个对象：</p>
+<h2 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h2><p>Set 是一个特殊的类型集合 —— “值的集合”（没有键），它的每一个值只能出现一次。</p>
+<p>它的主要方法如下：</p>
+<ul>
+<li>new Set(iterable) —— 创建一个 set，如果提供了一个 iterable 对象（通常是数组），将会从数组里面复制值到 set 中。</li>
+<li>set.add(value) —— 添加一个值，返回 set 本身</li>
+<li>set.delete(value) —— 删除值，如果 value 在这个方法调用的时候存在则返回 true ，否则返回 false。</li>
+<li>set.has(value) —— 如果 value 在 set 中，返回 true，否则返回 false。</li>
+<li>set.clear() —— 清空 set。</li>
+<li>set.size —— 返回元素个数。</li>
+</ul>
+<p>Map 中用于迭代的方法在 Set 中也同样支持：</p>
+<ul>
+<li>set.keys() —— 遍历并返回所有的值（returns an iterable object for values），</li>
+<li>set.values() —— 与 set.keys() 作用相同，这是为了兼容 Map，</li>
+<li>set.entries() —— 遍历并返回所有的实体（returns an iterable object for entries）[value, value]，它的存在也是为了兼容 Map。</li>
+</ul>
+<h2 id="解构赋值"><a href="#解构赋值" class="headerlink" title="解构赋值"></a>解构赋值</h2><p>解构赋值 是一种特殊的语法，它使我们可以将数组或对象“拆包”为到一系列变量中，因为有时候使用变量更加方便。解构操作对那些具有很多参数和默认值等的函数也很奏效。<br>解构赋值, 数组解构, 对象解构, 嵌套解构, 智能函数参数</p>
+<ul>
+<li>解构赋值可以立即将一个对象或数组映射到多个变量上。</li>
+<li>解构对象的完整语法：<ul>
+<li>let {prop : varName = default, …rest} = object</li>
+<li>这表示属性 prop 会被赋值给变量 varName，如果没有这个属性的话，就会使用默认值 default。</li>
+<li>没有对应映射的对象属性会被复制到 rest 对象。</li>
+</ul>
+</li>
+<li>解构数组的完整语法：<ul>
+<li>let [item1 = default, item2, …rest] = array</li>
+<li>数组的第一个元素被赋值给 item1，第二个元素被赋值给 item2，剩下的所有元素被复制到另一个数组 rest。</li>
+</ul>
+</li>
+<li>从嵌套数组/对象中提取数据也是可以的，此时等号左侧必须和等号右侧有相同的结构。</li>
+</ul>
+<h2 id="日期和时间"><a href="#日期和时间" class="headerlink" title="日期和时间"></a>日期和时间</h2><p>该对象存储日期和时间，并提供了日期/时间的管理方法。<br>例如，我们可以使用它来存储创建/修改时间，或者用来测量时间，再或者仅用来打印当前时间。</p>
+<h3 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h3><p>创建一个新的 Date 对象，只需要调用 new Date()，在调用时可以带有下面这些参数之一：</p>
+<ul>
+<li><p>new Date()</p>
+<ul>
+<li>不带参数 —— 创建一个表示当前日期和时间的 Date 对象：<ul>
+<li>let now = new Date();</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>new Date(milliseconds)</p>
+<ul>
+<li>创建一个 Date 对象，其时间等于 1970-01-01 00:00:00 UTC+0 再过一毫秒（1/1000 秒）。</li>
+<li>传入的整数参数代表的是自 1970-01-01 00:00:00 以来经过的毫秒数，该整数被称为 时间戳。</li>
+<li>这是一种日期的轻量级数字表示形式。我们通常使用 new Date(timestamp) 通过时间戳来创建日期，并可以使用 date.getTime() 将现有的 Date 对象转化为时间戳。</li>
+</ul>
+</li>
+<li><p>new Date(datestring)</p>
+<ul>
+<li>如果只有一个参数，并且是字符串，那么它会被自动解析。该算法与 Date.parse 所使用的算法相同</li>
+</ul>
+</li>
+<li><p>new Date(year, month, date, hours, minutes, seconds, ms)</p>
+<ul>
+<li>使用当前时区中的给定组件创建日期。只有前两个参数是必须的。</li>
+<li>自动校准（Autocorrection）</li>
+</ul>
+</li>
+</ul>
+<p>自动校准 是 Date 对象的一个非常方便的特性。我们可以设置超范围的数值，它会自动校准。<br>超出范围的日期组件将会被自动分配。</p>
+<h2 id="JSON-方法，toJSON"><a href="#JSON-方法，toJSON" class="headerlink" title="JSON 方法，toJSON"></a>JSON 方法，toJSON</h2><p>假设我们有一个复杂的对象，我们希望将其转换为字符串，以通过网络发送，或者只是为了在日志中输出它。</p>
+<p>当然，这样的字符串应该包含所有重要的属性。</p>
+<h3 id="JSON-stringify"><a href="#JSON-stringify" class="headerlink" title="JSON.stringify"></a>JSON.stringify</h3><p>JSON（JavaScript Object Notation）是表示值和对象的通用格式。在 RFC 4627 标准中有对其的描述。最初它是为 JavaScript 而创建的，但许多其他编程语言也有用于处理它的库。因此，当客户端使用 JavaScript 而服务器端是使用 Ruby/PHP/Java 等语言编写的时，使用 JSON 可以很容易地进行数据交换。</p>
+<p>JavaScript 提供了如下方法：</p>
+<ul>
+<li>JSON.stringify 将对象转换为 JSON。</li>
+<li>JSON.parse 将 JSON 转换回对象。</li>
+</ul>
+<p>方法 JSON.stringify(student) 接收对象并将其转换为字符串。<br>得到的 json 字符串是一个被称为 JSON 编码（JSON-encoded） 或 序列化（serialized） 或 字符串化（stringified） 或 编组化（marshalled） 的对象。</p>
+<p>请注意，JSON 编码的对象与对象字面量有几个重要的区别：:</p>
+<ul>
+<li>字符串使用双引号。JSON 中没有单引号或反引号。所以 ‘John’ 被转换为 “John”。</li>
+<li>对象属性名称也是双引号的。这是强制性的。所以 age:30 被转换成 “age”:30。</li>
+</ul>
+<p>JSON.stringify 也可以应用于原始（primitive）数据类型。<br>JSON 支持以下数据类型：</p>
+<ul>
+<li>Objects { … }</li>
+<li>Arrays [ … ]</li>
+<li>Primitives：<ul>
+<li>strings，</li>
+<li>numbers，</li>
+<li>boolean values true/false，</li>
+<li>null。</li>
+</ul>
+</li>
+</ul>
+<p>JSON 是语言无关的纯数据规范，因此一些特定于 JavaScript 的对象属性会被 JSON.stringify 跳过。<br>即：</p>
+<ul>
+<li>函数属性（方法）。</li>
+<li>Symbol 类型的属性。</li>
+<li>存储 undefined 的属性。</li>
+</ul>
+<p>​ 排除和转换：replacer</p>
+<p>JSON.stringify 的完整语法是：<br>let json = JSON.stringify(value, [replacer, space])<br> value<br>要编码的值。<br>replacer<br>要编码的属性数组或映射函数 function(key, value)。<br>space<br>用于格式化的空格数量</p>
+<h2 id="Rest-参数与-Spread-语法"><a href="#Rest-参数与-Spread-语法" class="headerlink" title="Rest 参数与 Spread 语法"></a>Rest 参数与 Spread 语法</h2><p>在 JavaScript 中，很多内建函数都支持传入任意数量的参数。<br>例如：</p>
+<ul>
+<li>Math.max(arg1, arg2, …, argN) —— 返回入参中的最大值。</li>
+<li>Object.assign(dest, src1, …, srcN) —— 依次将属性从 src1..N 复制到 dest。</li>
+</ul>
+<h3 id="Rest-参数-…"><a href="#Rest-参数-…" class="headerlink" title="Rest 参数 …"></a>Rest 参数 …</h3><p>在 JavaScript 中，无论函数是如何定义的，你都可以使用任意数量的参数调用函数。<br>Rest 参数可以通过使用三个点 … 并在后面跟着包含剩余参数的数组名称，来将它们包含在函数定义中。这些点的字面意思是“将剩余参数收集到一个数组中”。<br>Rest 参数必须放到参数列表的末尾<br>Rest 参数会收集剩余的所有参数，因此下面这种用法没有意义，并且会导致错误：<br>function f(arg1, …rest, arg2) { // arg2 在 …rest 后面？！<br>// error<br>}<br>…rest 必须处在最后。</p>
+<p>​ “arguments” 变量</p>
+<p>有一个名为 arguments 的特殊的类数组对象，该对象按参数索引包含所有参数。</p>
+<p>在过去，JavaScript 中没有 rest 参数，而使用 arguments 是获取函数所有参数的唯一方法。现在它仍然有效，我们可以在一些老代码里找到它。</p>
+<p>但缺点是，尽管 arguments 是一个类数组，也是可迭代对象，但它终究不是数组。它不支持数组方法，因此我们不能调用 arguments.map(…) 等方法。</p>
+<p>此外，它始终包含所有参数，我们不能像使用 rest 参数那样只截取入参的一部分。</p>
+<p>因此，当我们需要这些功能时，最好使用 rest 参数。</p>
+<h3 id="Spread-语法"><a href="#Spread-语法" class="headerlink" title="Spread 语法"></a>Spread 语法</h3><p>在脚本执行时，可能参数数组中有很多个元素，也可能一个都没有。并且这样设置的代码也很丑。<br>Spread 语法 来帮助你了！它看起来和 rest 参数很像，也使用 …，但是二者的用途完全相反。<br>当在函数调用中使用 …arr 时，它会把可迭代对象 arr “展开”到参数列表中。</p>
+<p>以 Math.max 为例：</p>
+<pre><code>  1. - let arr = [3, 5, 1];
+  2. - alert( Math.max(...arr) ); // 5（spread 语法把数组转换为参数列表）</code></pre>
+<p>我们还可以通过这种方式传递多个可迭代对象：</p>
+<pre><code>  1. let arr1 = [1, -2, 3, 4];
+  2. let arr2 = [8, 3, -8, 1];
+  3.
+  4. alert( Math.max(...arr1, ...arr2) ); // 8</code></pre>
+<p>我们甚至还可以将 spread 语法与常规值结合使用：</p>
+<pre><code>  1. let arr1 = [1, -2, 3, 4];
+  2. let arr2 = [8, 3, -8, 1];
+  3.
+  4. alert( Math.max(1, ...arr1, 2, ...arr2, 25) ); // 25</code></pre>
+<p>并且，我们还可以使用 spread 语法来合并数组：</p>
+<pre><code>  1. let arr = [3, 5, 1];
+  2. let arr2 = [8, 9, 15];
+  3.
+  4. let merged = [0, ...arr, 2, ...arr2];
+  5.
+  6. alert(merged); // 0,3,5,1,2,8,9,15（0，然后是 arr，然后是 2，然后是 arr2）</code></pre>
+<p>在上面的示例中，我们使用数组展示了 spread 语法，其实任何可迭代对象都可以。</p>
+<p>例如，在这儿我们使用 spread 语法将字符串转换为字符数组：</p>
+<ul>
+<li>let str = “Hello”;</li>
+<li>alert( […str] ); // H,e,l,l,o<br>Spread 语法内部使用了迭代器来收集元素，与 for..of 的方式相同</li>
+</ul>
+<p>不过 Array.from(obj) 和 […obj] 存在一个细微的差别：</p>
+<ul>
+<li>Array.from 适用于类数组对象也适用于可迭代对象。</li>
+<li>Spread 语法只适用于可迭代对象。<br>因此，对于将一些“东西”转换为数组的任务，Array.from 往往更通用。</li>
+</ul>
+<p>​ 总结<br> 当我们在代码中看到 “…” 时，它要么是 rest 参数，要么就是 spread 语法。</p>
+<p>有一个简单的方法可以区分它们：</p>
+<ul>
+<li><p>若 … 出现在函数参数列表的最后，那么它就是 rest 参数，它会把参数列表中剩余的参数收集到一个数组中。</p>
+</li>
+<li><p>若 … 出现在函数调用或类似的表达式中，那它就是 spread 语法，它会把一个数组展开为列表。</p>
+</li>
+<li><p>使用场景：</p>
+</li>
+<li><p>Rest 参数用于创建可接受任意数量参数的函数。</p>
+</li>
+<li><p>Spread 语法用于将数组传递给通常需要含有许多参数的列表的函数。<br>它们俩的出现帮助我们轻松地在列表和参数数组之间来回转换。</p>
+</li>
+</ul>
+<p>“旧式”的 arguments（类数组且可迭代的对象）也依然能够帮助我们获取函数调用中的所有参数。</p>
+<h2 id="变量作用域，闭包"><a href="#变量作用域，闭包" class="headerlink" title="变量作用域，闭包"></a>变量作用域，闭包</h2><h3 id="Step-1-变量"><a href="#Step-1-变量" class="headerlink" title="Step 1. 变量"></a>Step 1. 变量</h3><p>在 JavaScript 中，每个运行的函数，代码块 {…} 以及整个脚本，都有一个被称为 词法环境（Lexical Environment） 的内部（隐藏）的关联对象。</p>
+<p>词法环境对象由两部分组成：</p>
+<pre><code>  1. 环境记录（Environment Record） —— 一个存储所有局部变量作为其属性（包括一些其他信息，例如 this 的值）的对象。
+  2. 对 外部词法环境 的引用，与外部代码相关联。</code></pre>
+<p>一个“变量”只是 环境记录 这个特殊的内部对象的一个属性。“获取或修改变量”意味着“获取或修改词法环境的一个属性”。</p>
+<ul>
+<li>变量是特殊内部对象的属性，与当前正在执行的（代码）块/函数/脚本有关。</li>
+<li>操作变量实际上是操作该对象的属性。</li>
+</ul>
+<h3 id="Step-2-函数声明"><a href="#Step-2-函数声明" class="headerlink" title="Step 2. 函数声明"></a>Step 2. 函数声明</h3><p>一个函数其实也是一个值，就像变量一样。</p>
+<p><strong>* *不同之处在于函数声明的初始化会被立即完成。 **</strong></p>
+<p>当创建了一个词法环境（Lexical Environment）时，函数声明会立即变为即用型函数（不像 let 那样直到声明处才可用）。</p>
+<h3 id="Step-3-内部和外部的词法环境"><a href="#Step-3-内部和外部的词法环境" class="headerlink" title="Step 3. 内部和外部的词法环境"></a>Step 3. 内部和外部的词法环境</h3><p>在一个函数运行时，在调用刚开始时，会自动创建一个新的词法环境以存储这个调用的局部变量和参数。</p>
+<p><strong>* *当代码要访问一个变量时 —— 首先会搜索内部词法环境，然后搜索外部环境，然后搜索更外部的环境，以此类推，直到全局词法环境。 **</strong></p>
+<p>如果在任何地方都找不到这个变量，那么在严格模式下就会报错（在非严格模式下，为了向下兼容，给未定义的变量赋值会创建一个全局变量）。</p>
+<h3 id="Step-4-返回函数"><a href="#Step-4-返回函数" class="headerlink" title="Step 4. 返回函数"></a>Step 4. 返回函数</h3><p>所有的函数在“诞生”时都会记住创建它们的词法环境。从技术上讲，这里没有什么魔法：所有函数都有名为 [[Environment]] 的隐藏属性，该属性保存了对创建该函数的词法环境的引用。</p>
+<h3 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a><strong>闭包</strong></h3><p>开发者通常应该都知道“闭包”这个通用的编程术语。</p>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Closure_(computer_programming)">闭包</a> 是指内部函数总是可以访问其所在的外部函数中声明的变量和参数，即使在其外部函数被返回（寿命终结）了之后。</p>
+<p>也就是说：JavaScript 中的函数会自动通过隐藏的 <code>[[Environment]]</code> 属性记住创建它们的位置，所以它们都可以访问外部变量。</p>
+<p>在面试时，前端开发者通常会被问到“什么是闭包？”，正确的回答应该是闭包的定义，并解释清楚为什么 JavaScript 中的所有函数都是闭包的，以及可能的关于 <code>[[Environment]]</code> 属性和词法环境原理的技术细节。</p>
+<h3 id="垃圾收集"><a href="#垃圾收集" class="headerlink" title="垃圾收集"></a><strong>垃圾收集</strong></h3><p>通常，函数调用完成后，会将词法环境和其中的所有变量从内存中删除。因为现在没有任何对它们的引用了。与 JavaScript 中的任何其他对象一样，词法环境仅在可达时才会被保留在内存中。</p>
+<p>但是，如果有一个嵌套的函数在函数结束后仍可达，则它将具有引用词法环境的 <code>[[Environment]]</code> 属性。</p>
+<h3 id="实际开发中的优化"><a href="#实际开发中的优化" class="headerlink" title="实际开发中的优化"></a>实际开发中的优化</h3><p>正如我们所看到的，理论上当函数可达时，它外部的所有变量也都将存在。</p>
+<p>但在实际中，JavaScript 引擎会试图优化它。它们会分析变量的使用情况，如果从代码中可以明显看出有未使用的外部变量，那么就会将其删除。</p>
+<p><strong>在 V8（Chrome，Edge，Opera）中的一个重要的副作用是，此类变量在调试中将不可用。</strong></p>
+<h1 id="函数对象-NFE"><a href="#函数对象-NFE" class="headerlink" title="函数对象, NFE"></a>函数对象, NFE</h1><p>在 JavaScript 中，函数就是对象。</p>
+<h2 id="属性-“name”"><a href="#属性-“name”" class="headerlink" title="属性 “name”"></a>属性 “name”</h2><p>函数对象包含一些便于使用的属性。</p>
+<ol>
+<li><p>一个函数的名字可以通过属性 “name” 来访问。</p>
+</li>
+<li><p>名称赋值的逻辑很智能。即使函数被创建时没有名字，名称赋值的逻辑也能给它赋予一个正确的名字，然后进行赋值。</p>
+</li>
+<li><p>以默认值的方式完成了赋值时，它也有效。</p>
+</li>
+<li><p>如果函数自己没有提供，那么在赋值中，会根据上下文来推测一个。</p>
+<p>对象方法也有名字，</p>
+</li>
+</ol>
+<h2 id="属性-“length”"><a href="#属性-“length”" class="headerlink" title="属性 “length”"></a>属性 “length”</h2><p>内置属性 “length”，它返回函数入参的个数</p>
+<p>属性 <code>length</code> 有时在操作其它函数的函数中用于做 <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%86%85%E7%9C%81_(%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6)">内省/运行时检查（introspection）</a>。</p>
+<h2 id="自定义属性"><a href="#自定义属性" class="headerlink" title="自定义属性"></a>自定义属性</h2><p><strong>属性不是变量</strong></p>
+<p>被赋值给函数的属性，比如 <code>sayHi.counter = 0</code>，<strong>不会</strong> 在函数内定义一个局部变量 <code>counter</code>。换句话说，属性 <code>counter</code> 和变量 <code>let counter</code> 是毫不相关的两个东西。</p>
+<p>我们可以把函数当作对象，在它里面存储属性，但是这对它的执行没有任何影响。变量不是函数属性，反之亦然。它们之间是平行的。</p>
+<h2 id="命名函数表达式"><a href="#命名函数表达式" class="headerlink" title="命名函数表达式"></a>命名函数表达式</h2><p>命名函数表达式（NFE，Named Function Expression），指带有名字的函数表达式的术语。</p>
+<pre class="line-numbers language-none"><code class="language-none">let sayHi &#x3D; function func(who) &#123;
+  alert(&#96;Hello, $&#123;who&#125;&#96;);
+&#125;;
+
+sayHi(&quot;John&quot;); &#x2F;&#x2F; Hello, John<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>关于名字 <code>func</code> 有两个特殊的地方，这就是添加它的原因：</p>
+<ol>
+<li>它允许函数在内部引用自己。</li>
+<li>它在函数外是不可见的。</li>
+</ol>
+<p>下面的函数 <code>sayHi</code> 会在没有入参 <code>who</code> 时，以 <code>&quot;Guest&quot;</code> 为入参调用自己：</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">let</span> <span class="token function-variable function">sayHi</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token function">func</span><span class="token punctuation">(</span><span class="token parameter">who</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>who<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">alert</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">Hello, </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">$&#123;</span>who<span class="token interpolation-punctuation punctuation">&#125;</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+  <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">func</span><span class="token punctuation">(</span><span class="token string">'Guest'</span><span class="token punctuation">)</span> <span class="token comment">// 使用 func 再次调用函数自身</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token function">sayHi</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// Hello, Guest</span>
+<span class="token comment">// 但这不工作：</span>
+<span class="token function">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// Error, func is not defined（在函数外不可见）</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="问题（待解决）"><a href="#问题（待解决）" class="headerlink" title="问题（待解决）"></a>问题（待解决）</h2><h3 id="任意数量的括号求和"><a href="#任意数量的括号求和" class="headerlink" title="任意数量的括号求和"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/function-object#ren-yi-shu-liang-de-kuo-hao-qiu-he">任意数量的括号求和</a></h3><p>重要程度: 2</p>
+<p>写一个函数 <code>sum</code>，它有这样的功能：</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token function">sum</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">3</span> <span class="token comment">// 1 + 2</span>
+<span class="token function">sum</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">6</span> <span class="token comment">// 1 + 2 + 3</span>
+<span class="token function">sum</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">6</span>
+<span class="token function">sum</span><span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">3</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span>
+<span class="token function">sum</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">15</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>P.S. 提示：你可能需要创建自定义对象来为你的函数提供基本类型转换。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/function-object#zong-jie">总结</a></h2><p>函数就是对象。</p>
+<p>它们的一些属性：</p>
+<ul>
+<li><code>name</code> —— 函数的名字。通常取自函数定义，但如果函数定义时没设定函数名，JavaScript 会尝试通过函数的上下文猜一个函数名（例如把赋值的变量名取为函数名）。</li>
+<li><code>length</code> —— 函数定义时的入参的个数。Rest 参数不参与计数。</li>
+</ul>
+<h1 id="调度：setTimeout-和-setInterval"><a href="#调度：setTimeout-和-setInterval" class="headerlink" title="调度：setTimeout 和 setInterval"></a>调度：setTimeout 和 setInterval</h1><p>有时我们并不想立即执行一个函数，而是等待特定一段时间之后再执行。这就是所谓的“计划调用（scheduling a call）”。</p>
+<p>目前有两种方式可以实现：</p>
+<ul>
+<li><code>setTimeout</code> 允许我们将函数推迟到一段时间间隔之后再执行。</li>
+<li><code>setInterval</code> 允许我们重复运行一个函数，从一段时间间隔之后开始运行，之后以该时间间隔连续重复运行该函数。</li>
+</ul>
+<p>这两个方法并不在 JavaScript 的规范中。但是大多数运行环境都有内建的调度程序，并且提供了这些方法。目前来讲，所有浏览器以及 Node.js 都支持这两个方法。</p>
+<h2 id="setTimeout"><a href="#setTimeout" class="headerlink" title="setTimeout"></a>setTimeout</h2><p>语法：</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">let</span> timerId <span class="token operator">=</span> <span class="token function">setTimeout</span><span class="token punctuation">(</span>func<span class="token operator">|</span>code<span class="token punctuation">,</span> <span class="token punctuation">[</span>delay<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span>arg1<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span>arg2<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token operator">...</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>参数说明：</p>
+<ul>
+<li><p><code>func|code</code></p>
+<p>想要执行的函数或代码字符串。 一般传入的都是函数。由于某些历史原因，支持传入代码字符串，但是不建议这样做。</p>
+</li>
+<li><p><code>delay</code></p>
+<p>执行前的延时，以毫秒为单位（1000 毫秒 = 1 秒），默认值是 0；</p>
+</li>
+<li><p><code>arg1</code>，<code>arg2</code>…</p>
+<p>要传入被执行函数（或代码字符串）的参数列表（IE9 以下不支持）</p>
+</li>
+</ul>
+<h2 id="嵌套的-setTimeout"><a href="#嵌套的-setTimeout" class="headerlink" title="嵌套的 setTimeout"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/settimeout-setinterval#qian-tao-de-settimeout">嵌套的 setTimeout</a></h2><p>周期性调度有两种方式。</p>
+<p>一种是使用 <code>setInterval</code>，另外一种就是嵌套的 <code>setTimeout</code>，就像这样：</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">/** instead of:
+let timerId = setInterval(() => alert('tick'), 2000);
+*/</span>
+
+<span class="token keyword">let</span> timerId <span class="token operator">=</span> <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token function">tick</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token function">alert</span><span class="token punctuation">(</span><span class="token string">'tick'</span><span class="token punctuation">)</span>
+  timerId <span class="token operator">=</span> <span class="token function">setTimeout</span><span class="token punctuation">(</span>tick<span class="token punctuation">,</span> <span class="token number">2000</span><span class="token punctuation">)</span> <span class="token comment">// (*)</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token number">2000</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>上面这个 <code>setTimeout</code> 在当前这一次函数执行完时 <code>(*)</code> 立即调度下一次调用。</p>
+<p>嵌套的 <code>setTimeout</code> 要比 <code>setInterval</code> 灵活得多。采用这种方式可以根据当前执行结果来调度下一次调用，因此下一次调用可以与当前这一次不同。</p>
+<p><strong>传入一个函数，但不要执行它</strong></p>
+<p>新手开发者有时候会误将一对括号 <code>()</code> 加在函数后面：</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// 错的！</span>
+<span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token function">sayHi</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">1000</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>这样不行，因为 <code>setTimeout</code> 期望得到一个对函数的引用。而这里的 <code>sayHi()</code> 很明显是在执行函数，所以实际上传入 <code>setTimeout</code> 的是 <strong>函数的执行结果</strong>。在这个例子中，<code>sayHi()</code> 的执行结果是 <code>undefined</code>（也就是说函数没有返回任何结果），所以实际上什么也没有调度。</p>
+<h3 id="用-clearTimeout-来取消调度"><a href="#用-clearTimeout-来取消调度" class="headerlink" title="用 clearTimeout 来取消调度"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/settimeout-setinterval#yong-cleartimeout-lai-qu-xiao-tiao-du">用 clearTimeout 来取消调度</a></h3><p><code>setTimeout</code> 在调用时会返回一个“定时器标识符（timer identifier）”，在我们的例子中是 <code>timerId</code>，我们可以使用它来取消执行。</p>
+<p>取消调度的语法：</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">let</span> timerId <span class="token operator">=</span> <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token operator">...</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">clearTimeout</span><span class="token punctuation">(</span>timerId<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h2 id="setInterval"><a href="#setInterval" class="headerlink" title="setInterval"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/settimeout-setinterval#setinterval">setInterval</a></h2><p><code>setInterval</code> 方法和 <code>setTimeout</code> 的语法相同：</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">let</span> timerId <span class="token operator">=</span> <span class="token function">setInterval</span><span class="token punctuation">(</span>func<span class="token operator">|</span>code<span class="token punctuation">,</span> <span class="token punctuation">[</span>delay<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span>arg1<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span>arg2<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token operator">...</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>所有参数的意义也是相同的。不过与 <code>setTimeout</code> 只执行一次不同，<code>setInterval</code> 是每间隔给定的时间周期性执行。</p>
+<p>想要阻止后续调用，我们需要调用 <code>clearInterval(timerId)</code>。</p>
+<p><strong>alert 弹窗显示的时候计时器依然在进行计时</strong></p>
+<p>在大多数浏览器中，包括 Chrome 和 Firefox，在显示 <code>alert/confirm/prompt</code> 弹窗时，内部的定时器仍旧会继续“嘀嗒”。</p>
+<p>所以，在运行上面的代码时，如果在一定时间内没有关掉 <code>alert</code> 弹窗，那么在你关闭弹窗后，下一个 <code>alert</code> 会立即显示。两次 <code>alert</code> 之间的时间间隔将小于 2 秒。</p>
+<p><strong>嵌套的 <code>setTimeout</code> 能够精确地设置两次执行之间的延时，而 <code>setInterval</code> 却不能。</strong></p>
+<h2 id="零延时的-setTimeout"><a href="#零延时的-setTimeout" class="headerlink" title="零延时的 setTimeout"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/settimeout-setinterval#ling-yan-shi-de-settimeout">零延时的 setTimeout</a></h2><p>这儿有一种特殊的用法：<code>setTimeout(func, 0)</code>，或者仅仅是 <code>setTimeout(func)</code>。</p>
+<p>这样调度可以让 <code>func</code> 尽快执行。但是只有在当前正在执行的脚本执行完成后，调度程序才会调用它。</p>
+<p>也就是说，该函数被调度在当前脚本执行完成“之后”立即执行。</p>
+<p>例如，下面这段代码会先输出 “Hello”，然后立即输出 “World”：</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token function">alert</span><span class="token punctuation">(</span><span class="token string">'World'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token function">alert</span><span class="token punctuation">(</span><span class="token string">'Hello'</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>第一行代码“将调用安排到日程（calendar）0 毫秒处”。但是调度程序只有在当前脚本执行完毕时才会去“检查日程”，所以先输出 <code>&quot;Hello&quot;</code>，然后才输出 <code>&quot;World&quot;</code>。</p>
+<p><strong>零延时实际上不为零（在浏览器中）</strong></p>
+<h2 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/settimeout-setinterval#zong-jie">总结</a></h2><ul>
+<li><code>setTimeout(func, delay, ...args)</code> 和 <code>setInterval(func, delay, ...args)</code> 方法允许我们在 <code>delay</code> 毫秒之后运行 <code>func</code> 一次或以 <code>delay</code> 毫秒为时间间隔周期性运行 <code>func</code>。</li>
+<li>要取消函数的执行，我们应该调用 <code>clearInterval/clearTimeout</code>，并将 <code>setInterval/setTimeout</code> 返回的值作为入参传入。</li>
+<li>嵌套的 <code>setTimeout</code> 比 <code>setInterval</code> 用起来更加灵活，允许我们更精确地设置两次执行之间的时间。</li>
+<li>零延时调度 <code>setTimeout(func, 0)</code>（与 <code>setTimeout(func)</code> 相同）用来调度需要尽快执行的调用，但是会在当前脚本执行完成后进行调用。</li>
+<li>浏览器会将 <code>setTimeout</code> 或 <code>setInterval</code> 的五层或更多层嵌套调用（调用五次之后）的最小延时限制在 4ms。这是历史遗留问题。</li>
+</ul>
+<h1 id="函数绑定"><a href="#函数绑定" class="headerlink" title="函数绑定"></a>函数绑定</h1><p>当将对象方法作为回调进行传递，例如传递给 <code>setTimeout</code>，这儿会存在一个常见的问题：“丢失 <code>this</code>”。</p>
+<h2 id="丢失-“this”"><a href="#丢失-“this”" class="headerlink" title="丢失 “this”"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/bind#diu-shi-this">丢失 “this”</a></h2><p>下面是使用 <code>setTimeout</code> 时 <code>this</code> 是如何丢失的：</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">let</span> user <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+  firstName<span class="token operator">:</span> <span class="token string">'John'</span><span class="token punctuation">,</span>
+  <span class="token function">sayHi</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">alert</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">Hello, </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">$&#123;</span><span class="token keyword">this</span><span class="token punctuation">.</span>firstName<span class="token interpolation-punctuation punctuation">&#125;</span></span><span class="token string">!</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token function">setTimeout</span><span class="token punctuation">(</span>user<span class="token punctuation">.</span>sayHi<span class="token punctuation">,</span> <span class="token number">1000</span><span class="token punctuation">)</span> <span class="token comment">// Hello, undefined!</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="解决方案-1：包装器"><a href="#解决方案-1：包装器" class="headerlink" title="解决方案 1：包装器"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/bind#jie-jue-fang-an-1-bao-zhuang-qi">解决方案 1：包装器</a></h2><p>最简单的解决方案是使用一个包装函数：</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">let</span> user <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+  firstName<span class="token operator">:</span> <span class="token string">'John'</span><span class="token punctuation">,</span>
+  <span class="token function">sayHi</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">alert</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">Hello, </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">$&#123;</span><span class="token keyword">this</span><span class="token punctuation">.</span>firstName<span class="token interpolation-punctuation punctuation">&#125;</span></span><span class="token string">!</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  user<span class="token punctuation">.</span><span class="token function">sayHi</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// Hello, John!</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token number">1000</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>现在它可以正常工作了，因为它从外部词法环境中获取到了 <code>user</code>，就可以正常地调用方法了。</p>
+<h2 id="解决方案-2：bind"><a href="#解决方案-2：bind" class="headerlink" title="解决方案 2：bind"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/bind#jie-jue-fang-an-2-bind">解决方案 2：bind</a></h2><p>函数提供了一个内建方法 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh/docs/Web/JavaScript/Reference/Global_Objects/Function/bind">bind</a>，它可以绑定 <code>this</code>。</p>
+<p>基本的语法是：</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// 稍后将会有更复杂的语法</span>
+<span class="token keyword">let</span> boundFunc <span class="token operator">=</span> <span class="token function">func</span><span class="token punctuation">.</span><span class="token function">bind</span><span class="token punctuation">(</span>context<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p><code>func.bind(context)</code> 的结果是一个特殊的类似于函数的“外来对象（exotic object）”，它可以像函数一样被调用，并且透明地（transparently）将调用传递给 <code>func</code> 并设定 <code>this=context</code>。</p>
+<p><code>boundFunc</code> 调用就像绑定了 <code>this</code> 的 <code>func</code>。</p>
+<h2 id="在没有上下文情况下的-partial"><a href="#在没有上下文情况下的-partial" class="headerlink" title="在没有上下文情况下的 partial"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/bind#zai-mei-you-shang-xia-wen-qing-kuang-xia-de-partial">在没有上下文情况下的 partial</a></h2><p>当我们想绑定一些参数（arguments），但是这里没有上下文 <code>this</code>，应该怎么办？例如，对于一个对象方法。</p>
+<p>原生的 <code>bind</code> 不允许这种情况。我们不可以省略上下文直接跳到参数（arguments）。</p>
+<p><code>partial(func[, arg1, arg2...])</code> 调用的结果是一个包装器 <code>(*)</code>，它调用 <code>func</code> 并具有以下内容：</p>
+<ul>
+<li>与它获得的函数具有相同的 <code>this</code>（对于 <code>user.sayNow</code> 调用来说，它是 <code>user</code>）</li>
+<li>然后给它 <code>...argsBound</code> —— 来自于 <code>partial</code> 调用的参数（<code>&quot;10:00&quot;</code>）</li>
+<li>然后给它 <code>...args</code> —— 给包装器的参数（<code>&quot;Hello&quot;</code>）</li>
+</ul>
+<h2 id="总结-2"><a href="#总结-2" class="headerlink" title="总结"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/bind#zong-jie">总结</a></h2><p>方法 <code>func.bind(context, ...args)</code> 返回函数 <code>func</code> 的“绑定的（bound）变体”，它绑定了上下文 <code>this</code> 和第一个参数（如果给定了）。</p>
+<p>通常我们应用 <code>bind</code> 来绑定对象方法的 <code>this</code>，这样我们就可以把它们传递到其他地方使用。例如，传递给 <code>setTimeout</code>。</p>
+<p>当我们绑定一个现有的函数的某些参数时，绑定后的（不太通用的）函数被称为 <strong>partially applied</strong> 或 <strong>partial</strong>。</p>
+<p>当我们不想一遍又一遍地重复相同的参数时，partial 非常有用。就像我们有一个 <code>send(from, to)</code> 函数，并且对于我们的任务来说，<code>from</code> 应该总是一样的，那么我们就可以搞一个 partial 并使用它。</p>
+<h1 id="深入理解箭头函数"><a href="#深入理解箭头函数" class="headerlink" title="深入理解箭头函数"></a>深入理解箭头函数</h1><p>让我们深入研究一下箭头函数。</p>
+<p>箭头函数不仅仅是编写简洁代码的“捷径”。它还具有非常特殊且有用的特性。</p>
+<p>JavaScript 充满了我们需要编写在其他地方执行的小函数的情况。</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">let</span> <span class="token function-variable function">sum</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">a<span class="token punctuation">,</span> b</span><span class="token punctuation">)</span> <span class="token operator">=></span> a <span class="token operator">+</span> b
+
+<span class="token comment">/* 这个箭头函数是下面这个函数的更短的版本：
+
+let sum = function(a, b) &#123;
+  return a + b;
+&#125;;
+*/</span>
+
+<span class="token function">alert</span><span class="token punctuation">(</span><span class="token function">sum</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">// 3</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li>如果我们只有一个参数，还可以省略掉参数外的圆括号，使代码更短。</li>
+<li>如果没有参数，括号将是空的（但括号应该保留）：</li>
+</ul>
+<h2 id="箭头函数没有-“this”"><a href="#箭头函数没有-“this”" class="headerlink" title="箭头函数没有 “this”"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/arrow-functions#jian-tou-han-shu-mei-you-this">箭头函数没有 “this”</a></h2><p>正如我们在 <a target="_blank" rel="noopener" href="https://zh.javascript.info/object-methods">对象方法，”this”</a> 一章中所学到的，箭头函数没有 <code>this</code>。如果访问 <code>this</code>，则会从外部获取。</p>
+<p><strong>不能对箭头函数进行 <code>new</code> 操作</strong></p>
+<p>不具有 <code>this</code> 自然也就意味着另一个限制：箭头函数不能用作构造器（constructor）。不能用 <code>new</code> 调用它们。</p>
+<h2 id="箭头函数没有-“arguments”"><a href="#箭头函数没有-“arguments”" class="headerlink" title="箭头函数没有 “arguments”"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/arrow-functions#jian-tou-han-shu-mei-you-arguments">箭头函数没有 “arguments”</a></h2><p>箭头函数也没有 <code>arguments</code> 变量。</p>
+<p>当我们需要使用当前的 <code>this</code> 和 <code>arguments</code> 转发一个调用时，这对装饰器（decorators）来说非常有用。</p>
+<h2 id="总结-3"><a href="#总结-3" class="headerlink" title="总结"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/arrow-functions#zong-jie">总结</a></h2><p>箭头函数：</p>
+<ul>
+<li>没有 <code>this</code></li>
+<li>没有 <code>arguments</code></li>
+<li>不能使用 <code>new</code> 进行调用</li>
+<li>它们也没有 <code>super</code></li>
+</ul>
+<h1 id="Mixin-模式"><a href="#Mixin-模式" class="headerlink" title="Mixin 模式"></a>Mixin 模式</h1><p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Mixin">mixin</a> 是一个包含可被其他类使用而无需继承的方法的类。</p>
+<h2 id="EventMixin"><a href="#EventMixin" class="headerlink" title="EventMixin"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/mixins#eventmixin">EventMixin</a></h2><p>现在让我们为实际运用构造一个 mixin。</p>
+<p>例如，许多浏览器对象的一个重要功能是它们可以生成事件。事件是向任何有需要的人“广播信息”的好方法。因此，让我们构造一个 mixin，使我们能够轻松地将与事件相关的函数添加到任意 class/object 中。</p>
+<ul>
+<li>Mixin 将提供 <code>.trigger(name, [...data])</code> 方法，以在发生重要的事情时“生成一个事件”。<code>name</code> 参数（arguments）是事件的名称，<code>[...data]</code> 是可选的带有事件数据的其他参数（arguments）。</li>
+<li>此外还有 <code>.on(name, handler)</code> 方法，它为具有给定名称的事件添加了 <code>handler</code> 函数作为监听器（listener）。当具有给定 <code>name</code> 的事件触发时将调用该方法，并从 <code>.trigger</code> 调用中获取参数（arguments）。</li>
+<li>……还有 <code>.off(name, handler)</code> 方法，它会删除 <code>handler</code> 监听器（listener）。</li>
+</ul>
+<h2 id="总结-4"><a href="#总结-4" class="headerlink" title="总结"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/mixins#zong-jie">总结</a></h2><p><em>Mixin</em> — 是一个通用的面向对象编程术语：一个包含其他类的方法的类。</p>
+<p>一些其它编程语言允许多重继承。JavaScript 不支持多重继承，但是可以通过将方法拷贝到原型中来实现 mixin。</p>
+<p>我们可以使用 mixin 作为一种通过添加多种行为（例如上文中所提到的事件处理）来扩充类的方法。</p>
+<p><strong>受保护的属性通常以下划线 <code>_</code> 作为前缀。</strong></p>
+<h1 id="简介：回调"><a href="#简介：回调" class="headerlink" title="简介：回调"></a>简介：回调</h1><p>JavaScript 主机（host）环境提供了许多函数，这些函数允许我们计划 <strong>异步</strong> 行为（action）。</p>
+<p>脚本是“异步”调用的，因为它从现在开始加载，但是在这个加载函数执行完成后才运行。</p>
+<h1 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h1><p>Promise 对象的构造器（constructor）语法如下：</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">let</span> promise <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">resolve<span class="token punctuation">,</span> reject</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token comment">// executor（生产者代码，“歌手”）</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>传递给 <code>new Promise</code> 的函数被称为 <strong>executor</strong>。当 <code>new Promise</code> 被创建，executor 会自动运行。</p>
+<p>当 executor 获得了结果，无论是早还是晚都没关系，它应该调用以下回调之一：</p>
+<ul>
+<li><code>resolve(value)</code> — 如果任务成功完成并带有结果 <code>value</code>。</li>
+<li><code>reject(error)</code> — 如果出现了 error，<code>error</code> 即为 error 对象。</li>
+</ul>
+<p>executor 会自动运行并尝试执行一项工作。尝试结束后，如果成功则调用 <code>resolve</code>，如果出现 error 则调用 <code>reject</code>。</p>
+<p>由 <code>new Promise</code> 构造器返回的 <code>promise</code> 对象具有以下内部属性：</p>
+<ul>
+<li><code>state</code> — 最初是 <code>&quot;pending&quot;</code>，然后在 <code>resolve</code> 被调用时变为 <code>&quot;fulfilled&quot;</code>，或者在 <code>reject</code> 被调用时变为 <code>&quot;rejected&quot;</code>。</li>
+<li><code>result</code> — 最初是 <code>undefined</code>，然后在 <code>resolve(value)</code> 被调用时变为 <code>value</code>，或者在 <code>reject(error)</code> 被调用时变为 <code>error</code>。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="left">Promises</th>
+<th align="left">Callbacks</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Promises 允许我们按照自然顺序进行编码。首先，我们运行 <code>loadScript</code> 和 <code>.then</code> 来处理结果。</td>
+<td align="left">在调用 <code>loadScript(script, callback)</code> 时，在我们处理的地方（disposal）必须有一个 <code>callback</code> 函数。换句话说，在调用 <code>loadScript</code> <strong>之前</strong>，我们必须知道如何处理结果。</td>
+</tr>
+<tr>
+<td align="left">我们可以根据需要，在 promise 上多次调用 <code>.then</code>。每次调用，我们都会在“订阅列表”中添加一个新的“分析”，一个新的订阅函数。在下一章将对此内容进行详细介绍：<a target="_blank" rel="noopener" href="https://zh.javascript.info/promise-chaining">Promise 链</a>。</td>
+<td align="left">只能有一个回调。</td>
+</tr>
+</tbody></table>
+<p>因此，promise 为我们提供了更好的代码流和灵活性。</p>
+<p>一个 promise 构造器和一个简单的 executor 函数，该 executor 函数具有包含时间（即 <code>setTimeout</code>）的“生产者代码”：</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">let</span> promise <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">resolve<span class="token punctuation">,</span> reject</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token comment">// 当 promise 被构造完成时，自动执行此函数</span>
+
+  <span class="token comment">// 1 秒后发出工作已经被完成的信号，并带有结果 "done"</span>
+  <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token function">resolve</span><span class="token punctuation">(</span><span class="token string">'done'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">1000</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>在 new Promise()的时候，Promise 的执行器就会立马执行，但是<strong>调用 resolve()会触发异步操作，传入的 then()方法的函数会被添加到任务队列并异步执行</strong></p>
+<p><code>promise</code> 对象代表异步执行结果，通过构造函数 <code>new Promise</code> 创建，其参数是 executor function 可能有一些异步代码，对象其后的方法 <code>.then</code>、<code>.catch</code>、<code>.finally</code> 相当于回调函数。</p>
+<p>一开始创建的 <code>promise</code> 对象状态是 <code>pending</code>（表示初始状态）然后在 executor function 中会有条件地执行 <code>resolve</code> 或 <code>reject</code> 之一，这样就会改变 <code>promise</code> 对象的状态为 <code>settled</code>（表示状态确定，可以触发对象后的方法 <code>.finally</code>）</p>
+<p><code>promise</code> 对象确定的状态其实有两种，如果在 executor function 调用的是 <code>resolve</code> 状态就变成 <code>resolved</code> 相应地会调用对象后的方法 <code>.then</code>；而如果在 executor function 调用的是 <code>reject</code> 状态就变成 <code>rejected</code> 相应地会调用对象后的方法 <code>.catch</code>（其实这是 <code>.then(null, rejectFunc)</code> 缩写形式）</p>
+<h1 id="Promise-链"><a href="#Promise-链" class="headerlink" title="Promise 链"></a>Promise 链</h1><p>它的理念是将 result 通过 <code>.then</code> 处理程序（handler）链进行传递。</p>
+<p>运行流程如下：</p>
+<ol>
+<li>初始 promise 在 1 秒后进行 resolve <code>(*)</code>，</li>
+<li>然后 <code>.then</code> 处理程序（handler）被调用 <code>(**)</code>。</li>
+<li>它返回的值被传入下一个 <code>.then</code> 处理程序（handler）<code>(***)</code></li>
+<li>……依此类推。</li>
+</ol>
+<p><strong>新手常犯的一个经典错误：从技术上讲，我们也可以将多个 <code>.then</code> 添加到一个 promise 上。但这并不是 promise 链（chaining）。</strong></p>
+<h2 id="总结-5"><a href="#总结-5" class="headerlink" title="总结"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/promise-chaining#zong-jie">总结</a></h2><p>如果 <code>.then</code>（或 <code>catch/finally</code> 都可以）处理程序（handler）返回一个 promise，那么链的其余部分将会等待，直到它状态变为 settled。当它被 settled 后，其 result（或 error）将被进一步传递下去。</p>
+<p><img src="E:\Markdown图片\image-20210128140346440.png" alt="image-20210128140346440"></p>
+<h1 id="使用-promise-进行错误处理"><a href="#使用-promise-进行错误处理" class="headerlink" title="使用 promise 进行错误处理"></a>使用 promise 进行错误处理</h1><p>Promise 链在错误（error）处理中十分强大。当一个 promise 被 reject 时，控制权将移交至最近的 rejection 处理程序（handler）。</p>
+<h2 id="隐式-try…catch"><a href="#隐式-try…catch" class="headerlink" title="隐式 try…catch"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/promise-error-handling#yin-shi-trycatch">隐式 try…catch</a></h2><p>Promise 的执行者（executor）和 promise 的处理程序（handler）周围有一个“隐式的 <code>try..catch</code>”。如果发生异常，它（译注：指异常）就会被捕获，并被视为 rejection 进行处理。</p>
+<p>下面这段代码：</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">resolve<span class="token punctuation">,</span> reject</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">Error</span><span class="token punctuation">(</span><span class="token string">'Whoops!'</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">catch</span><span class="token punctuation">(</span>alert<span class="token punctuation">)</span> <span class="token comment">// Error: Whoops!</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>……与下面这段代码工作上完全相同：</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">resolve<span class="token punctuation">,</span> reject</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+  <span class="token function">reject</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Error</span><span class="token punctuation">(</span><span class="token string">'Whoops!'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">catch</span><span class="token punctuation">(</span>alert<span class="token punctuation">)</span> <span class="token comment">// Error: Whoops!</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>在 executor 周围的“隐式 <code>try..catch</code>”自动捕获了 error，并将其变为 rejected promise。</p>
+<p>这不仅仅发生在 executor 函数中，同样也发生在其 handler 中。如果我们在 <code>.then</code> 处理程序（handler）中 <code>throw</code>，这意味着 promise 被 rejected，因此控制权移交至最近的 error 处理程序（handler）。</p>
+<p>一个例子：</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">resolve<span class="token punctuation">,</span> reject</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+  <span class="token function">resolve</span><span class="token punctuation">(</span><span class="token string">'ok'</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">result</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">Error</span><span class="token punctuation">(</span><span class="token string">'Whoops!'</span><span class="token punctuation">)</span> <span class="token comment">// reject 这个 promise</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">catch</span><span class="token punctuation">(</span>alert<span class="token punctuation">)</span> <span class="token comment">// Error: Whoops!</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="再次抛出（Rethrowing）"><a href="#再次抛出（Rethrowing）" class="headerlink" title="再次抛出（Rethrowing）"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/promise-error-handling#zai-ci-pao-chu-rethrowing">再次抛出（Rethrowing）</a></h2><p>链尾端的 <code>.catch</code> 的表现有点像 <code>try..catch</code>。我们可能有许多个 <code>.then</code> 处理程序（handler），然后在尾端使用一个 <code>.catch</code> 处理上面的所有 error。</p>
+<h2 id="总结-6"><a href="#总结-6" class="headerlink" title="总结"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/promise-error-handling#zong-jie">总结</a></h2><ul>
+<li><code>.catch</code> 处理 promise 中的各种 error：在 <code>reject()</code> 调用中的，或者在处理程序（handler）中抛出的（thrown）error。</li>
+<li>我们应该将 <code>.catch</code> 准确地放到我们想要处理 error，并知道如何处理这些 error 的地方。处理程序应该分析 error（可以自定义 error 类来帮助分析）并再次抛出未知的 error（可能它们是编程错误）。</li>
+<li>如果没有办法从 error 中恢复的话，不使用 <code>.catch</code> 也可以。</li>
+<li>在任何情况下我们都应该有 <code>unhandledrejection</code> 事件处理程序（用于浏览器，以及其他环境的模拟），以跟踪未处理的 error 并告知用户（可能还有我们的服务器）有关信息，以使我们的应用程序永远不会“死掉”。</li>
+</ul>
+<h1 id="Promise-API"><a href="#Promise-API" class="headerlink" title="Promise API"></a>Promise API</h1><h2 id="Promise-all"><a href="#Promise-all" class="headerlink" title="Promise.all"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/promise-api#promiseall">Promise.all</a></h2><p>假设我们希望并行执行多个 promise，并等待所有 promise 都准备就绪。语法：</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">let</span> promise <span class="token operator">=</span> Promise<span class="token punctuation">.</span><span class="token function">all</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token operator">...</span>promises<span class="token operator">...</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p><code>Promise.all(iterable)</code> <strong>允许在</strong> <code>iterable</code> <strong>中使用 non-promise 的“常规”值</strong></p>
+<p><code>Promise.all</code> 接受一个 promise 数组作为参数（从技术上讲，它可以是任何可迭代的，但通常是一个数组）并返回一个新的 promise。</p>
+<p><strong>如果任意一个 promise 被 reject，由 <code>Promise.all</code> 返回的 promise 就会立即 reject，并且带有的就是这个 error。</strong></p>
+<h2 id="Promise-allSettled"><a href="#Promise-allSettled" class="headerlink" title="Promise.allSettled"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/promise-api#promiseallsettled">Promise.allSettled</a></h2><p><code>Promise.allSettled</code> 等待所有的 promise 都被 settle，无论结果如何。结果数组具有：</p>
+<ul>
+<li><code>&#123;status:&quot;fulfilled&quot;, value:result&#125;</code> 对于成功的响应，</li>
+<li><code>&#123;status:&quot;rejected&quot;, reason:error&#125;</code> 对于 error。</li>
+</ul>
+<h2 id="Promise-race"><a href="#Promise-race" class="headerlink" title="Promise.race"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/promise-api#promiserace">Promise.race</a></h2><p>与 <code>Promise.all</code> 类似，但只等待第一个 settled 的 promise 并获取其结果（或 error）。</p>
+<p><code>Promise.all</code> 可能是在实战中使用最多的。</p>
+<h1 id="微任务（Microtask）"><a href="#微任务（Microtask）" class="headerlink" title="微任务（Microtask）"></a>微任务（Microtask）</h1><p>Promise 的处理程序（handlers）<code>.then</code>、<code>.catch</code> 和 <code>.finally</code> 都是异步的。</p>
+<p>即便一个 promise 立即被 resolve，<code>.then</code>、<code>.catch</code> 和 <code>.finally</code> <strong>下面</strong> 的代码也会在这些处理程序（handler）之前被执行。</p>
+<h2 id="微任务队列（Microtask-queue）"><a href="#微任务队列（Microtask-queue）" class="headerlink" title="微任务队列（Microtask queue）"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/microtask-queue#wei-ren-wu-dui-lie-microtaskqueue">微任务队列（Microtask queue）</a></h2><p>异步任务需要适当的管理。为此，ECMA 标准规定了一个内部队列 <code>PromiseJobs</code>，通常被称为“微任务队列（microtask queue）”（ES8 术语）。</p>
+<p>如 <a target="_blank" rel="noopener" href="https://tc39.github.io/ecma262/#sec-jobs-and-job-queues">规范</a> 中所述：</p>
+<ul>
+<li>队列（queue）是先进先出的：首先进入队列的任务会首先运行。</li>
+<li>只有在 JavaScript 引擎中没有其它任务在运行时，才开始执行任务队列中的任务。</li>
+</ul>
+<p>当一个 promise 准备就绪时，它的 <code>.then/catch/finally</code> 处理程序（handler）就会被放入队列中：但是它们不会立即被执行。当 JavaScript 引擎执行完当前的代码，它会从队列中获取任务并执行它。</p>
+<p>如果有一个包含多个 <code>.then/catch/finally</code> 的链，那么它们中的每一个都是异步执行的。也就是说，它会首先进入队列，然后在当前代码执行完成并且先前排队的处理程序（handler）都完成时才会被执行。</p>
+<h2 id="总结-7"><a href="#总结-7" class="headerlink" title="总结"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/microtask-queue#zong-jie">总结</a></h2><p>Promise 处理始终是异步的，因为所有 promise 行为都会通过内部的 “promise jobs” 队列，也被称为“微任务队列”（ES8 术语）。</p>
+<p>因此，<code>.then/catch/finally</code> 处理程序（handler）总是在当前代码完成后才会被调用。</p>
+<p>如果我们需要确保一段代码在 <code>.then/catch/finally</code> 之后被执行，我们可以将它添加到链式调用的 <code>.then</code> 中。</p>
+<h1 id="Async-await"><a href="#Async-await" class="headerlink" title="Async/await"></a>Async/await</h1><h2 id="Async-function"><a href="#Async-function" class="headerlink" title="Async function"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/async-await#asyncfunction">Async function</a></h2><p>Async/await 是以更舒适的方式使用 promise 的一种特殊语法，同时它也非常易于理解和使用。</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">return</span> <span class="token number">1</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>在函数前面的 “async” 这个单词表达了一个简单的事情：即这个函数总是返回一个 promise。其他值将自动被包装在一个 resolved 的 promise 中。</p>
+<h2 id="Await"><a href="#Await" class="headerlink" title="Await"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/async-await#await">Await</a></h2><p>语法如下：</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// 只在 async 函数内工作</span>
+<span class="token keyword">let</span> value <span class="token operator">=</span> <span class="token keyword">await</span> promise<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>关键字 <code>await</code> 让 JavaScript 引擎等待直到 promise 完成（settle）并返回结果。</p>
+<h1 id="Generator"><a href="#Generator" class="headerlink" title="Generator"></a>Generator</h1><p>常规函数只会返回一个单一值（或者不返回任何值）。</p>
+<p>而 Generator 可以按需一个接一个地返回（“yield”）多个值。它们可与 <a target="_blank" rel="noopener" href="https://zh.javascript.info/iterable">iterable</a> 完美配合使用，从而可以轻松地创建数据流。</p>
+<h2 id="Generator-函数"><a href="#Generator-函数" class="headerlink" title="Generator 函数"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/generators#generator-han-shu">Generator 函数</a></h2><p>要创建一个 generator，我们需要一个特殊的语法结构：<code>function*</code>，即所谓的 “generator function”。</p>
+<p>像这样：</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">function</span><span class="token operator">*</span> <span class="token function">generateSequence</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">yield</span> <span class="token number">1</span>
+  <span class="token keyword">yield</span> <span class="token number">2</span>
+  <span class="token keyword">return</span> <span class="token number">3</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>一个 generator 的主要方法就是 <code>next()</code>。当被调用时（译注：指 <code>next()</code> 方法），它会恢复上图所示的运行，执行直到最近的 <code>yield &lt;value&gt;</code> 语句（<code>value</code> 可以被省略，默认为 <code>undefined</code>）。然后函数执行暂停，并将产出的（yielded）值返回到外部代码。</p>
+<p><code>next()</code> 的结果始终是一个具有两个属性的对象：</p>
+<ul>
+<li><code>value</code>: 产出的（yielded）的值。</li>
+<li><code>done</code>: 如果 generator 函数已执行完成则为 <code>true</code>，否则为 <code>false</code>。</li>
+</ul>
+<p>代码恢复执行并返回下一个 <code>yield</code> 的值：</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">let</span> two <span class="token operator">=</span> generator<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token function">alert</span><span class="token punctuation">(</span><span class="token constant">JSON</span><span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span>two<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">// &#123;value: 2, done: false&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p><strong><code>function\* f(…)</code> 或 <code>function \*f(…)</code>？</strong></p>
+<p>这两种语法都是对的。</p>
+<p>但是通常更倾向于第一种语法，因为星号 <code>*</code> 表示它是一个 generator 函数，它描述的是函数种类而不是名称，因此 <code>*</code> 应该和 <code>function</code> 关键字紧贴一起。</p>
+<h2 id="“yield”-是一条双向路"><a href="#“yield”-是一条双向路" class="headerlink" title="“yield” 是一条双向路"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/generators#yield-shi-yi-tiao-shuang-xiang-lu">“yield” 是一条双向路</a></h2><p>目前看来，generator 和可迭代对象类似，都具有用来生成值的特殊语法。但实际上，generator 更加强大且灵活。</p>
+<p>这是因为 <code>yield</code> 是一条双向路（two-way street）：它不仅可以向外返回结果，而且还可以将外部的值传递到 generator 内。</p>
+<p>调用 <code>generator.next(arg)</code>，我们就能将参数 <code>arg</code> 传递到 generator 内部。这个 <code>arg</code> 参数会变成 <code>yield</code> 的结果。</p>
+<h2 id="generator-throw"><a href="#generator-throw" class="headerlink" title="generator.throw"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/generators#generatorthrow">generator.throw</a></h2><p>正如我们在上面的例子中观察到的那样，外部代码可能会将一个值传递到 generator，作为 <code>yield</code> 的结果。</p>
+<p>……但是它也可以在那里发起（抛出）一个 error。这很自然，因为 error 本身也是一种结果。</p>
+<p>要向 <code>yield</code> 传递一个 error，我们应该调用 <code>generator.throw(err)</code>。在这种情况下，<code>err</code> 将被抛到对应的 <code>yield</code> 所在的那一行。</p>
+<h2 id="总结-8"><a href="#总结-8" class="headerlink" title="总结"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/generators#zong-jie">总结</a></h2><ul>
+<li>Generator 是通过 generator 函数 <code>function* f(…) &#123;…&#125;</code> 创建的。</li>
+<li>在 generator（仅在）内部，存在 <code>yield</code> 操作。</li>
+<li>外部代码和 generator 可能会通过 <code>next/yield</code> 调用交换结果。</li>
+</ul>
+<h1 id="异步迭代和-generator"><a href="#异步迭代和-generator" class="headerlink" title="异步迭代和 generator"></a>异步迭代和 generator</h1><p>异步迭代允许我们对按需通过异步请求而得到的数据进行迭代。</p>
+<p>当值是以异步的形式出现时，例如在 <code>setTimeout</code> 或者另一种延迟之后，就需要异步迭代。</p>
+<p>最常见的场景是，对象需要发送一个网络请求以传递下一个值，稍后我们将看到一个它的真实示例。</p>
+<p>要使对象异步迭代：</p>
+<ol>
+<li>使用 <code>Symbol.asyncIterator</code> 取代 <code>Symbol.iterator</code>。</li>
+<li><code>next()</code> 方法应该返回一个 <code>promise</code>（带有下一个值，并且状态为 <code>fulfilled</code>）。<ul>
+<li>关键字 <code>async</code> 可以实现这一点，我们可以简单地使用 <code>async next()</code>。</li>
+</ul>
+</li>
+<li>我们应该使用 <code>for await (let item of iterable)</code> 循环来迭代这样的对象。<ul>
+<li>注意关键字 <code>await</code>。</li>
+</ul>
+</li>
+</ol>
+<p>作为开始的示例，让我们创建一个可迭代的 <code>range</code> 对象，与前面的那个类似，不过现在它将异步地每秒返回一个值。</p>
+<p>我们需要做的就是对上面代码中的部分代码进行替换：</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">let</span> range <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">from</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+  to<span class="token operator">:</span> <span class="token number">5</span><span class="token punctuation">,</span>
+
+  <span class="token punctuation">[</span>Symbol<span class="token punctuation">.</span>asyncIterator<span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// (1)</span>
+    <span class="token keyword">return</span> <span class="token punctuation">&#123;</span>
+      current<span class="token operator">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>from<span class="token punctuation">,</span>
+      last<span class="token operator">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>to<span class="token punctuation">,</span>
+
+      <span class="token keyword">async</span> <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// (2)</span>
+
+        <span class="token comment">// 注意：我们可以在 async next 内部使用 "await"</span>
+        <span class="token keyword">await</span> <span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">resolve</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token function">setTimeout</span><span class="token punctuation">(</span>resolve<span class="token punctuation">,</span> <span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">// (3)</span>
+
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>current <span class="token operator">&lt;=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>last<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+          <span class="token keyword">return</span> <span class="token punctuation">&#123;</span> done<span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span> value<span class="token operator">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>current<span class="token operator">++</span> <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+          <span class="token keyword">return</span> <span class="token punctuation">&#123;</span> done<span class="token operator">:</span> <span class="token boolean">true</span> <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+      <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token punctuation">;</span><span class="token punctuation">(</span><span class="token keyword">async</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">for</span> <span class="token keyword">await</span> <span class="token punctuation">(</span><span class="token keyword">let</span> value <span class="token keyword">of</span> range<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// (4)</span>
+    <span class="token function">alert</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span> <span class="token comment">// 1,2,3,4,5</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>正如我们所看到的，其结构与常规的 iterator 类似:</p>
+<ol>
+<li>为了使一个对象可以异步迭代，它必须具有方法 <code>Symbol.asyncIterator</code> <code>(1)</code>。</li>
+<li>这个方法必须返回一个带有 <code>next()</code> 方法的对象，<code>next()</code> 方法会返回一个 promise <code>(2)</code>。</li>
+<li>这个 <code>next()</code> 方法可以不是 <code>async</code> 的，它可以是一个返回值是一个 <code>promise</code> 的常规的方法，但是使用 <code>async</code> 关键字可以允许我们在方法内部使用 <code>await</code>，所以会更加方便。这里我们只是用于延迟 1 秒的操作 <code>(3)</code>。</li>
+<li>我们使用 <code>for await(let value of range)</code> <code>(4)</code> 来进行迭代，也就是在 <code>for</code> 后面添加 <code>await</code>。它会调用一次 <code>range[Symbol.asyncIterator]()</code> 方法一次，然后调用它的 <code>next()</code> 方法获取值。</li>
+</ol>
+<p>这是一个对比 Iterator 和异步 iterator 之间差异的表格：</p>
+<table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="left">Iterator</th>
+<th align="left">异步 iterator</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">提供 iterator 的对象方法</td>
+<td align="left"><code>Symbol.iterator</code></td>
+<td align="left"><code>Symbol.asyncIterator</code></td>
+</tr>
+<tr>
+<td align="left"><code>next()</code> 返回的值是</td>
+<td align="left">任意值</td>
+<td align="left"><code>Promise</code></td>
+</tr>
+<tr>
+<td align="left">要进行循环，使用</td>
+<td align="left"><code>for..of</code></td>
+<td align="left"><code>for await..of</code></td>
+</tr>
+</tbody></table>
+<h1 id="模块-Module-简介"><a href="#模块-Module-简介" class="headerlink" title="模块 (Module) 简介"></a>模块 (Module) 简介</h1><p>社区发明了许多种方法来将代码组织到模块中，使用特殊的库按需加载模块。</p>
+<p>列举一些（出于历史原因）：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Asynchronous_module_definition">AMD</a> —— 最古老的模块系统之一，最初由 <a target="_blank" rel="noopener" href="http://requirejs.org/">require.js</a> 库实现。</li>
+<li><a target="_blank" rel="noopener" href="http://wiki.commonjs.org/wiki/Modules/1.1">CommonJS</a> —— 为 Node.js 服务器创建的模块系统。</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/umdjs/umd">UMD</a> —— 另外一个模块系统，建议作为通用的模块系统，它与 AMD 和 CommonJS 都兼容。</li>
+</ul>
+<h2 id="什么是模块？"><a href="#什么是模块？" class="headerlink" title="什么是模块？"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/modules-intro#shi-mo-shi-mo-kuai">什么是模块？</a></h2><p>一个模块（module）就是一个文件。一个脚本就是一个模块。就这么简单。</p>
+<p>模块可以相互加载，并可以使用特殊的指令 <code>export</code> 和 <code>import</code> 来交换功能，从另一个模块调用一个模块的函数：</p>
+<ul>
+<li><code>export</code> 关键字标记了可以从当前模块外部访问的变量和函数。</li>
+<li><code>import</code> 关键字允许从其他模块导入功能。</li>
+</ul>
+<h2 id="模块核心功能"><a href="#模块核心功能" class="headerlink" title="模块核心功能"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/modules-intro#mo-kuai-he-xin-gong-neng">模块核心功能</a></h2><h3 id="始终使用-“use-strict”"><a href="#始终使用-“use-strict”" class="headerlink" title="始终使用 “use strict”"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/modules-intro#shi-zhong-shi-yong-usestrict">始终使用 “use strict”</a></h3><p>模块始终默认使用 <code>use strict</code>，例如，对一个未声明的变量赋值将产生错误（译注：在浏览器控制台可以看到 error 信息）。</p>
+<h3 id="模块级作用域"><a href="#模块级作用域" class="headerlink" title="模块级作用域"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/modules-intro#mo-kuai-ji-zuo-yong-yu">模块级作用域</a></h3><p>每个模块都有自己的顶级作用域（top-level scope）。换句话说，一个模块中的顶级作用域变量和函数在其他脚本中是不可见的。</p>
+<h3 id="模块代码仅在第一次导入时被解析"><a href="#模块代码仅在第一次导入时被解析" class="headerlink" title="模块代码仅在第一次导入时被解析"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/modules-intro#mo-kuai-dai-ma-jin-zai-di-yi-ci-dao-ru-shi-bei-jie-xi">模块代码仅在第一次导入时被解析</a></h3><p>如果同一个模块被导入到多个其他位置，那么它的代码仅会在第一次导入时执行，然后将导出（export）的内容提供给所有的导入（importer）。</p>
+<h3 id="在一个模块中，“this”-是-undefined"><a href="#在一个模块中，“this”-是-undefined" class="headerlink" title="在一个模块中，“this” 是 undefined"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/modules-intro#zai-yi-ge-mo-kuai-zhong-this-shi-undefined">在一个模块中，“this” 是 undefined</a></h3><p>这是一个小功能，但为了完整性，我们应该提到它。</p>
+<p>在一个模块中，顶级 <code>this</code> 是 undefined。</p>
+<h3 id="import-meta"><a href="#import-meta" class="headerlink" title="import.meta"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/modules-intro#importmeta">import.meta</a></h3><p><code>import.meta</code> 对象包含关于当前模块的信息。</p>
+<p>它的内容取决于其所在的环境。在浏览器环境中，它包含当前脚本的 URL，或者如果它是在 HTML 中的话，则包含当前页面的 URL。</p>
+<h3 id="模块脚本是延迟的"><a href="#模块脚本是延迟的" class="headerlink" title="模块脚本是延迟的"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/modules-intro#mo-kuai-jiao-ben-shi-yan-chi-de">模块脚本是延迟的</a></h3><p>模块脚本 <strong>总是</strong> 被延迟的，与 <code>defer</code> 特性（在 <a target="_blank" rel="noopener" href="https://zh.javascript.info/script-async-defer">脚本：async，defer</a> 一章中描述的）对外部脚本和内联脚本（inline script）的影响相同。</p>
+<p>也就是说：</p>
+<ul>
+<li>下载外部模块脚本 <code>&lt;script type=&quot;module&quot; src=&quot;...&quot;&gt;</code> 不会阻塞 HTML 的处理，它们会与其他资源并行加载。</li>
+<li>模块脚本会等到 HTML 文档完全准备就绪（即使它们很小并且比 HTML 加载速度更快），然后才会运行。</li>
+<li>保持脚本的相对顺序：在文档中排在前面的脚本先执行。</li>
+</ul>
+<p>它的一个副作用是，模块脚本总是会“看到”已完全加载的 HTML 页面，包括在它们下方的 HTML 元素。</p>
+<h3 id="不允许裸模块（“bare”-module）"><a href="#不允许裸模块（“bare”-module）" class="headerlink" title="不允许裸模块（“bare” module）"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/modules-intro#bu-yun-xu-luo-mo-kuai-baremodule">不允许裸模块（“bare” module）</a></h3><p>在浏览器中，<code>import</code> 必须给出相对或绝对的 URL 路径。没有任何路径的模块被称为“裸（bare）”模块。在 <code>import</code> 中不允许这种模块。</p>
+<h3 id="兼容性，“nomodule”"><a href="#兼容性，“nomodule”" class="headerlink" title="兼容性，“nomodule”"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/modules-intro#jian-rong-xing-nomodule">兼容性，“nomodule”</a></h3><p>旧时的浏览器不理解 <code>type=&quot;module&quot;</code>。未知类型的脚本会被忽略。</p>
+<h2 id="构建工具"><a href="#构建工具" class="headerlink" title="构建工具"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/modules-intro#gou-jian-gong-ju">构建工具</a></h2><p>在实际开发中，浏览器模块很少被以“原始”形式进行使用。通常，我们会使用一些特殊工具，例如 <a target="_blank" rel="noopener" href="https://webpack.js.org/">Webpack</a>，将它们打包在一起，然后部署到生产环境的服务器。</p>
+<p>使用打包工具的一个好处是 —— 它们可以更好地控制模块的解析方式，允许我们使用裸模块和更多的功能，例如 CSS/HTML 模块等。</p>
+<p>构建工具做以下这些事儿：</p>
+<ol>
+<li>从一个打算放在 HTML 中的 <code>&lt;script type=&quot;module&quot;&gt;</code> “主”模块开始。</li>
+<li>分析它的依赖：它的导入，以及它的导入的导入等。</li>
+<li>使用所有模块构建一个文件（或者多个文件，这是可调的），并用打包函数（bundler function）替代原生的 <code>import</code> 调用，以使其正常工作。还支持像 HTML/CSS 模块等“特殊”的模块类型。</li>
+<li>在处理过程中，可能会应用其他转换和优化：<ul>
+<li>删除无法访问的代码。</li>
+<li>删除未使用的导出（“tree-shaking”）。</li>
+<li>删除特定于开发的像 <code>console</code> 和 <code>debugger</code> 这样的语句。</li>
+<li>可以使用 <a target="_blank" rel="noopener" href="https://babeljs.io/">Babel</a> 将前沿的现代的 JavaScript 语法转换为具有类似功能的旧的 JavaScript 语法。</li>
+<li>压缩生成的文件（删除空格，用短的名字替换变量等）。</li>
+</ul>
+</li>
+</ol>
+<h2 id="总结-9"><a href="#总结-9" class="headerlink" title="总结"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/modules-intro#zong-jie">总结</a></h2><p>下面总结一下模块的核心概念：</p>
+<ol>
+<li>一个模块就是一个文件。浏览器需要使用<script type="module">以使 import/export 可以工作。模块（译注：相较于常规脚本）有几点差别：<ul>
+<li>默认是延迟解析的（deferred）。</li>
+<li>Async 可用于内联脚本。</li>
+<li>要从另一个源（域/协议/端口）加载外部脚本，需要 CORS header。</li>
+<li>重复的外部脚本会被忽略</li>
+</ul>
+</li>
+<li>模块具有自己的本地顶级作用域，并可以通过 <code>import/export</code> 交换功能。</li>
+<li>模块始终使用 <code>use strict</code>。</li>
+<li>模块代码只执行一次。导出仅创建一次，然后会在导入之间共享。</li>
+</ol>
+<h1 id="Proxy-和-Reflect"><a href="#Proxy-和-Reflect" class="headerlink" title="Proxy 和 Reflect"></a>Proxy 和 Reflect</h1><p>一个 <code>Proxy</code> 对象包装另一个对象并拦截诸如读取/写入属性和其他操作，可以选择自行处理它们，或者透明地允许该对象处理它们。</p>
+<p>Proxy 被用于了许多库和某些浏览器框架。</p>
+<h2 id="Proxy"><a href="#Proxy" class="headerlink" title="Proxy"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/proxy#proxy">Proxy</a></h2><p>语法：</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">let</span> proxy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Proxy</span><span class="token punctuation">(</span>target<span class="token punctuation">,</span> handler<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<ul>
+<li><code>target</code> —— 是要包装的对象，可以是任何东西，包括函数。</li>
+<li><code>handler</code> —— 代理配置：带有“捕捉器”（“traps”，即拦截操作的方法）的对象。比如 <code>get</code> 捕捉器用于读取 <code>target</code> 的属性，<code>set</code> 捕捉器用于写入 <code>target</code> 的属性，等等。</li>
+</ul>
+<p>对 <code>proxy</code> 进行操作，如果在 <code>handler</code> 中存在相应的捕捉器，则它将运行，并且 Proxy 有机会对其进行处理，否则将直接对 target 进行处理。</p>
+<p>由于没有捕捉器，所有对 <code>proxy</code> 的操作都直接转发给了 <code>target</code>。</p>
+<ol>
+<li>写入操作 <code>proxy.test=</code> 会将值写入 <code>target</code>。</li>
+<li>读取操作 <code>proxy.test</code> 会从 <code>target</code> 返回对应的值。</li>
+<li>迭代 <code>proxy</code> 会从 <code>target</code> 返回对应的值。</li>
+</ol>
+<h2 id="带有-“get”-捕捉器的默认值"><a href="#带有-“get”-捕捉器的默认值" class="headerlink" title="带有 “get” 捕捉器的默认值"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/proxy#dai-you-get-bu-zhuo-qi-de-mo-ren-zhi">带有 “get” 捕捉器的默认值</a></h2><p>最常见的捕捉器是用于读取/写入的属性。</p>
+<p>要拦截读取操作，<code>handler</code> 应该有 <code>get(target, property, receiver)</code> 方法。</p>
+<p>读取属性时触发该方法，参数如下：</p>
+<ul>
+<li><code>target</code> —— 是目标对象，该对象被作为第一个参数传递给 <code>new Proxy</code>，</li>
+<li><code>property</code> —— 目标属性名，</li>
+<li><code>receiver</code> —— 如果目标属性是一个 getter 访问器属性，则 <code>receiver</code> 就是本次读取属性所在的 <code>this</code> 对象。通常，这就是 <code>proxy</code> 对象本身（或者，如果我们从 proxy 继承，则是从该 proxy 继承的对象）。现在我们不需要此参数，因此稍后我们将对其进行详细介绍。</li>
+</ul>
+<h2 id="使用-“set”-捕捉器进行验证"><a href="#使用-“set”-捕捉器进行验证" class="headerlink" title="使用 “set” 捕捉器进行验证"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/proxy#shi-yong-set-bu-zhuo-qi-jin-hang-yan-zheng">使用 “set” 捕捉器进行验证</a></h2><p>假设我们想要一个专门用于数字的数组。如果添加了其他类型的值，则应该抛出一个错误。</p>
+<p>当写入属性时 <code>set</code> 捕捉器被触发。</p>
+<p><code>set(target, property, value, receiver)</code>：</p>
+<ul>
+<li><code>target</code> —— 是目标对象，该对象被作为第一个参数传递给 <code>new Proxy</code>，</li>
+<li><code>property</code> —— 目标属性名称，</li>
+<li><code>value</code> —— 目标属性的值，</li>
+<li><code>receiver</code> —— 与 <code>get</code> 捕捉器类似，仅与 setter 访问器属性相关。</li>
+</ul>
+<p>如果写入操作（setting）成功，<code>set</code> 捕捉器应该返回 <code>true</code>，否则返回 <code>false</code>（触发 <code>TypeError</code>）。</p>
+<h2 id="使用-“ownKeys”-和-“getOwnPropertyDescriptor”-进行迭代"><a href="#使用-“ownKeys”-和-“getOwnPropertyDescriptor”-进行迭代" class="headerlink" title="使用 “ownKeys” 和 “getOwnPropertyDescriptor” 进行迭代"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/proxy#shi-yong-ownkeys-he-getownpropertydescriptor-jin-hang-die-dai">使用 “ownKeys” 和 “getOwnPropertyDescriptor” 进行迭代</a></h2><p><code>Object.keys</code>，<code>for..in</code> 循环和大多数其他遍历对象属性的方法都使用内部方法 <code>[[OwnPropertyKeys]]</code>（由 <code>ownKeys</code> 捕捉器拦截) 来获取属性列表。</p>
+<p>这些方法在细节上有所不同：</p>
+<ul>
+<li><code>Object.getOwnPropertyNames(obj)</code> 返回非 Symbol 键。</li>
+<li><code>Object.getOwnPropertySymbols(obj)</code> 返回 Symbol 键。</li>
+<li><code>Object.keys/values()</code> 返回带有 <code>enumerable</code> 标志的非 Symbol 键/值（属性标志在 <a target="_blank" rel="noopener" href="https://zh.javascript.info/property-descriptors">属性标志和属性描述符</a> 一章有详细讲解)。</li>
+<li><code>for..in</code> 循环遍历所有带有 <code>enumerable</code> 标志的非 Symbol 键，以及原型对象的键。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/02/23/%E6%B5%8F%E8%A7%88%E5%99%A8%EF%BC%9A%E6%96%87%E6%A1%A3%EF%BC%8C%E4%BA%8B%E4%BB%B6%EF%BC%8C%E6%8E%A5%E5%8F%A3/" rel="next" title="浏览器：文档，事件，接口">
+                  浏览器：文档，事件，接口 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Colorfuls</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共18.6k字</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+    <div class="pjax">
+
+
+  
+    </div>
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+</body>
+</html>

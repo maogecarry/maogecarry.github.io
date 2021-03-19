@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","version":"8.2.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
+<meta name="description" content="DOM 树HTML 文档的主干是标签（tag）。 根据文档对象模型（DOM），每个 HTML 标签都是一个对象。嵌套的标签是闭合标签的“子标签（children）”。标签内的文本也是一个对象。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浏览器：文档，事件，接口">
+<meta property="og:url" content="http://example.com/2021/02/23/%E6%B5%8F%E8%A7%88%E5%99%A8%EF%BC%9A%E6%96%87%E6%A1%A3%EF%BC%8C%E4%BA%8B%E4%BB%B6%EF%BC%8C%E6%8E%A5%E5%8F%A3/index.html">
+<meta property="og:site_name" content="Colorfuls-Blogs">
+<meta property="og:description" content="DOM 树HTML 文档的主干是标签（tag）。 根据文档对象模型（DOM），每个 HTML 标签都是一个对象。嵌套的标签是闭合标签的“子标签（children）”。标签内的文本也是一个对象。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="e:/Markdown图片/image-20210202215947121.png">
+<meta property="og:image" content="e:/Markdown图片/image-20210221110537095.png">
+<meta property="article:published_time" content="2021-02-23T13:50:00.000Z">
+<meta property="article:modified_time" content="2021-02-23T13:24:09.004Z">
+<meta property="article:author" content="Colorfuls">
+<meta property="article:tag" content="浏览器">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="e:/Markdown图片/image-20210202215947121.png">
+
+
+<link rel="canonical" href="http://example.com/2021/02/23/%E6%B5%8F%E8%A7%88%E5%99%A8%EF%BC%9A%E6%96%87%E6%A1%A3%EF%BC%8C%E4%BA%8B%E4%BB%B6%EF%BC%8C%E6%8E%A5%E5%8F%A3/">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>浏览器：文档，事件，接口 | Colorfuls-Blogs</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Colorfuls-Blogs</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">追风去</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-article"><a href="/article" rel="section"><i class="fa fa-newspaper fa-fw"></i>文章</a></li>
+        <li class="menu-item menu-item-teach"><a href="/teach" rel="section"><i class="fa fa-address-card fa-fw"></i>教程</a></li>
+        <li class="menu-item menu-item-site"><a href="/site" rel="section"><i class="fa fa-star fa-fw"></i>站点</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#DOM-%E6%A0%91"><span class="nav-number">1.</span> <span class="nav-text">DOM 树</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.1.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%81%8D%E5%8E%86-DOM"><span class="nav-number">2.</span> <span class="nav-text">遍历 DOM</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E5%A4%9A%E9%93%BE%E6%8E%A5%EF%BC%9A%E8%A1%A8%E6%A0%BC"><span class="nav-number">2.1.</span> <span class="nav-text">更多链接：表格</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-1"><span class="nav-number">2.2.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%90%9C%E7%B4%A2%EF%BC%9AgetElement%EF%BC%8CquerySelector"><span class="nav-number">3.</span> <span class="nav-text">搜索：getElement，querySelector</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#document-getElementById-%E6%88%96%E8%80%85%E5%8F%AA%E4%BD%BF%E7%94%A8-id"><span class="nav-number">3.1.</span> <span class="nav-text">document.getElementById 或者只使用 id</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#querySelectorAll"><span class="nav-number">3.2.</span> <span class="nav-text">querySelectorAll</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#matches"><span class="nav-number">3.3.</span> <span class="nav-text">matches</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#closest"><span class="nav-number">3.4.</span> <span class="nav-text">closest</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-2"><span class="nav-number">3.5.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%8A%82%E7%82%B9%E5%B1%9E%E6%80%A7%EF%BC%9Atype%EF%BC%8Ctag-%E5%92%8C-content"><span class="nav-number">4.</span> <span class="nav-text">节点属性：type，tag 和 content</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#DOM-%E8%8A%82%E7%82%B9%E7%B1%BB"><span class="nav-number">4.1.</span> <span class="nav-text">DOM 节点类</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%89%B9%E6%80%A7%E5%92%8C%E5%B1%9E%E6%80%A7%EF%BC%88Attributes-and-properties%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">特性和属性（Attributes and properties）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HTML-%E7%89%B9%E6%80%A7"><span class="nav-number">5.1.</span> <span class="nav-text">HTML 特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-3"><span class="nav-number">5.2.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Window-%E5%A4%A7%E5%B0%8F%E5%92%8C%E6%BB%9A%E5%8A%A8"><span class="nav-number">6.</span> <span class="nav-text">Window 大小和滚动</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AA%97%E5%8F%A3%E7%9A%84-width-height"><span class="nav-number">6.1.</span> <span class="nav-text">窗口的 width&#x2F;height</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BB%9A%E5%8A%A8%EF%BC%9AscrollTo%EF%BC%8CscrollBy%EF%BC%8CscrollIntoView"><span class="nav-number">6.2.</span> <span class="nav-text">滚动：scrollTo，scrollBy，scrollIntoView</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#scrollIntoView"><span class="nav-number">6.3.</span> <span class="nav-text">scrollIntoView</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-4"><span class="nav-number">6.4.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BA%8B%E4%BB%B6"><span class="nav-number">7.</span> <span class="nav-text">创建自定义事件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E6%9E%84%E9%80%A0%E5%99%A8"><span class="nav-number">7.1.</span> <span class="nav-text">事件构造器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dispatchEvent"><span class="nav-number">7.2.</span> <span class="nav-text">dispatchEvent</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A1%A8%E5%8D%95%E5%B1%9E%E6%80%A7%E5%92%8C%E6%96%B9%E6%B3%95"><span class="nav-number">8.</span> <span class="nav-text">表单属性和方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%BC%E8%88%AA%EF%BC%9A%E8%A1%A8%E5%8D%95%E5%92%8C%E5%85%83%E7%B4%A0"><span class="nav-number">8.1.</span> <span class="nav-text">导航：表单和元素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8D%E5%90%91%E5%BC%95%E7%94%A8%EF%BC%9Aelement-form"><span class="nav-number">8.2.</span> <span class="nav-text">反向引用：element.form</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A8%E5%8D%95%E5%85%83%E7%B4%A0"><span class="nav-number">8.3.</span> <span class="nav-text">表单元素</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#input-%E5%92%8C-textarea"><span class="nav-number">8.3.1.</span> <span class="nav-text">input 和 textarea</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Colorfuls</p>
+  <div class="site-description" itemprop="description">前路浩浩荡荡，万事皆可期待。</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/maogecarry" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;maogecarry" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/02/23/%E6%B5%8F%E8%A7%88%E5%99%A8%EF%BC%9A%E6%96%87%E6%A1%A3%EF%BC%8C%E4%BA%8B%E4%BB%B6%EF%BC%8C%E6%8E%A5%E5%8F%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Colorfuls">
+      <meta itemprop="description" content="前路浩浩荡荡，万事皆可期待。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Colorfuls-Blogs">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          浏览器：文档，事件，接口
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-02-23 21:50:00 / 修改时间：21:24:09" itemprop="dateCreated datePublished" datetime="2021-02-23T21:50:00+08:00">2021-02-23</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="DOM-树"><a href="#DOM-树" class="headerlink" title="DOM 树"></a>DOM 树</h1><p>HTML 文档的主干是标签（tag）。</p>
+<p>根据文档对象模型（DOM），每个 HTML 标签都是一个对象。嵌套的标签是闭合标签的“子标签（children）”。标签内的文本也是一个对象。</p>
+<a id="more"></a>
+<p>所有这些对象都可以通过 JavaScript 来访问，我们可以使用它们来修改页面。</p>
+<p>一共有 <a target="_blank" rel="noopener" href="https://dom.spec.whatwg.org/#node">12 种节点类型</a>。实际上，我们通常用到的是其中的 4 种：</p>
+<ol>
+<li><code>document</code> — DOM 的“入口点”。</li>
+<li>元素节点 — HTML 标签，树构建块。</li>
+<li>文本节点 — 包含文本。</li>
+<li>注释 — 有时我们可以将一些信息放入其中，它不会显示，但 JS 可以从 DOM 中读取它。</li>
+</ol>
+<p><strong>DOM 集合是只读的</strong></p>
+<p>DOM 集合，甚至可以说本章中列出的 <strong>所有</strong> 导航（navigation）属性都是只读的。</p>
+<p>我们不能通过类似 <code>childNodes[i] = ...</code> 的操作来替换一个子节点。</p>
+<p>修改子节点需要使用其它方法。我们将会在下一章中看到它们。</p>
+<p><strong>DOM 集合是实时的</strong></p>
+<p>除小部分例外，几乎所有的 DOM 集合都是 <strong>实时</strong> 的。换句话说，它们反映了 DOM 的当前状态。</p>
+<p>如果我们保留一个对 <code>elem.childNodes</code> 的引用，然后向 DOM 中添加/移除节点，那么这些节点的更新会自动出现在集合中。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/dom-nodes#zong-jie">总结</a></h2><p>HTML/XML 文档在浏览器内均被表示为 DOM 树。</p>
+<ul>
+<li>标签（tag）成为元素节点，并形成文档结构。</li>
+<li>文本（text）成为文本节点。</li>
+<li>……等，HTML 中的所有东西在 DOM 中都有它的位置，甚至对注释也是如此。</li>
+</ul>
+<h1 id="遍历-DOM"><a href="#遍历-DOM" class="headerlink" title="遍历 DOM"></a>遍历 DOM</h1><p>DOM 让我们可以对元素和它们中的内容做任何事，但是首先我们需要获取到对应的 DOM 对象。</p>
+<p>对 DOM 的所有操作都是以 <code>document</code> 对象开始。它是 DOM 的主“入口点”。从它我们可以访问任何节点。</p>
+<p><strong>在 DOM 的世界中，<code>null</code> 就意味着“不存在”</strong></p>
+<p>在 DOM 中，<code>null</code> 值就意味着“不存在”或者“没有这个节点”。</p>
+<p><strong>DOM 集合是只读的</strong></p>
+<p><strong>DOM 集合是实时的</strong></p>
+<p><strong>不要使用</strong> <code>for..in</code> <strong>来遍历集合</strong></p>
+<h2 id="更多链接：表格"><a href="#更多链接：表格" class="headerlink" title="更多链接：表格"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/dom-navigation#dom-navigation-tables">更多链接：表格</a></h2><table> 元素支持 (除了上面给出的，之外) 以下这些属性:
+table.rows — <tr> 元素的集合。table.caption/tHead/tFoot — 引用元素 <caption>，<thead>，<tfoot>。table.tBodies — <tbody> 元素的集合（根据标准还有很多元素，但是这里至少会有一个 — 即使没有被写在 HTML 源文件中，浏览器也会将其放入 DOM 中）。
+
+<thead>，<tfoot>，<tbody> 元素提供了 rows 属性：
+tbody.rows — 表格内部 <tr> 元素的集合。
+
+<tr>：
+tr.cells — 在给定 <tr> 中的 <td> 和 <th> 单元格的集合。tr.sectionRowIndex — 给定的 <tr> 在封闭的 <thead>/<tbody>/<tfoot> 中的位置（索引）。tr.rowIndex — 在整个表格中 <tr> 的编号（包括表格的所有行）。
+
+<td> 和 <th>：
+td.cellIndex — 在封闭的 <tr> 中单元格的编号。
+
+<h2 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/dom-navigation#zong-jie">总结</a></h2><p>给定一个 DOM 节点，我们可以使用导航（navigation）属性访问其直接的邻居。</p>
+<p>这些属性主要分为两组：</p>
+<ul>
+<li>对于所有节点：<code>parentNode</code>，<code>childNodes</code>，<code>firstChild</code>，<code>lastChild</code>，<code>previousSibling</code>，<code>nextSibling</code>。</li>
+<li>仅对于元素节点：<code>parentElement</code>，<code>children</code>，<code>firstElementChild</code>，<code>lastElementChild</code>，<code>previousElementSibling</code>，<code>nextElementSibling</code>。</li>
+</ul>
+<p>某些类型的 DOM 元素，例如 table，提供了用于访问其内容的其他属性和集合。</p>
+<h1 id="搜索：getElement，querySelector"><a href="#搜索：getElement，querySelector" class="headerlink" title="搜索：getElement，querySelector"></a>搜索：getElement<em>，querySelector</em></h1><h2 id="document-getElementById-或者只使用-id"><a href="#document-getElementById-或者只使用-id" class="headerlink" title="document.getElementById 或者只使用 id"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/searching-elements-dom#documentgetelementbyid-huo-zhe-zhi-shi-yong-id">document.getElementById 或者只使用 id</a></h2><p>如果一个元素有 <code>id</code> 特性（attribute），那我们就可以使用 <code>document.getElementById(id)</code> 方法获取该元素，无论它在哪里。</p>
+<p><strong><code>id</code> 必须是唯一的</strong></p>
+<p><code>id</code> 必须是唯一的。在文档中，只能有一个元素带有给定的 <code>id</code>。</p>
+<p>如果有多个元素都带有同一个 <code>id</code>，那么使用它的方法的行为是不可预测的，例如 <code>document.getElementById</code> 可能会随机返回其中一个元素。因此，请遵守规则，保持 <code>id</code> 的唯一性。</p>
+<p><strong>只有 <code>document.getElementById</code>，没有 <code>anyElem.getElementById</code></strong></p>
+<p><code>getElementById</code> 方法只能被在 <code>document</code> 对象上调用。它会在整个文档中查找给定的 <code>id</code>。</p>
+<h2 id="querySelectorAll"><a href="#querySelectorAll" class="headerlink" title="querySelectorAll"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/searching-elements-dom#querySelectorAll">querySelectorAll</a></h2><p>到目前为止，最通用的方法是 <code>elem.querySelectorAll(css)</code>，它返回 <code>elem</code> 中与给定 CSS 选择器匹配的所有元素。</p>
+<h2 id="matches"><a href="#matches" class="headerlink" title="matches"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/searching-elements-dom#matches">matches</a></h2><p>之前的方法是搜索 DOM。</p>
+<p><a target="_blank" rel="noopener" href="http://dom.spec.whatwg.org/#dom-element-matches">elem.matches(css)</a> 不会查找任何内容，它只会检查 <code>elem</code> 是否与给定的 CSS 选择器匹配。它返回 <code>true</code> 或 <code>false</code>。</p>
+<h2 id="closest"><a href="#closest" class="headerlink" title="closest"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/searching-elements-dom#closest">closest</a></h2><p>元素的祖先（ancestor）是：父级，父级的父级，它的父级等。祖先们一起组成了从元素到顶端的父级链。</p>
+<p><code>elem.closest(css)</code> 方法会查找与 CSS 选择器匹配的最近的祖先。<code>elem</code> 自己也会被搜索。</p>
+<p>换句话说，方法 <code>closest</code> 在元素中得到了提升，并检查每个父级。如果它与选择器匹配，则停止搜索并返回该祖先。</p>
+<h2 id="总结-2"><a href="#总结-2" class="headerlink" title="总结"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/searching-elements-dom#zong-jie">总结</a></h2><p>目前为止，最常用的是 <code>querySelector</code> 和 <code>querySelectorAll</code>，但是 <code>getElement(s)By*</code> 可能会偶尔有用，或者可以在旧脚本中找到。</p>
+<p>此外：</p>
+<ul>
+<li><code>elem.matches(css)</code> 用于检查 <code>elem</code> 与给定的 CSS 选择器是否匹配。</li>
+<li><code>elem.closest(css)</code> 用于查找与给定 CSS 选择器相匹配的最近的祖先。<code>elem</code> 本身也会被检查。</li>
+</ul>
+<p>让我们在这里提一下另一种用来检查子级与父级之间关系的方法，因为它有时很有用：</p>
+<ul>
+<li>如果 <code>elemB</code> 在 <code>elemA</code> 内（<code>elemA</code> 的后代）或者 <code>elemA==elemB</code>，<code>elemA.contains(elemB)</code> 将返回 true。</li>
+</ul>
+<h1 id="节点属性：type，tag-和-content"><a href="#节点属性：type，tag-和-content" class="headerlink" title="节点属性：type，tag 和 content"></a>节点属性：type，tag 和 content</h1><h2 id="DOM-节点类"><a href="#DOM-节点类" class="headerlink" title="DOM 节点类"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/basic-dom-node-properties#dom-jie-dian-lei">DOM 节点类</a></h2><p>不同的 DOM 节点可能有不同的属性。例如，标签 <code>&lt;a&gt;</code> 相对应的元素节点具有链接相关的（link-related）属性，标签 <code>&lt;input&gt;</code> 相对应的元素节点具有与输入相关的属性，等。文本节点与元素节点不同。但是所有这些标签对应的 DOM 节点之间也存在共有的属性和方法，因为所有类型的 DOM 节点都形成了一个单一层次的结构（single hierarchy）。</p>
+<p>每个 DOM 节点都属于相应的内建类。</p>
+<p>层次结构（hierarchy）的根节点是 <a target="_blank" rel="noopener" href="https://dom.spec.whatwg.org/#eventtarget">EventTarget</a>，<a target="_blank" rel="noopener" href="http://dom.spec.whatwg.org/#interface-node">Node</a> 继承自它，其他 DOM 节点继承自 Node。</p>
+<p><img src="E:\Markdown图片\image-20210202215947121.png" alt="image-20210202215947121"></p>
+<h1 id="特性和属性（Attributes-and-properties）"><a href="#特性和属性（Attributes-and-properties）" class="headerlink" title="特性和属性（Attributes and properties）"></a>特性和属性（Attributes and properties）</h1><p>当浏览器加载页面时，它会“读取”（或者称之为：“解析”）HTML 并从中生成 DOM 对象。对于元素节点，大多数标准的 HTML 特性（attributes）会自动变成 DOM 对象的属性（properties）。</p>
+<h2 id="HTML-特性"><a href="#HTML-特性" class="headerlink" title="HTML 特性"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/dom-attributes-and-properties#html-te-xing">HTML 特性</a></h2><p>在 HTML 中，标签可能拥有特性（attributes）。当浏览器解析 HTML 文本，并根据标签创建 DOM 对象时，浏览器会辨别 <strong>标准的</strong> 特性并以此创建 DOM 属性。</p>
+<p>所以，当一个元素有 <code>id</code> 或其他 <strong>标准的</strong> 特性，那么就会生成对应的 DOM 属性。但是非 <strong>标准的</strong> 特性则不会。</p>
+<p>HTML 特性有以下几个特征：</p>
+<ul>
+<li>它们的名字是大小写不敏感的（<code>id</code> 与 <code>ID</code> 相同）。</li>
+<li>它们的值总是字符串类型的。</li>
+</ul>
+<h2 id="总结-3"><a href="#总结-3" class="headerlink" title="总结"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/dom-attributes-and-properties#zong-jie">总结</a></h2><ul>
+<li>特性（attribute）— 写在 HTML 中的内容。</li>
+<li>属性（property）— DOM 对象中的内容。</li>
+</ul>
+<p>简略的对比：</p>
+<table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="left">属性</th>
+<th align="left">特性</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">类型</td>
+<td align="left">任何值，标准的属性具有规范中描述的类型</td>
+<td align="left">字符串</td>
+</tr>
+<tr>
+<td align="left">名字</td>
+<td align="left">名字（name）是大小写敏感的</td>
+<td align="left">名字（name）是大小写不敏感的</td>
+</tr>
+</tbody></table>
+<h1 id="Window-大小和滚动"><a href="#Window-大小和滚动" class="headerlink" title="Window 大小和滚动"></a>Window 大小和滚动</h1><h2 id="窗口的-width-height"><a href="#窗口的-width-height" class="headerlink" title="窗口的 width/height"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/size-and-scroll-window#chuang-kou-de-widthheight">窗口的 width/height</a></h2><p>为了获取窗口（window）的宽度和高度，我们可以使用 <code>document.documentElement</code> 的 <code>clientWidth/clientHeight</code>：</p>
+<h2 id="滚动：scrollTo，scrollBy，scrollIntoView"><a href="#滚动：scrollTo，scrollBy，scrollIntoView" class="headerlink" title="滚动：scrollTo，scrollBy，scrollIntoView"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/size-and-scroll-window#window-scroll">滚动：scrollTo，scrollBy，scrollIntoView</a></h2><p>可以通过更改 <code>scrollTop/scrollLeft</code> 来滚动常规元素。</p>
+<p>我们可以使用 <code>document.documentElement.scrollTop/scrollLeft</code> 对页面进行相同的操作（Safari 除外，而应该使用 <code>document.body.scrollTop/Left</code> 代替）。</p>
+<p>方法 <code>scrollBy(x,y)</code> 将页面滚动至 <strong>相对于当前位置的 <code>(x, y)</code> 位置</strong>。例如，<code>scrollBy(0,10)</code> 会将页面向下滚动 <code>10px</code>。</p>
+<p>方法 <code>scrollTo(pageX,pageY)</code> 将页面滚动至 <strong>绝对坐标</strong>，使得可见部分的左上角具有相对于文档左上角的坐标 <code>(pageX, pageY)</code>。就像设置了 <code>scrollLeft/scrollTop</code> 一样。</p>
+<p>要滚动到最开始，我们可以使用 <code>scrollTo(0,0)</code>。</p>
+<h2 id="scrollIntoView"><a href="#scrollIntoView" class="headerlink" title="scrollIntoView"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/size-and-scroll-window#scrollintoview">scrollIntoView</a></h2><p>为了完整起见，让我们再介绍一种方法：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh/docs/Web/API/Element/scrollIntoView">elem.scrollIntoView(top)</a>。</p>
+<p>对 <code>elem.scrollIntoView(top)</code> 的调用将滚动页面以使 <code>elem</code> 可见。它有一个参数：</p>
+<ul>
+<li>如果 <code>top=true</code>（默认值），页面滚动，使 <code>elem</code> 出现在窗口顶部。元素的上边缘将与窗口顶部对齐。</li>
+<li>如果 <code>top=false</code>，页面滚动，使 <code>elem</code> 出现在窗口底部。元素的底部边缘将与窗口底部对齐。</li>
+</ul>
+<p>下面这个按钮会滚动页面，以使其自身定位在窗口顶部：</p>
+<p>this.scrollIntoView()</p>
+<p>下面这个按钮会滚动页面，以使其自身定位在窗口底部：</p>
+<p>this.scrollIntoView(false)</p>
+<h2 id="总结-4"><a href="#总结-4" class="headerlink" title="总结"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/size-and-scroll-window#zong-jie">总结</a></h2><p>几何：</p>
+<ul>
+<li><p>文档可见部分的 width/height（内容区域的 width/height）：<code>document.documentElement.clientWidth/clientHeight</code></p>
+</li>
+<li><p>整个文档的 width/height，其中包括滚动出去的部分：</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">let</span> scrollHeight <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">max</span><span class="token punctuation">(</span>
+  document<span class="token punctuation">.</span>body<span class="token punctuation">.</span>scrollHeight<span class="token punctuation">,</span>
+  document<span class="token punctuation">.</span>documentElement<span class="token punctuation">.</span>scrollHeight<span class="token punctuation">,</span>
+  document<span class="token punctuation">.</span>body<span class="token punctuation">.</span>offsetHeight<span class="token punctuation">,</span>
+  document<span class="token punctuation">.</span>documentElement<span class="token punctuation">.</span>offsetHeight<span class="token punctuation">,</span>
+  document<span class="token punctuation">.</span>body<span class="token punctuation">.</span>clientHeight<span class="token punctuation">,</span>
+  document<span class="token punctuation">.</span>documentElement<span class="token punctuation">.</span>clientHeight
+<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>滚动：</p>
+</li>
+<li><p>读取当前的滚动：<code>window.pageYOffset/pageXOffset</code>。</p>
+</li>
+<li><p>更改当前的滚动：</p>
+<ul>
+<li><code>window.scrollTo(pageX,pageY)</code> — 绝对坐标，</li>
+<li><code>window.scrollBy(x,y)</code> — 相对当前位置进行滚动，</li>
+<li><code>elem.scrollIntoView(top)</code> — 滚动以使 <code>elem</code> 可见（<code>elem</code> 与窗口的顶部/底部对齐）。</li>
+</ul>
+</li>
+</ul>
+<h1 id="创建自定义事件"><a href="#创建自定义事件" class="headerlink" title="创建自定义事件"></a>创建自定义事件</h1><p>我们不仅可以分配事件处理程序，还可以从 JavaScript 生成事件。</p>
+<p>自定义事件可用于创建“图形组件”。</p>
+<h2 id="事件构造器"><a href="#事件构造器" class="headerlink" title="事件构造器"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/dispatch-events#shi-jian-gou-zao-qi">事件构造器</a></h2><p>内建事件类形成一个层次结构（hierarchy），类似于 DOM 元素类。根是内建的 <a target="_blank" rel="noopener" href="http://www.w3.org/TR/dom/#event">Event</a> 类。</p>
+<p>我们可以像这样创建 <code>Event</code> 对象：</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">let</span> event <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Event</span><span class="token punctuation">(</span>type<span class="token punctuation">[</span><span class="token punctuation">,</span> options<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>参数：</p>
+<ul>
+<li><p><strong>type</strong> —— 事件类型，可以是像这样 <code>&quot;click&quot;</code> 的字符串，或者我们自己的像这样 <code>&quot;my-event&quot;</code> 的参数。</p>
+</li>
+<li><p><strong>options</strong> —— 具有两个可选属性的对象：</p>
+<ul>
+<li><code>bubbles: true/false</code> —— 如果为 <code>true</code>，那么事件会冒泡。</li>
+<li><code>cancelable: true/false</code> —— 如果为 <code>true</code>，那么“默认行为”就会被阻止。稍后我们会看到对于自定义事件，它意味着什么。</li>
+</ul>
+<p>默认情况下，以上两者都为 false：<code>&#123;bubbles: false, cancelable: false&#125;</code>。</p>
+</li>
+</ul>
+<h2 id="dispatchEvent"><a href="#dispatchEvent" class="headerlink" title="dispatchEvent"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/dispatch-events#dispatchevent">dispatchEvent</a></h2><p>事件对象被创建后，我们应该使用 <code>elem.dispatchEvent(event)</code> 调用在元素上“运行”它。</p>
+<p>然后，处理程序会对它做出反应，就好像它是一个常规的浏览器事件一样。如果事件是用 <code>bubbles</code> 标志创建的，那么它会冒泡。</p>
+<h1 id="表单属性和方法"><a href="#表单属性和方法" class="headerlink" title="表单属性和方法"></a>表单属性和方法</h1><p>表单（form）以及例如 <code>&lt;input&gt;</code> 的控件（control）元素有许多特殊的属性和事件。</p>
+<h2 id="导航：表单和元素"><a href="#导航：表单和元素" class="headerlink" title="导航：表单和元素"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/form-elements#dao-hang-biao-dan-he-yuan-su">导航：表单和元素</a></h2><p>文档中的表单是特殊集合 <code>document.forms</code> 的成员。</p>
+<p>这就是所谓的“命名的集合”：既是被命名了的，也是有序的。我们既可以使用名字，也可以使用在文档中的编号来获取表单。</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript">document<span class="token punctuation">.</span>forms<span class="token punctuation">.</span>my <span class="token operator">-</span> name<span class="token operator">=</span><span class="token string">"my"</span> 的表单
+document<span class="token punctuation">.</span>forms<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">-</span> 文档中的第一个表单<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>当我们有了一个表单时，其中的任何元素都可以通过命名的集合 <code>form.elements</code> 来获取到。</p>
+<h2 id="反向引用：element-form"><a href="#反向引用：element-form" class="headerlink" title="反向引用：element.form"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/form-elements#fan-xiang-yin-yong-elementform">反向引用：element.form</a></h2><p>对于任何元素，其对应的表单都可以通过 <code>element.form</code> 访问到。因此，表单引用了所有元素，元素也引用了表单。</p>
+<p>这是一张示意图：</p>
+<p><img src="E:\Markdown图片\image-20210221110537095.png" alt="image-20210221110537095"></p>
+<h2 id="表单元素"><a href="#表单元素" class="headerlink" title="表单元素"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/form-elements#biao-dan-yuan-su">表单元素</a></h2><p>让我们来谈谈表单控件。</p>
+<h3 id="input-和-textarea"><a href="#input-和-textarea" class="headerlink" title="input 和 textarea"></a><a target="_blank" rel="noopener" href="https://zh.javascript.info/form-elements#input-he-textarea">input 和 textarea</a></h3><p>我们可以通过 <code>input.value</code>（字符串）或 <code>input.checked</code>（布尔值）来访问复选框（checkbox）中的它们的 <code>value</code>。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" rel="tag"># 浏览器</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/02/06/javaScript%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="prev" title="javaScript学习笔记">
+                  <i class="fa fa-chevron-left"></i> javaScript学习笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/03/02/%E9%80%92%E5%BD%92%E4%BB%8E%E5%A4%A7%E5%88%B0%E5%B0%8F%E6%8E%92%E5%88%97%E7%9A%84%E6%95%B0%E7%BB%84/" rel="next" title="递归创建从大到小排列的数组">
+                  递归创建从大到小排列的数组 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Colorfuls</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共18.6k字</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+    <div class="pjax">
+
+
+  
+    </div>
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+</body>
+</html>
