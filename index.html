@@ -254,7 +254,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-03-25 14:14:09" itemprop="dateModified" datetime="2021-03-25T14:14:09+08:00">2021-03-25</time>
+        <time title="修改时间：2021-03-25 14:44:41" itemprop="dateModified" datetime="2021-03-25T14:44:41+08:00">2021-03-25</time>
       </span>
 
   
@@ -269,208 +269,14 @@
     <div class="post-body" itemprop="articleBody">
           <h1 id="Vue查漏补缺"><a href="#Vue查漏补缺" class="headerlink" title="Vue查漏补缺"></a>Vue查漏补缺</h1><ol>
 <li><h2 id="data为什么被定义成函数"><a href="#data为什么被定义成函数" class="headerlink" title="data为什么被定义成函数"></a>data为什么被定义成函数</h2><p>避免组件中的数据互相影响。同一个组件被复用多次会创建多个实例，如果data是一个对象的话，这些实例用的是同一个构造函数。为了保证组件的数据独立，要求每个组件都必须通过data函数返回一个对象作为组件的状态。</p>
-</li>
-<li><h2 id="vue组件之间的传递分类："><a href="#vue组件之间的传递分类：" class="headerlink" title="vue组件之间的传递分类："></a>vue组件之间的传递分类：</h2><ol>
-<li>父向子传递:props</li>
-<li>子向父传递：$emit</li>
-<li>兄弟之间传递：借助中间代理：emit,$on</li>
-<li>祖先传给孙子：provide,inject</li>
-</ol>
-</li>
-<li><h2 id="v-model中的实现原理及如何自定义v-model"><a href="#v-model中的实现原理及如何自定义v-model" class="headerlink" title="v-model中的实现原理及如何自定义v-model"></a>v-model中的实现原理及如何自定义v-model</h2><p>v-model可以看成是value+input方法的语法糖(组件)。原生的v-model，会根据标签的不同生成不同的事件与属性。</p>
-<p>自定义:自己写model属性，里面放上Prop和event</p>
-</li>
-<li><h2 id="Vue性能优化"><a href="#Vue性能优化" class="headerlink" title="Vue性能优化"></a>Vue性能优化</h2><h5 id="编码优化"><a href="#编码优化" class="headerlink" title="编码优化"></a>编码优化</h5><ul>
-<li>事件代理</li>
-<li>keep-alive</li>
-<li>拆分组件</li>
-<li>key保证唯一性</li>
-<li>路由懒加载、异步组件</li>
-<li>防抖节流</li>
-</ul>
-<h5 id="Vue加载性能优化"><a href="#Vue加载性能优化" class="headerlink" title="Vue加载性能优化"></a>Vue加载性能优化</h5><ul>
-<li>第三方模块按需导入（babel-plugin-component)</li>
-<li>图片懒加载</li>
-</ul>
-<p>用户体验</p>
-<ul>
-<li>app-skeleton 骨架屏</li>
-<li>shellap p壳</li>
-<li>pwa</li>
-</ul>
-<p>SEO优化</p>
-<ul>
-<li>预渲染</li>
-</ul>
-</li>
-<li><h2 id="Computed、watch和method"><a href="#Computed、watch和method" class="headerlink" title="Computed、watch和method"></a>Computed、watch和method</h2><p><strong>computed</strong>：默认computed也是一个watcher具备缓存,只有当依赖的数据变化时才会计算，当数据没有变化时，它会读取缓存数据。如果一个数据依赖于其他数据，使用computed</p>
-<p><strong>watch</strong>:每次都需要执行函数。watch更适用于数据变化时的异步操作。如果需要在某个数据变化时做一些事情，使用watch。</p>
-<p><strong>method</strong>:只要把方法用到模板上了，每次一变化就会重新渲染视图，性能开销大。</p>
-</li>
-<li><h2 id="vue中的watch监听数据变化"><a href="#vue中的watch监听数据变化" class="headerlink" title="vue中的watch监听数据变化"></a>vue中的watch监听数据变化</h2><ol>
-<li><h3 id="watch使用的几种方法"><a href="#watch使用的几种方法" class="headerlink" title="watch使用的几种方法"></a>watch使用的几种方法</h3><ol>
-<li><p>通过watch监听data数据的变化，数据发生变化时，就会打印当前的值</p>
-<pre class="line-numbers language-none"><code class="language-none">watch: &#123;
-    data(val, newval) &#123;
-        console.log(val)
-        console.log(newval)
-    &#125;
-  &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
-<li><p>通过watch监听docData数据的变化，数据发生变化时，this,change_number++(使用深度监听)</p>
-<pre class="line-numbers language-none"><code class="language-none">watch: &#123;
-    docData: &#123;
-      handler(newVal) &#123;
-        this.change_number++
-      &#125;,
-      deep: true
-    &#125;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
-<li><p>通过watch监听data数据的变化，数据发生变化时,执行changeData方法</p>
-<pre class="line-numbers language-none"><code class="language-none">watch: &#123;
-    data： &#39;changeData&#39;  &#x2F;&#x2F; 值可以为methods的方法名
-&#125;，
-methods: &#123;
-      changeData(curVal,oldVal)&#123;
-    　　　 conosle.log(curVal,oldVal)
-　　&#125;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h2></li>
-</ol>
-</li>
-</ol>
-</li>
-</ol>
-<h3 id="生命周期图示"><a href="#生命周期图示" class="headerlink" title="生命周期图示"></a>生命周期图示</h3><p><img src="https://cn.vuejs.org/images/lifecycle.png" alt="Vue 实例生命周期"></p>
-<ul>
-<li><h4 id="beforeCreate"><a href="#beforeCreate" class="headerlink" title="beforeCreate"></a>beforeCreate</h4><ul>
-<li>类型：Function</li>
-<li>作用：在实例初始化之后，数据观测（data observer）和event/watcher事件配置之前被调用</li>
-</ul>
-</li>
-<li><h4 id="created"><a href="#created" class="headerlink" title="created"></a>created</h4><ul>
-<li>类型：Function</li>
-<li>作用：在实例创建完成后被立即调用。在这一步，实例已完成以下的配置：数据观测（data observer），property和方法的运算，watch/event事件回调。</li>
-</ul>
-</li>
-<li><h4 id="beforeMount"><a href="#beforeMount" class="headerlink" title="beforeMount"></a>beforeMount</h4><ul>
-<li>类型：Function</li>
-<li>作用：在挂载开始之前被调用：相关的render函数首次被调用。</li>
-</ul>
-</li>
-<li><h4 id="mounted"><a href="#mounted" class="headerlink" title="mounted"></a>mounted</h4><ul>
-<li>类型：Function</li>
-<li>作用：实例被挂载后调用，这时el被新创建的vm.$el替换了。</li>
-</ul>
-</li>
-<li><h4 id="beforeUpdate"><a href="#beforeUpdate" class="headerlink" title="beforeUpdate"></a>beforeUpdate</h4><ul>
-<li>类型：Function</li>
-<li>作用：数据更新时调用，发生在虚拟DOM打补丁之前。</li>
-</ul>
-</li>
-<li><h4 id="updated"><a href="#updated" class="headerlink" title="updated"></a>updated</h4><ul>
-<li>类型：Function</li>
-<li>作用：由于数据更改导致的虚拟DOM重新渲染和打补丁，在这之后回调用该钩子。</li>
-</ul>
-</li>
-<li><h4 id="beforeDestroy"><a href="#beforeDestroy" class="headerlink" title="beforeDestroy"></a>beforeDestroy</h4><ul>
-<li>类型：Function</li>
-<li>作用：实例销毁之前调用。在这一步实例仍然完全可用。</li>
-</ul>
-</li>
-<li><h4 id="destroyed"><a href="#destroyed" class="headerlink" title="destroyed"></a>destroyed</h4><ul>
-<li>类型：Function</li>
-<li>作用：实例销毁后调用。解绑Vue实例的所用指令，移除所有事件监听器。</li>
-</ul>
-</li>
-</ul>
-<h2 id="组件传值"><a href="#组件传值" class="headerlink" title="组件传值"></a>组件传值</h2><h3 id="provide-inject"><a href="#provide-inject" class="headerlink" title="provide/inject"></a>provide/inject</h3><ul>
-<li><h5 id="类型："><a href="#类型：" class="headerlink" title="类型："></a>类型：</h5><ul>
-<li><strong>provide</strong>：Object | () =&gt; Object</li>
-<li><strong>inject</strong>：Array<string> | {[key: string] : string | Symbol | Object}</li>
-</ul>
-</li>
-<li><h5 id="作用："><a href="#作用：" class="headerlink" title="作用："></a>作用：</h5><ul>
-<li>provide选项应该是一个对象或返回一个对象的函数。</li>
-<li>inject选项应该是：<ul>
-<li>一个字符串数组或</li>
-<li>一个对象，对象的key是本地的绑定名，value是：<ul>
-<li>在可用的注入内容中搜索用的key（字符串或Symbol），或</li>
-<li>一个对象，该对象的：<ul>
-<li>from property是在可用的注入内容中搜索有用的key</li>
-<li>default property是降级情况下使用的value</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="model"><a href="#model" class="headerlink" title="model"></a>model</h2><ul>
-<li>类型：{prop?: string , event ?:string}</li>
-<li>作用：允许一个自定义组件在使用<code>v-model</code>时定制prop和event。默认情况下，一个组件上的v-model会把<code>value</code>用作prop且把<strong>input</strong>用作event，但是一些输入类型比如单选框和复选框按钮可能想使用 <code>value</code> prop 来达到不同的目的。使用 <code>model</code> 选项可以回避这些情况产生的冲突。</li>
-</ul>
-<p><code>model</code> 接受有两个属性：</p>
-<ul>
-<li>props 代替原来 <code>value</code> 的值。</li>
-<li>event 代替原本 <code>input</code> 出发的事件。</li>
-</ul>
-<p><strong>子组件</strong></p>
-<pre class="line-numbers language-vue" data-language="vue"><code class="language-vue">&lt;template&gt;
-   &lt;div v-if&#x3D;&quot;show&quot;&gt;
-      &lt;div&gt;
-         &lt;p&gt;定制 v-model&lt;&#x2F;p&gt;
-        &lt;button @click&#x3D;&#39;close&#39;&gt;关闭组件&lt;&#x2F;button&gt;
-      &lt;&#x2F;div&gt;
-   &lt;&#x2F;div&gt;
-&lt;&#x2F;template&gt;
-
-&lt;script&gt;
-export default &#123;
-  model: &#123;
-    prop: &#39;show&#39;,
-    event: &#39;close&#39;
-  &#125;,
-  props: [&#39;show&#39;],
-  methods: &#123;
-    close () &#123;
-      this.$emit(&#39;close&#39;,false)
-    &#125;
-  &#125;
-&#125;
-&lt;&#x2F;script&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><strong>父组件</strong></p>
-<pre class="line-numbers language-vue" data-language="vue"><code class="language-vue">&lt;template&gt;
-  &lt;div&gt;
-    &lt;button @click&#x3D;&quot;show&#x3D;true&quot;&gt;打开model&lt;&#x2F;button&gt;
-    &lt;child v-model&#x3D;&quot;show&quot; &gt;&lt;&#x2F;child&gt;
-    &lt;!-- 等同于 --&gt;
-    &lt;child :show&#x3D;&#39;show&#39; @close&#x3D;&quot;show &#x3D; $event&quot;&gt;&lt;&#x2F;child&gt;
-  &lt;&#x2F;div&gt;
-&lt;&#x2F;template&gt;
-
-&lt;script&gt;
-  import Child from &#39;.&#x2F;child&#39;
-  export default &#123;
-    components: &#123;
-      Child
-    &#125;,
-    data () &#123;
-      return &#123;
-        show: false
-      &#125;
-    &#125;
-  &#125;
-&lt;&#x2F;script&gt;
-
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<ol>
-<li>当父组件点击 打开model 按钮的时候，内部的 show 属性变为了 true, 这时因为子组件的显示与隐藏是根据 props 里面的 show 来确定的， 子组件将会显示。</li>
-<li>点击子组件的 关闭组件 按钮, 出发了 close 事件，这个事件中将会像父级暴露一个 close 方法，并传递一个 false 参数。</li>
-<li>父级触发 close 方法，改变 show 的值.</li>
-</ol>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/03/23/Vue%E6%9F%A5%E6%BC%8F%E8%A1%A5%E7%BC%BA/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
