@@ -23,18 +23,21 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","version":"8.2.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
   </script>
-<meta name="description" content="前路浩浩荡荡，万事皆可期待。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Colorfuls-Blogs">
-<meta property="og:url" content="http://example.com/tags/front/index.html">
+<meta name="description" content="JS问题function Bar() &amp;#123;   return   &amp;#123;     a: 1   &amp;#125; &amp;#125; const f &#x3D; Bar() console.log(f.a) 输出 error，因为return后没有值，即使格式化也没有用，因此下方的Object和return没有关联">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Js代码题">
+<meta property="og:url" content="http://example.com/2021/03/26/Js%E4%BB%A3%E7%A0%81%E9%A2%98/index.html">
 <meta property="og:site_name" content="Colorfuls-Blogs">
-<meta property="og:description" content="前路浩浩荡荡，万事皆可期待。">
+<meta property="og:description" content="JS问题function Bar() &amp;#123;   return   &amp;#123;     a: 1   &amp;#125; &amp;#125; const f &#x3D; Bar() console.log(f.a) 输出 error，因为return后没有值，即使格式化也没有用，因此下方的Object和return没有关联">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-03-26T06:46:50.000Z">
+<meta property="article:modified_time" content="2021-03-26T06:51:03.919Z">
 <meta property="article:author" content="Colorfuls">
+<meta property="article:tag" content="JavaScript">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/tags/front/">
+<link rel="canonical" href="http://example.com/2021/03/26/Js%E4%BB%A3%E7%A0%81%E9%A2%98/">
 
 
 <script data-pjax class="page-configurations">
@@ -42,11 +45,11 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
-<title>标签: front | Colorfuls-Blogs</title>
+<title>Js代码题 | Colorfuls-Blogs</title>
   
 
 
@@ -147,7 +150,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -160,6 +163,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#JS%E9%97%AE%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">JS问题</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -213,70 +217,95 @@
 </noscript>
 
 
-    <div class="main-inner tag posts-collapse">
+    <div class="main-inner post posts-expand">
 
 
   
-  
-  
-  <div class="post-block">
-    <div class="post-content">
-      <div class="collection-title">
-        <h2 class="collection-header">front
-          <small>标签</small>
-        </h2>
-      </div>
 
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/26/Js%E4%BB%A3%E7%A0%81%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Colorfuls">
+      <meta itemprop="description" content="前路浩浩荡荡，万事皆可期待。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Colorfuls-Blogs">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Js代码题
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
       
-    <div class="collection-year">
-      <span class="collection-header">2021</span>
+
+      <time title="创建时间：2021-03-26 14:46:50 / 修改时间：14:51:03" itemprop="dateCreated datePublished" datetime="2021-03-26T14:46:50+08:00">2021-03-26</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="JS问题"><a href="#JS问题" class="headerlink" title="JS问题"></a>JS问题</h2><pre class="line-numbers language-none"><code class="language-none">function Bar() &#123;
+  return
+  &#123;
+    a: 1
+  &#125;
+&#125;
+const f &#x3D; Bar()
+console.log(f.a)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>输出 error，因为<code>return</code>后没有值，即使格式化也没有用，因此下方的<code>Object</code>和<code>return</code>没有关联</p>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-03-07T11:03:00+08:00"
-              content="2021-03-07">
-          03-07
-        </time>
-      </div>
+    
+    
+    
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/03/07/%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E6%95%B4%E7%90%86/" itemprop="url">
-            <span itemprop="name">前端基础知识</span>
-          </a>
-      </div>
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          </div>
 
-      
-    </header>
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/03/23/Vue%E6%9F%A5%E6%BC%8F%E8%A1%A5%E7%BC%BA/" rel="prev" title="Vue查漏补缺">
+                  <i class="fa fa-chevron-left"></i> Vue查漏补缺
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
   </article>
+</div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-03-07T11:03:00+08:00"
-              content="2021-03-07">
-          03-07
-        </time>
-      </div>
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/03/07/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98/" itemprop="url">
-            <span itemprop="name">前端面试题</span>
-          </a>
-      </div>
 
-      
-    </header>
-  </article>
 
-    </div>
-  </div>
-  
-  
-  
+
 
 
 <script>
