@@ -23,30 +23,33 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","version":"8.2.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
   </script>
-<meta name="description" content="前路浩浩荡荡，万事皆可期待。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Colorfuls-Blogs">
-<meta property="og:url" content="http://example.com/index.html">
+<meta name="description" content="css 布局问题让一个块级元素垂直居中的方法第一种方法 利用弹性布局实现，在父容器中添加 .out &amp;#123;   width: 500px;   height: 500px;   background-color: skyblue;   display: flex;   align-items: center; &#x2F;*垂直居中*&#x2F;   &#x2F;*justify-content: center;*&#x2F; &#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="css布局问题">
+<meta property="og:url" content="http://example.com/2021/04/05/css%E5%B8%83%E5%B1%80%E9%97%AE%E9%A2%98/index.html">
 <meta property="og:site_name" content="Colorfuls-Blogs">
-<meta property="og:description" content="前路浩浩荡荡，万事皆可期待。">
+<meta property="og:description" content="css 布局问题让一个块级元素垂直居中的方法第一种方法 利用弹性布局实现，在父容器中添加 .out &amp;#123;   width: 500px;   height: 500px;   background-color: skyblue;   display: flex;   align-items: center; &#x2F;*垂直居中*&#x2F;   &#x2F;*justify-content: center;*&#x2F; &#x2F;">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-04-05T06:59:37.000Z">
+<meta property="article:modified_time" content="2021-04-05T07:30:45.793Z">
 <meta property="article:author" content="Colorfuls">
+<meta property="article:tag" content="css">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/">
+<link rel="canonical" href="http://example.com/2021/04/05/css%E5%B8%83%E5%B1%80%E9%97%AE%E9%A2%98/">
 
 
 <script data-pjax class="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
-<title>Colorfuls-Blogs</title>
+<title>css布局问题 | Colorfuls-Blogs</title>
   
 
 
@@ -147,7 +150,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -160,6 +163,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#css-%E5%B8%83%E5%B1%80%E9%97%AE%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">css 布局问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A9%E4%B8%80%E4%B8%AA%E5%9D%97%E7%BA%A7%E5%85%83%E7%B4%A0%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">1.1.</span> <span class="nav-text">让一个块级元素垂直居中的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E7%A7%8D%E6%96%B9%E6%B3%95"><span class="nav-number">1.1.1.</span> <span class="nav-text">第一种方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E7%A7%8D%E6%96%B9%E6%B3%95"><span class="nav-number">1.1.2.</span> <span class="nav-text">第二种方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E7%A7%8D%E6%96%B9%E6%B3%95"><span class="nav-number">1.1.3.</span> <span class="nav-text">第三种方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E7%A7%8D%E6%96%B9%E6%B3%95"><span class="nav-number">1.1.4.</span> <span class="nav-text">第四种方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A9%E4%B8%80%E4%B8%AA%E5%85%83%E7%B4%A0%E6%B0%B4%E5%B9%B3%E5%B1%85%E4%B8%AD"><span class="nav-number">1.2.</span> <span class="nav-text">让一个元素水平居中</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%EF%BC%9A%E8%A1%8C%E5%86%85%E5%85%83%E7%B4%A0"><span class="nav-number">1.2.1.</span> <span class="nav-text">一：行内元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%EF%BC%9A%E9%87%87%E7%94%A8-margin"><span class="nav-number">1.2.2.</span> <span class="nav-text">二：采用 margin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%EF%BC%9A%E9%87%87%E7%94%A8-table-%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.2.3.</span> <span class="nav-text">三：采用 table 实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%EF%BC%9A%E5%88%A9%E7%94%A8%E7%88%B6%E5%85%83%E7%B4%A0%E7%9A%84-position"><span class="nav-number">1.2.4.</span> <span class="nav-text">四：利用父元素的 position</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E5%85%83%E7%B4%A0%E6%B0%B4%E5%B9%B3%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD"><span class="nav-number">1.3.</span> <span class="nav-text">实现元素水平垂直居中</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E7%BB%9D%E5%AF%B9%E5%AE%9A%E4%BD%8D%EF%BC%8C%E5%88%A9%E7%94%A8%E8%B4%9F%E8%BE%B9%E8%B7%9D"><span class="nav-number">1.3.1.</span> <span class="nav-text">1.绝对定位，利用负边距</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E7%BB%9D%E5%AF%B9%E5%AE%9A%E4%BD%8D%EF%BC%8Cmargin-auto"><span class="nav-number">1.3.2.</span> <span class="nav-text">2.绝对定位，margin: auto</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Flex"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.Flex</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Transform"><span class="nav-number">1.3.4.</span> <span class="nav-text">4.Transform</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-Table"><span class="nav-number">1.3.5.</span> <span class="nav-text">5.Table</span></a></li></ol></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -213,16 +217,17 @@
 </noscript>
 
 
-    <div class="main-inner index posts-expand">
+    <div class="main-inner post posts-expand">
 
-    
+
+  
 
 
 <div class="post-block">
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/05/css%E5%B8%83%E5%B1%80%E9%97%AE%E9%A2%98/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -235,9 +240,9 @@
       <meta itemprop="name" content="Colorfuls-Blogs">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/04/05/css%E5%B8%83%E5%B1%80%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">css布局问题</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          css布局问题
+        </h1>
 
         <div class="post-meta-container">
           <div class="post-meta">
@@ -261,7 +266,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="css-布局问题"><a href="#css-布局问题" class="headerlink" title="css 布局问题"></a>css 布局问题</h1><h2 id="让一个块级元素垂直居中的方法"><a href="#让一个块级元素垂直居中的方法" class="headerlink" title="让一个块级元素垂直居中的方法"></a>让一个块级元素垂直居中的方法</h2><h3 id="第一种方法"><a href="#第一种方法" class="headerlink" title="第一种方法"></a>第一种方法</h3><ul>
+        <h1 id="css-布局问题"><a href="#css-布局问题" class="headerlink" title="css 布局问题"></a>css 布局问题</h1><h2 id="让一个块级元素垂直居中的方法"><a href="#让一个块级元素垂直居中的方法" class="headerlink" title="让一个块级元素垂直居中的方法"></a>让一个块级元素垂直居中的方法</h2><h3 id="第一种方法"><a href="#第一种方法" class="headerlink" title="第一种方法"></a>第一种方法</h3><ul>
 <li><p>利用弹性布局实现，在父容器中添加</p>
 <pre class="line-numbers language-css" data-language="css"><code class="language-css"><span class="token selector">.out</span> <span class="token punctuation">&#123;</span>
   <span class="token property">width</span><span class="token punctuation">:</span> 500px<span class="token punctuation">;</span>
@@ -406,7 +411,6 @@
   <span class="token property">vertical-align</span><span class="token punctuation">:</span> middle<span class="token punctuation">;</span>
   <span class="token property">display</span><span class="token punctuation">:</span> teble-cell<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-      
     </div>
 
     
@@ -414,728 +418,25 @@
     
 
     <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
+          <div class="post-tags">
+              <a href="/tags/css/" rel="tag"># css</a>
+          </div>
 
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/26/Js%E4%BB%A3%E7%A0%81%E9%A2%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Colorfuls">
-      <meta itemprop="description" content="前路浩浩荡荡，万事皆可期待。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Colorfuls-Blogs">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/03/26/Js%E4%BB%A3%E7%A0%81%E9%A2%98/" class="post-title-link" itemprop="url">Js代码题</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-03-26 14:46:50" itemprop="dateCreated datePublished" datetime="2021-03-26T14:46:50+08:00">2021-03-26</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-04-05 15:30:59" itemprop="dateModified" datetime="2021-04-05T15:30:59+08:00">2021-04-05</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="JS-问题"><a href="#JS-问题" class="headerlink" title="JS 问题"></a>JS 问题</h2><pre class="line-numbers language-none"><code class="language-none">function Bar() &#123;
-  return
-  &#123;
-    a: 1
-  &#125;
-&#125;
-const f &#x3D; Bar()
-console.log(f.a)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>输出 error，因为<code>return</code>后没有值，即使格式化也没有用，因此下方的<code>Object</code>和<code>return</code>没有关联</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/03/26/Js%E4%BB%A3%E7%A0%81%E9%A2%98/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
         
-      
-    </div>
 
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/23/Vue%E6%9F%A5%E6%BC%8F%E8%A1%A5%E7%BC%BA/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Colorfuls">
-      <meta itemprop="description" content="前路浩浩荡荡，万事皆可期待。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Colorfuls-Blogs">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/03/23/Vue%E6%9F%A5%E6%BC%8F%E8%A1%A5%E7%BC%BA/" class="post-title-link" itemprop="url">Vue查漏补缺</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-03-23 15:43:12" itemprop="dateCreated datePublished" datetime="2021-03-23T15:43:12+08:00">2021-03-23</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-03-29 09:53:55" itemprop="dateModified" datetime="2021-03-29T09:53:55+08:00">2021-03-29</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="Vue-查漏补缺"><a href="#Vue-查漏补缺" class="headerlink" title="Vue 查漏补缺"></a>Vue 查漏补缺</h1><ol>
-<li><h2 id="data-为什么被定义成函数"><a href="#data-为什么被定义成函数" class="headerlink" title="data 为什么被定义成函数"></a>data 为什么被定义成函数</h2><p>避免组件中的数据互相影响。同一个组件被复用多次会创建多个实例，如果 data 是一个对象的话，这些实例用的是同一个构造函数。为了保证组件的数据独立，要求每个组件都必须通过 data 函数返回一个对象作为组件的状态。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/03/23/Vue%E6%9F%A5%E6%BC%8F%E8%A1%A5%E7%BC%BA/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/03/26/Js%E4%BB%A3%E7%A0%81%E9%A2%98/" rel="prev" title="Js代码题">
+                  <i class="fa fa-chevron-left"></i> Js代码题
+                </a>
             </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/22/%E5%8E%9F%E5%9E%8B%E9%93%BE%E4%B8%8E%E7%BB%A7%E6%89%BF/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Colorfuls">
-      <meta itemprop="description" content="前路浩浩荡荡，万事皆可期待。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Colorfuls-Blogs">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/03/22/%E5%8E%9F%E5%9E%8B%E9%93%BE%E4%B8%8E%E7%BB%A7%E6%89%BF/" class="post-title-link" itemprop="url">原型链与继承</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2021-03-22 16:44:00 / 修改时间：18:33:39" itemprop="dateCreated datePublished" datetime="2021-03-22T16:44:00+08:00">2021-03-22</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="原型链与继承"><a href="#原型链与继承" class="headerlink" title="原型链与继承"></a>原型链与继承</h2><p><strong>概念</strong><br>原型链是一种机制，指的是 JavaScript 每个对象<code>包括原型对象</code>都有一个内置的[[proto]]属性指向创建它的函数对象的原型对象，即 prototype 属性。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/03/22/%E5%8E%9F%E5%9E%8B%E9%93%BE%E4%B8%8E%E7%BB%A7%E6%89%BF/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
+            <div class="post-nav-item">
             </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
+          </div>
     </footer>
   </article>
 </div>
 
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/22/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Colorfuls">
-      <meta itemprop="description" content="前路浩浩荡荡，万事皆可期待。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Colorfuls-Blogs">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/03/22/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">数据结构和算法</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-03-22 16:44:00" itemprop="dateCreated datePublished" datetime="2021-03-22T16:44:00+08:00">2021-03-22</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-04-05 10:54:13" itemprop="dateModified" datetime="2021-04-05T10:54:13+08:00">2021-04-05</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="数据结构和算法"><a href="#数据结构和算法" class="headerlink" title="数据结构和算法"></a>数据结构和算法</h2><h3 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h3><ol>
-<li>栈是一个后进先出的数据结构</li>
-<li>JavaScript 中没有栈，但可以用 Array 实现栈的所有功能</li>
-<li>栈常用操作:push、pop、stack[stack.length-1]
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/03/22/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/07/%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E6%95%B4%E7%90%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Colorfuls">
-      <meta itemprop="description" content="前路浩浩荡荡，万事皆可期待。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Colorfuls-Blogs">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/03/07/%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E6%95%B4%E7%90%86/" class="post-title-link" itemprop="url">前端基础知识</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-03-07 11:03:00" itemprop="dateCreated datePublished" datetime="2021-03-07T11:03:00+08:00">2021-03-07</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-03-17 11:37:41" itemprop="dateModified" datetime="2021-03-17T11:37:41+08:00">2021-03-17</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="前端基础知识整理"><a href="#前端基础知识整理" class="headerlink" title="前端基础知识整理"></a>前端基础知识整理</h2><h3 id="1-typeof返回的数据类型"><a href="#1-typeof返回的数据类型" class="headerlink" title="1.typeof返回的数据类型"></a>1.typeof返回的数据类型</h3><p>typeof返回的数据类型包括undefined、 string、number、boolean、symbol、Object、Function类型</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/03/07/%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E6%95%B4%E7%90%86/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/07/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Colorfuls">
-      <meta itemprop="description" content="前路浩浩荡荡，万事皆可期待。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Colorfuls-Blogs">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/03/07/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98/" class="post-title-link" itemprop="url">前端面试题</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-03-07 11:03:00" itemprop="dateCreated datePublished" datetime="2021-03-07T11:03:00+08:00">2021-03-07</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-03-20 20:54:55" itemprop="dateModified" datetime="2021-03-20T20:54:55+08:00">2021-03-20</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="前端面试题"><a href="#前端面试题" class="headerlink" title="前端面试题"></a>前端面试题</h2><h3 id="window-对象-和-document-对象"><a href="#window-对象-和-document-对象" class="headerlink" title="window 对象 和 document 对象"></a>window 对象 和 document 对象</h3><p>window 对象：代表浏览器中一个打开的窗口<br>document 对象：代表整个 HTML 文档，可以用来访问页面中的所有元素，且每个载入浏览器的 HTML 文档都是 document 对象<br>document 对象是 window 对象的一部分，可以有 window. document 来访问</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/03/07/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/02/%E9%80%92%E5%BD%92%E4%BB%8E%E5%A4%A7%E5%88%B0%E5%B0%8F%E6%8E%92%E5%88%97%E7%9A%84%E6%95%B0%E7%BB%84/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Colorfuls">
-      <meta itemprop="description" content="前路浩浩荡荡，万事皆可期待。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Colorfuls-Blogs">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/03/02/%E9%80%92%E5%BD%92%E4%BB%8E%E5%A4%A7%E5%88%B0%E5%B0%8F%E6%8E%92%E5%88%97%E7%9A%84%E6%95%B0%E7%BB%84/" class="post-title-link" itemprop="url">递归创建从大到小排列的数组</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-03-02 15:27:00" itemprop="dateCreated datePublished" datetime="2021-03-02T15:27:00+08:00">2021-03-02</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-03-03 21:31:52" itemprop="dateModified" datetime="2021-03-03T21:31:52+08:00">2021-03-03</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="使用递归创建从大到小排列的数组"><a href="#使用递归创建从大到小排列的数组" class="headerlink" title="使用递归创建从大到小排列的数组"></a>使用递归创建从大到小排列的数组</h3><pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">function</span> <span class="token function">countdown</span><span class="token punctuation">(</span><span class="token parameter">n</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-  <span class="token keyword">if</span> <span class="token punctuation">(</span>n <span class="token operator">&lt;</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">return</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
-  <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">const</span> arr <span class="token operator">=</span> <span class="token function">countdown</span><span class="token punctuation">(</span>n <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span>
-    arr<span class="token punctuation">.</span><span class="token function">unshift</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span>
-    <span class="token keyword">return</span> arr
-  <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/03/02/%E9%80%92%E5%BD%92%E4%BB%8E%E5%A4%A7%E5%88%B0%E5%B0%8F%E6%8E%92%E5%88%97%E7%9A%84%E6%95%B0%E7%BB%84/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/02/23/%E6%B5%8F%E8%A7%88%E5%99%A8%EF%BC%9A%E6%96%87%E6%A1%A3%EF%BC%8C%E4%BA%8B%E4%BB%B6%EF%BC%8C%E6%8E%A5%E5%8F%A3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Colorfuls">
-      <meta itemprop="description" content="前路浩浩荡荡，万事皆可期待。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Colorfuls-Blogs">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/02/23/%E6%B5%8F%E8%A7%88%E5%99%A8%EF%BC%9A%E6%96%87%E6%A1%A3%EF%BC%8C%E4%BA%8B%E4%BB%B6%EF%BC%8C%E6%8E%A5%E5%8F%A3/" class="post-title-link" itemprop="url">浏览器：文档，事件，接口</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-02-23 21:50:00" itemprop="dateCreated datePublished" datetime="2021-02-23T21:50:00+08:00">2021-02-23</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-03-23 17:49:23" itemprop="dateModified" datetime="2021-03-23T17:49:23+08:00">2021-03-23</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="DOM-树"><a href="#DOM-树" class="headerlink" title="DOM 树"></a>DOM 树</h1><p>HTML 文档的主干是标签（tag）。</p>
-<p>根据文档对象模型（DOM），每个 HTML 标签都是一个对象。嵌套的标签是闭合标签的“子标签（children）”。标签内的文本也是一个对象。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/02/23/%E6%B5%8F%E8%A7%88%E5%99%A8%EF%BC%9A%E6%96%87%E6%A1%A3%EF%BC%8C%E4%BA%8B%E4%BB%B6%EF%BC%8C%E6%8E%A5%E5%8F%A3/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/02/06/javaScript%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Colorfuls">
-      <meta itemprop="description" content="前路浩浩荡荡，万事皆可期待。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Colorfuls-Blogs">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/02/06/javaScript%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">javaScript学习笔记</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-02-06 16:50:00" itemprop="dateCreated datePublished" datetime="2021-02-06T16:50:00+08:00">2021-02-06</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-03-17 09:35:18" itemprop="dateModified" datetime="2021-03-17T09:35:18+08:00">2021-03-17</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="javascript"><a href="#javascript" class="headerlink" title="javascript"></a>javascript</h1><h2 id="对象引用和复制"><a href="#对象引用和复制" class="headerlink" title="对象引用和复制"></a>对象引用和复制</h2><p>与原始类型相比，对象的根本区别之一是对象是“通过引用”被存储和复制的，与原始类型值相反：字符串，数字，布尔值等 —— 始终是以“整体值”的形式被复制的。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/02/06/javaScript%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
 
 
 
