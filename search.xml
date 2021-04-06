@@ -1851,6 +1851,23 @@ const f &#x3D; Bar()
 console.log(f.a)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>输出 error，因为<code>return</code>后没有值，即使格式化也没有用，因此下方的<code>Object</code>和<code>return</code>没有关联</p>
 <a id="more"></a>
+<h2 id="js将多层嵌套的数组转换为一层数组"><a href="#js将多层嵌套的数组转换为一层数组" class="headerlink" title="js将多层嵌套的数组转换为一层数组"></a>js将多层嵌套的数组转换为一层数组</h2><pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">let</span> list <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">]</span>
+
+<span class="token class-name">Array</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">transfer</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">level</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">let</span> list <span class="token operator">=</span> <span class="token keyword">this</span>
+  <span class="token keyword">const</span> <span class="token function-variable function">flat</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">list</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> list<span class="token punctuation">.</span><span class="token function">reduce</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">prev<span class="token punctuation">,</span> next</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+      next <span class="token operator">=</span> Array<span class="token punctuation">.</span><span class="token function">isArray</span><span class="token punctuation">(</span>next<span class="token punctuation">)</span> <span class="token operator">?</span> next <span class="token operator">:</span> <span class="token punctuation">[</span>next<span class="token punctuation">]</span>
+      <span class="token keyword">return</span> <span class="token punctuation">[</span><span class="token operator">...</span>prev<span class="token punctuation">,</span> <span class="token operator">...</span>next<span class="token punctuation">]</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+  <span class="token punctuation">&#125;</span>
+  <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token parameter">level <span class="token operator">></span> <span class="token number">0</span></span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    list <span class="token operator">=</span> <span class="token function">flat</span><span class="token punctuation">(</span>list<span class="token punctuation">)</span>
+    level<span class="token operator">--</span>
+  <span class="token punctuation">&#125;</span>
+  <span class="token keyword">return</span> list
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><code>let list = this</code>调用时候的数组，在原型链上的东西，使用时即调用本身。</p>
 ]]></content>
       <tags>
         <tag>JavaScript</tag>
