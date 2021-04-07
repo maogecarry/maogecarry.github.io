@@ -206,6 +206,20 @@ export default &#123;
 <li>父级触发 close 方法，改变 show 的值.</li>
 </ol>
 <h2 id="计算属性和侦听器"><a href="#计算属性和侦听器" class="headerlink" title="计算属性和侦听器"></a>计算属性和侦听器</h2><h3 id="计算属性"><a href="#计算属性" class="headerlink" title="计算属性"></a>计算属性</h3><p>对于任何复杂逻辑，都应当使用计算属性。</p>
+<h2 id="7-Vue2-x-双向绑定原理"><a href="#7-Vue2-x-双向绑定原理" class="headerlink" title="7.Vue2.x 双向绑定原理"></a>7.Vue2.x 双向绑定原理</h2><p>Vue 采用<strong>数据劫持+订阅发布模式实现双向绑定</strong>。通过<code>Object.defineProperty()</code>方法来为组件中<code>data</code>的每个属性添加 get 和 set 方法，在数据变动时，触发 set 里相应的监听回调函数，将变动信息发布给订阅者。</p>
+<h2 id="8-Vuex"><a href="#8-Vuex" class="headerlink" title="8.Vuex"></a>8.Vuex</h2><p>Vuex 是一个专为 Vue.js 应用程序开发的状态管理模式。每一个 Vuex 应用的核心就是 store(仓库)。store 基本上就是一个容器，它包含着应用中的大部分的状态(state).</p>
+<ol>
+<li>Vuex 的状态存储是响应式的。当 Vue 组件从 store 中读取状态的时候，若 store 中的状态发生变化，那么相应的组件也会得到高效更新。</li>
+<li>改变 store 中的状态的唯一途径就是显式地提交(commit)mutaition。</li>
+</ol>
+<p>主要包括以下几个模块：</p>
+<ul>
+<li>State：定义了应用状态的数据结构，可以在这里设置默认的初始状态。</li>
+<li>Getter：允许组件从 Store 中获取数据，mapGetters 辅助函数仅仅是将 store 中的 getter 映射到局部计算属性。</li>
+<li>Mutation：是唯一更改 store 中状态的方法，且必须是同步函数。</li>
+<li>Action：用于提交 mutation，而不是直接变更状态，可以包含任意异步操作。</li>
+<li>Module：允许将单一的 Store 拆分为多个 store 且同时保存在单一的状态树中。</li>
+</ul>
 ]]></content>
       <tags>
         <tag>Vue</tag>
