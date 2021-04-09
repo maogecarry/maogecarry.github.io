@@ -47,21 +47,21 @@
 <li><h2 id="vue-中的-watch-监听数据变化"><a href="#vue-中的-watch-监听数据变化" class="headerlink" title="vue 中的 watch 监听数据变化"></a>vue 中的 watch 监听数据变化</h2><ol>
 <li><h3 id="watch-使用的几种方法"><a href="#watch-使用的几种方法" class="headerlink" title="watch 使用的几种方法"></a>watch 使用的几种方法</h3><ol>
 <li><p>通过 watch 监听 data 数据的变化，数据发生变化时，就会打印当前的值</p>
-<pre class="line-numbers language-none"><code class="language-none">watch: &#123;
-    data(val, newval) &#123;
-        console.log(val)
-        console.log(newval)
-    &#125;
-  &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript">watch<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">data</span><span class="token punctuation">(</span><span class="token parameter">val<span class="token punctuation">,</span> newval</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>val<span class="token punctuation">)</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>newval<span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 <li><p>通过 watch 监听 docData 数据的变化，数据发生变化时，this,change_number++(使用深度监听)</p>
-<pre class="line-numbers language-none"><code class="language-none">watch: &#123;
-    docData: &#123;
-      handler(newVal) &#123;
-        this.change_number++
-      &#125;,
-      deep: true
-    &#125;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript">watch<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    docData<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+      <span class="token function">handler</span><span class="token punctuation">(</span><span class="token parameter">newVal</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>change_number<span class="token operator">++</span>
+      <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+      deep<span class="token operator">:</span> <span class="token boolean">true</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 <li><p>通过 watch 监听 data 数据的变化，数据发生变化时,执行 changeData 方法</p>
 <pre class="line-numbers language-none"><code class="language-none">watch: &#123;
     data： &#39;changeData&#39;  &#x2F;&#x2F; 值可以为methods的方法名
