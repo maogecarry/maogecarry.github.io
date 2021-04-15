@@ -383,7 +383,7 @@ Standards （标准）模式（也就是严格呈现模式）用于呈现遵循�
 <a id="more"></a>
 
 <h3 id="javascript-中的-this-指的对象是什么？"><a href="#javascript-中的-this-指的对象是什么？" class="headerlink" title="javascript 中的 this 指的对象是什么？"></a>javascript 中的 this 指的对象是什么？</h3><p>查看 JavaScript 中 this 指向的对象，this 指向的一句话法则：</p>
-<p>永远指向其所在函数的所有者如果没有所有者时，指向 window。</p>
+<p>永远指向其所在函数的所有者,如果没有所有者时，指向 window。</p>
 <p>理解 this 的要点：关键在于将函数与函数名分开看待。同一个函数，在不同的执行方法下，会有不同的效果。</p>
 <p>1）全局函数中的 this 指向</p>
 <p>2）对象方法中的 this 指向</p>
