@@ -31,7 +31,7 @@
 <meta property="og:description" content="前端面试题window 对象 和 document 对象window 对象：代表浏览器中一个打开的窗口document 对象：代表整个 HTML 文档，可以用来访问页面中的所有元素，且每个载入浏览器的 HTML 文档都是 document 对象document 对象是 window 对象的一部分，可以有 window. document 来访问">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-03-07T03:03:00.000Z">
-<meta property="article:modified_time" content="2021-04-15T08:13:32.638Z">
+<meta property="article:modified_time" content="2021-04-27T01:43:08.610Z">
 <meta property="article:author" content="Colorfuls">
 <meta property="article:tag" content="front">
 <meta name="twitter:card" content="summary">
@@ -190,7 +190,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">前端面试题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#window-%E5%AF%B9%E8%B1%A1-%E5%92%8C-document-%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.1.</span> <span class="nav-text">window 对象 和 document 对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#javascript-%E4%B8%AD%E7%9A%84-this-%E6%8C%87%E7%9A%84%E5%AF%B9%E8%B1%A1%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.2.</span> <span class="nav-text">javascript 中的 this 指的对象是什么？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#html-%E9%83%A8%E5%88%86"><span class="nav-number">2.</span> <span class="nav-text">html 部分</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%B4%E8%AF%B4%E4%BD%A0%E5%AF%B9%E8%AF%AD%E4%B9%89%E5%8C%96%E7%9A%84%E7%90%86%E8%A7%A3%EF%BC%9F"><span class="nav-number">2.1.</span> <span class="nav-text">说说你对语义化的理解？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Doctype-%E4%BD%9C%E7%94%A8-%E4%B8%A5%E6%A0%BC%E6%A8%A1%E5%BC%8F%E4%B8%8E%E6%B7%B7%E6%9D%82%E6%A8%A1%E5%BC%8F%E5%A6%82%E4%BD%95%E5%8C%BA%E5%88%86%EF%BC%9F%E5%AE%83%E4%BB%AC%E6%9C%89%E4%BD%95%E6%84%8F%E4%B9%89"><span class="nav-number">2.2.</span> <span class="nav-text">Doctype 作用? 严格模式与混杂模式如何区分？它们有何意义?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%A0%E7%9F%A5%E9%81%93%E5%A4%9A%E5%B0%91%E7%A7%8D-Doctype-%E6%96%87%E6%A1%A3%E7%B1%BB%E5%9E%8B%EF%BC%9F"><span class="nav-number">2.3.</span> <span class="nav-text">你知道多少种 Doctype 文档类型？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DOM-%E6%93%8D%E4%BD%9C%E2%80%94%E2%80%94%E6%80%8E%E6%A0%B7%E6%B7%BB%E5%8A%A0%E3%80%81%E7%A7%BB%E9%99%A4%E3%80%81%E7%A7%BB%E5%8A%A8%E3%80%81%E5%A4%8D%E5%88%B6%E3%80%81%E5%88%9B%E5%BB%BA%E5%92%8C%E6%9F%A5%E6%89%BE%E8%8A%82%E7%82%B9%E3%80%82"><span class="nav-number">2.4.</span> <span class="nav-text">DOM 操作——怎样添加、移除、移动、复制、创建和查找节点。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#html5-%E6%9C%89%E5%93%AA%E4%BA%9B%E6%96%B0%E7%89%B9%E6%80%A7%E3%80%81%E7%A7%BB%E9%99%A4%E4%BA%86%E9%82%A3%E4%BA%9B%E5%85%83%E7%B4%A0%EF%BC%9F%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86-HTML5-%E6%96%B0%E6%A0%87%E7%AD%BE%E7%9A%84%E6%B5%8F%E8%A7%88%E5%99%A8%E5%85%BC%E5%AE%B9%E9%97%AE%E9%A2%98%EF%BC%9F%E5%A6%82%E4%BD%95%E5%8C%BA%E5%88%86-HTML-%E5%92%8C-HTML5%EF%BC%9F"><span class="nav-number">2.5.</span> <span class="nav-text">html5 有哪些新特性、移除了那些元素？如何处理 HTML5 新标签的浏览器兼容问题？如何区分 HTML 和 HTML5？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#documen-write-%E5%92%8C-innerHTML-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">3.</span> <span class="nav-text">documen.write 和 innerHTML 的区别</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">前端面试题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#window-%E5%AF%B9%E8%B1%A1-%E5%92%8C-document-%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.1.</span> <span class="nav-text">window 对象 和 document 对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#javascript-%E4%B8%AD%E7%9A%84-this-%E6%8C%87%E7%9A%84%E5%AF%B9%E8%B1%A1%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.2.</span> <span class="nav-text">javascript 中的 this 指的对象是什么？</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -286,7 +286,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-04-15 16:13:32" itemprop="dateModified" datetime="2021-04-15T16:13:32+08:00">2021-04-15</time>
+        <time title="修改时间：2021-04-27 09:43:08" itemprop="dateModified" datetime="2021-04-27T09:43:08+08:00">2021-04-27</time>
       </span>
 
   
@@ -312,81 +312,7 @@
 <p>5）鼠标单击事件等进行函数的绑定时，this 的指向</p>
 <p>6）setTimeout 等传参形式的 this 指向</p>
 <p>7）改变 this 的方法：call,apply</p>
-<h2 id="html-部分"><a href="#html-部分" class="headerlink" title="html 部分"></a>html 部分</h2><h3 id="说说你对语义化的理解？"><a href="#说说你对语义化的理解？" class="headerlink" title="说说你对语义化的理解？"></a>说说你对语义化的理解？</h3><pre class="line-numbers language-none"><code class="language-none">1，去掉或者丢失样式的时候能够让页面呈现出清晰的结构
-2，有利于SEO：和搜索引擎建立良好沟通，有助于爬虫抓取更多的有效信息：爬虫依赖于标签来确定上下文和各个关键字的权重；
-3，方便其他设备解析（如屏幕阅读器、盲人阅读器、移动设备）以意义的方式来渲染网页；
-4，便于团队开发和维护，语义化更具可读性，是下一步吧网页的重要动向，遵循W3C标准的团队都遵循这个标准，可以减少差异化。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="Doctype-作用-严格模式与混杂模式如何区分？它们有何意义"><a href="#Doctype-作用-严格模式与混杂模式如何区分？它们有何意义" class="headerlink" title="Doctype 作用? 严格模式与混杂模式如何区分？它们有何意义?"></a>Doctype 作用? 严格模式与混杂模式如何区分？它们有何意义?</h3><pre class="line-numbers language-none"><code class="language-none">（1）、&lt;!DOCTYPE&gt; 声明位于文档中的最前面，处于 &lt;html&gt; 标签之前。告知浏览器以何种模式来渲染文档。
 
-（2）、严格模式的排版和 JS 运作模式是  以该浏览器支持的最高标准运行。
-
-（3）、在混杂模式中，页面以宽松的向后兼容的方式显示。模拟老式浏览器的行为以防止站点无法工作。
-
-（4）、DOCTYPE不存在或格式不正确会导致文档以混杂模式呈现。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="你知道多少种-Doctype-文档类型？"><a href="#你知道多少种-Doctype-文档类型？" class="headerlink" title="你知道多少种 Doctype 文档类型？"></a>你知道多少种 Doctype 文档类型？</h3><pre class="line-numbers language-none"><code class="language-none"> 该标签可声明三种 DTD 类型，分别表示严格版本、过渡版本以及基于框架的 HTML 文档。
- HTML 4.01 规定了三种文档类型：Strict、Transitional 以及 Frameset。
- XHTML 1.0 规定了三种 XML 文档类型：Strict、Transitional 以及 Frameset。
-Standards （标准）模式（也就是严格呈现模式）用于呈现遵循最新标准的网页，而 Quirks
- （包容）模式（也就是松散呈现模式或者兼容模式）用于呈现为传统浏览器而设计的网页。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="DOM-操作——怎样添加、移除、移动、复制、创建和查找节点。"><a href="#DOM-操作——怎样添加、移除、移动、复制、创建和查找节点。" class="headerlink" title="DOM 操作——怎样添加、移除、移动、复制、创建和查找节点。"></a>DOM 操作——怎样添加、移除、移动、复制、创建和查找节点。</h3><pre class="line-numbers language-none"><code class="language-none">（1）创建新节点
-
-      createDocumentFragment()    &#x2F;&#x2F;创建一个DOM片段
-
-      createElement()   &#x2F;&#x2F;创建一个具体的元素
-
-      createTextNode()   &#x2F;&#x2F;创建一个文本节点
-
-（2）添加、移除、替换、插入
-
-      appendChild()
-
-      removeChild()
-
-      replaceChild()
-
-      insertBefore() &#x2F;&#x2F;在已有的子节点前插入一个新的子节点
-
-（3）查找
-
-      getElementsByTagName()    &#x2F;&#x2F;通过标签名称
-
-      getElementsByName()    &#x2F;&#x2F;通过元素的Name属性的值(IE容错能力较强，会得到一个数组，其中包括id等于name值的)
-
-      getElementById()    &#x2F;&#x2F;通过元素Id，唯一性<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="html5-有哪些新特性、移除了那些元素？如何处理-HTML5-新标签的浏览器兼容问题？如何区分-HTML-和-HTML5？"><a href="#html5-有哪些新特性、移除了那些元素？如何处理-HTML5-新标签的浏览器兼容问题？如何区分-HTML-和-HTML5？" class="headerlink" title="html5 有哪些新特性、移除了那些元素？如何处理 HTML5 新标签的浏览器兼容问题？如何区分 HTML 和 HTML5？"></a>html5 有哪些新特性、移除了那些元素？如何处理 HTML5 新标签的浏览器兼容问题？如何区分 HTML 和 HTML5？</h3><pre class="line-numbers language-none"><code class="language-none">* HTML5 现在已经不是 SGML 的子集，主要是关于图像，位置，存储，多任务等功能的增加。
-
-* 拖拽释放(Drag and drop) API
-  语义化更好的内容标签（header,nav,footer,aside,article,section）
-  音频、视频API(audio,video)
-  画布(Canvas) API
-  地理(Geolocation) API
-  本地离线存储 localStorage 长期存储数据，浏览器关闭后数据不丢失；
-  sessionStorage 的数据在浏览器关闭后自动删除
-
-  表单控件，calendar、date、time、email、url、search
-  新的技术webworker, websocket, Geolocation
-
-* 移除的元素
-
-纯表现的元素：basefont，big，center，font, s，strike，tt，u；
-
-对可用性产生负面影响的元素：frame，frameset，noframes；
-
-支持HTML5新标签：
-
-* IE8&#x2F;IE7&#x2F;IE6支持通过document.createElement方法产生的标签，
-  可以利用这一特性让这些浏览器支持HTML5新标签，
-
-  浏览器支持新标签后，还需要添加标签默认的样式：
-
-* 当然最好的方式是直接使用成熟的框架、使用最多的是html5shim框架
-   &lt;!--[if lt IE 9]&gt;
-   &lt;script&gt; src&#x3D;&quot;http:&#x2F;&#x2F;html5shim.googlecode.com&#x2F;svn&#x2F;trunk&#x2F;html5.js&quot;&lt;&#x2F;script&gt;
-   &lt;![endif]--&gt;
-如何区分：DOCTYPE声明新增的结构元素功能元素<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="documen-write-和-innerHTML-的区别"><a href="#documen-write-和-innerHTML-的区别" class="headerlink" title="documen.write 和 innerHTML 的区别"></a>documen.write 和 innerHTML 的区别</h2><pre class="line-numbers language-none"><code class="language-none">document.write只能重绘整个页面
-
-innerHTML可以重绘页面的一部分<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
     </div>
 
     
@@ -463,7 +389,7 @@ innerHTML可以重绘页面的一部分<span aria-hidden="true" class="line-numb
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共25k字</span>
+  <span class="post-count">博客全站共23.9k字</span>
 </div>
 
     </div>
