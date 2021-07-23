@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","version":"8.2.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="前端基础知识整理1.typeof 返回的数据类型typeof 返回的数据类型包括 undefined、 string、number、boolean、symbol、object、function、bigInt 类型">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端基础知识">
+<meta property="og:url" content="http://example.com/2021/03/07/%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E6%95%B4%E7%90%86/index.html">
+<meta property="og:site_name" content="Colorfuls-Blogs">
+<meta property="og:description" content="前端基础知识整理1.typeof 返回的数据类型typeof 返回的数据类型包括 undefined、 string、number、boolean、symbol、object、function、bigInt 类型">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/16573783-49cd30241aecbd9b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/895/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/16573783-263e9cc74899752c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/877/format/webp">
+<meta property="article:published_time" content="2021-03-07T03:03:00.000Z">
+<meta property="article:modified_time" content="2021-05-04T02:29:25.640Z">
+<meta property="article:author" content="Colorfuls">
+<meta property="article:tag" content="front">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/16573783-49cd30241aecbd9b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/895/format/webp">
+
+
+<link rel="canonical" href="http://example.com/2021/03/07/%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E6%95%B4%E7%90%86/">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>前端基础知识 | Colorfuls-Blogs</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Colorfuls-Blogs</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">追风去</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-article"><a href="/article" rel="section"><i class="fa fa-newspaper fa-fw"></i>文章</a></li>
+        <li class="menu-item menu-item-teach"><a href="/teach" rel="section"><i class="fa fa-address-card fa-fw"></i>教程</a></li>
+        <li class="menu-item menu-item-site"><a href="/site" rel="section"><i class="fa fa-star fa-fw"></i>站点</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E6%95%B4%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">前端基础知识整理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-typeof-%E8%BF%94%E5%9B%9E%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.1.</span> <span class="nav-text">1.typeof 返回的数据类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%A3%80%E6%9F%A5%E6%95%B0%E7%BB%84%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="nav-number">1.2.</span> <span class="nav-text">2.检查数组的方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-js-%E4%B8%AD%E7%9A%84-call%E3%80%81apply%E3%80%81bind-%E6%96%B9%E6%B3%95%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.3.</span> <span class="nav-text">3.js 中的 call、apply、bind 方法的区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E9%97%AD%E5%8C%85"><span class="nav-number">2.</span> <span class="nav-text">4.闭包</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-js-%E4%BA%8B%E4%BB%B6%E6%9C%BA%E5%88%B6"><span class="nav-number">2.1.</span> <span class="nav-text">5.js 事件机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E5%B8%B8%E7%94%A8%E7%9A%84%E5%A4%84%E7%90%86%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%96%B9%E6%B3%95"><span class="nav-number">2.2.</span> <span class="nav-text">6.常用的处理字符串方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-window-%E5%AF%B9%E8%B1%A1-%E5%92%8C-document-%E5%AF%B9%E8%B1%A1"><span class="nav-number">3.</span> <span class="nav-text">7.window 对象 和 document 对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#html-%E9%83%A8%E5%88%86"><span class="nav-number">4.</span> <span class="nav-text">html 部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E8%AF%B4%E8%AF%B4%E4%BD%A0%E5%AF%B9%E8%AF%AD%E4%B9%89%E5%8C%96%E7%9A%84%E7%90%86%E8%A7%A3%EF%BC%9F"><span class="nav-number">5.</span> <span class="nav-text">1.说说你对语义化的理解？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Doctype-%E4%BD%9C%E7%94%A8-%E4%B8%A5%E6%A0%BC%E6%A8%A1%E5%BC%8F%E4%B8%8E%E6%B7%B7%E6%9D%82%E6%A8%A1%E5%BC%8F%E5%A6%82%E4%BD%95%E5%8C%BA%E5%88%86%EF%BC%9F%E5%AE%83%E4%BB%AC%E6%9C%89%E4%BD%95%E6%84%8F%E4%B9%89"><span class="nav-number">6.</span> <span class="nav-text">2.Doctype 作用? 严格模式与混杂模式如何区分？它们有何意义?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E4%BD%A0%E7%9F%A5%E9%81%93%E5%A4%9A%E5%B0%91%E7%A7%8D-Doctype-%E6%96%87%E6%A1%A3%E7%B1%BB%E5%9E%8B%EF%BC%9F"><span class="nav-number">7.</span> <span class="nav-text">3.你知道多少种 Doctype 文档类型？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-DOM-%E6%93%8D%E4%BD%9C%E2%80%94%E2%80%94%E6%80%8E%E6%A0%B7%E6%B7%BB%E5%8A%A0%E3%80%81%E7%A7%BB%E9%99%A4%E3%80%81%E7%A7%BB%E5%8A%A8%E3%80%81%E5%A4%8D%E5%88%B6%E3%80%81%E5%88%9B%E5%BB%BA%E5%92%8C%E6%9F%A5%E6%89%BE%E8%8A%82%E7%82%B9%E3%80%82"><span class="nav-number">8.</span> <span class="nav-text">4.DOM 操作——怎样添加、移除、移动、复制、创建和查找节点。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-html5-%E6%9C%89%E5%93%AA%E4%BA%9B%E6%96%B0%E7%89%B9%E6%80%A7%E3%80%81%E7%A7%BB%E9%99%A4%E4%BA%86%E9%82%A3%E4%BA%9B%E5%85%83%E7%B4%A0%EF%BC%9F%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86-HTML5-%E6%96%B0%E6%A0%87%E7%AD%BE%E7%9A%84%E6%B5%8F%E8%A7%88%E5%99%A8%E5%85%BC%E5%AE%B9%E9%97%AE%E9%A2%98%EF%BC%9F%E5%A6%82%E4%BD%95%E5%8C%BA%E5%88%86-HTML-%E5%92%8C-HTML5%EF%BC%9F"><span class="nav-number">9.</span> <span class="nav-text">5.html5 有哪些新特性、移除了那些元素？如何处理 HTML5 新标签的浏览器兼容问题？如何区分 HTML 和 HTML5？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-documen-write-%E5%92%8C-innerHTML-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">10.</span> <span class="nav-text">6.documen.write 和 innerHTML 的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E4%BB%80%E4%B9%88%E6%98%AF-HTML5-%E4%BB%A5%E5%8F%8A%E5%92%8C-HTML-%E7%9A%84%E5%8C%BA%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">11.</span> <span class="nav-text">7.什么是 HTML5 以及和 HTML 的区别是什么</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E5%BF%B5"><span class="nav-number">11.1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8C%BA%E5%88%AB"><span class="nav-number">11.2.</span> <span class="nav-text">区别</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%8E%E8%AF%AD%E4%B9%89%E7%BB%93%E6%9E%84%E4%B8%8A%E7%9C%8B%EF%BC%9A"><span class="nav-number">11.2.1.</span> <span class="nav-text">从语义结构上看：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-%E8%A1%8C%E5%86%85%E5%85%83%E7%B4%A0%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F%E5%9D%97%E7%BA%A7%E5%85%83%E7%B4%A0%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F-%E7%A9%BA-void-%E5%85%83%E7%B4%A0%E6%9C%89%E9%82%A3%E4%BA%9B%EF%BC%9F"><span class="nav-number">12.</span> <span class="nav-text">8.行内元素有哪些？块级元素有哪些？ 空(void)元素有那些？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-WebSocket-%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%92%8C%E5%BA%94%E7%94%A8"><span class="nav-number">13.</span> <span class="nav-text">9.WebSocket 的实现和应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-webSocket%EF%BC%9F"><span class="nav-number">13.1.</span> <span class="nav-text">什么是 webSocket？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WebSocket-%E6%98%AF%E4%BB%80%E4%B9%88%E6%A0%B7%E7%9A%84%E5%8D%8F%E8%AE%AE%EF%BC%8C%E5%85%B7%E4%BD%93%E6%9C%89%E4%BB%80%E4%B9%88%E4%BC%98%E7%82%B9%E3%80%82"><span class="nav-number">13.2.</span> <span class="nav-text">WebSocket 是什么样的协议，具体有什么优点。</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-HTML-%E5%85%83%E7%B4%A0%E5%A6%82%E4%BD%95%E4%BD%93%E7%8E%B0%E5%85%B6%E5%B5%8C%E5%A5%97%E5%85%B3%E7%B3%BB"><span class="nav-number">14.</span> <span class="nav-text">10.HTML 元素如何体现其嵌套关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-%E5%AF%B9-HTML5-%E6%9C%89%E4%BB%80%E4%B9%88%E4%BA%86%E8%A7%A3%EF%BC%9F"><span class="nav-number">15.</span> <span class="nav-text">11.对 HTML5 有什么了解？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CSS-%E9%83%A8%E5%88%86"><span class="nav-number"></span> <span class="nav-text">CSS 部分</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%A0%87%E5%87%86%E7%9A%84-CSS-%E7%9B%92%E5%AD%90%E6%A8%A1%E5%9E%8B%E5%8F%8A%E5%85%B6%E5%92%8C%E4%BD%8E%E7%89%88%E6%9C%AC%E7%9A%84-IE-%E7%9B%92%E5%AD%90%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">1.标准的 CSS 盒子模型及其和低版本的 IE 盒子模型的区别？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-display-%E6%9C%89%E5%93%AA%E4%BA%9B%E5%80%BC%EF%BC%9F%E4%BB%96%E4%BB%AC%E7%9A%84%E4%BD%9C%E7%94%A8%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">2.display 有哪些值？他们的作用是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E7%94%A8-CSS-%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E4%B8%89%E8%A7%92%E5%BD%A2"><span class="nav-number">3.</span> <span class="nav-text">3.用 CSS 创建一个三角形</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E4%BB%80%E4%B9%88%E6%98%AF%E5%93%8D%E5%BA%94%E5%BC%8F%E8%AE%BE%E8%AE%A1%EF%BC%9F%E5%93%8D%E5%BA%94%E5%BC%8F%E8%AE%BE%E8%AE%A1%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">4.</span> <span class="nav-text">4.什么是响应式设计？响应式设计的基本原理是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E6%B5%AE%E5%8A%A8%E5%8E%9F%E7%90%86%E4%BB%A5%E5%8F%8A%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E5%87%BA%E7%8E%B0%E6%B5%AE%E5%8A%A8%E5%92%8C%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E9%9C%80%E8%A6%81%E6%B8%85%E9%99%A4%E6%B5%AE%E5%8A%A8%EF%BC%9F%E6%B8%85%E9%99%A4%E6%B5%AE%E5%8A%A8%E7%9A%84%E6%96%B9%E5%BC%8F%EF%BC%9F"><span class="nav-number">5.</span> <span class="nav-text">5.浮动原理以及为什么会出现浮动和什么时候需要清除浮动？清除浮动的方式？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-before-%E5%92%8C-after-%E4%B8%AD%E5%8F%8C%E5%86%92%E5%8F%B7%E5%92%8C%E5%8D%95%E5%86%92%E5%8F%B7%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB%EF%BC%9F%E8%A7%A3%E9%87%8A%E4%B8%80%E4%B8%8B%E8%BF%99-2-%E4%B8%AA%E4%BC%AA%E5%85%83%E7%B4%A0%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">6.</span> <span class="nav-text">6.::before 和:after 中双冒号和单冒号有什么区别？解释一下这 2 个伪元素的作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-display-float-position-%E6%9C%89%E4%BB%80%E4%B9%88%E5%85%B3%E7%B3%BB%EF%BC%9F"><span class="nav-number">7.</span> <span class="nav-text">7.display,float,position 有什么关系？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-%E4%BB%80%E4%B9%88%E6%98%AF%E5%9B%9E%E6%B5%81%EF%BC%88%E9%87%8D%E6%8E%92%EF%BC%89%E5%92%8C%E9%87%8D%E7%BB%98%E4%BB%A5%E5%8F%8A%E5%85%B6%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="nav-number">8.</span> <span class="nav-text">8.什么是回流（重排）和重绘以及其区别？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9F%A5%E8%AF%86"><span class="nav-number"></span> <span class="nav-text">计算机网络知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E6%A0%B8"><span class="nav-number">1.</span> <span class="nav-text">1.浏览器内核</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-TCP-%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%92%8C%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B"><span class="nav-number">2.</span> <span class="nav-text">2.TCP 三次握手和四次挥手</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B"><span class="nav-number">2.1.</span> <span class="nav-text">三次握手</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E6%98%AF%E4%B8%A4%E6%AC%A1"><span class="nav-number">2.2.</span> <span class="nav-text">为什么不是两次</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B"><span class="nav-number">2.3.</span> <span class="nav-text">四次挥手</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%B5%8F%E8%A7%88%E5%99%A8%E8%BE%93%E5%85%A5-url-%E4%B9%8B%E5%90%8E%E5%8F%91%E7%94%9F%E4%BA%86%E4%BB%80%E4%B9%88"><span class="nav-number">3.</span> <span class="nav-text">3.浏览器输入 url 之后发生了什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Cookie%E3%80%81sessionStorage%E3%80%81localStorage-%E5%8C%BA%E5%88%AB"><span class="nav-number">4.</span> <span class="nav-text">4.Cookie、sessionStorage、localStorage 区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE"><span class="nav-number">5.</span> <span class="nav-text">5.原型和原型链</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E9%97%AD%E5%8C%85"><span class="nav-number">6.</span> <span class="nav-text">6.作用域和闭包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-this-%E7%9A%84%E6%8C%87%E5%90%91%E9%97%AE%E9%A2%98"><span class="nav-number">7.</span> <span class="nav-text">7.this 的指向问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0"><span class="nav-number">7.1.</span> <span class="nav-text">1.箭头函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-new"><span class="nav-number">7.2.</span> <span class="nav-text">2.new</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-bind"><span class="nav-number">7.3.</span> <span class="nav-text">3.bind</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%9A%E6%AC%A1-bind-%E6%97%B6%E5%8F%AA%E8%AE%A4%E7%AC%AC%E4%B8%80%E6%AC%A1-bind-%E7%9A%84%E5%80%BC"><span class="nav-number">7.3.1.</span> <span class="nav-text">多次 bind 时只认第一次 bind 的值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0%E4%B8%AD-this-%E4%B8%8D%E4%BC%9A%E8%A2%AB%E4%BF%AE%E6%94%B9"><span class="nav-number">7.3.2.</span> <span class="nav-text">箭头函数中 this 不会被修改</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-apply-%E5%92%8C-call"><span class="nav-number">7.4.</span> <span class="nav-text">4.apply 和 call</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#bind-%E5%87%BD%E6%95%B0%E4%B8%AD-this-%E4%B8%8D%E4%BC%9A%E8%A2%AB%E4%BF%AE%E6%94%B9"><span class="nav-number">7.4.1.</span> <span class="nav-text">bind 函数中 this 不会被修改</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E6%AC%A7%E6%AF%94%E5%B1%8A%E7%82%B9-obj"><span class="nav-number">7.5.</span> <span class="nav-text">5.欧比届点(obj.)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E7%9B%B4%E6%8E%A5%E8%B0%83%E7%94%A8"><span class="nav-number">7.6.</span> <span class="nav-text">6.直接调用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-%E4%B8%8D%E5%9C%A8%E5%87%BD%E6%95%B0%E9%87%8C"><span class="nav-number">7.7.</span> <span class="nav-text">7.不在函数里</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D"><span class="nav-number">8.</span> <span class="nav-text">9.数组去重</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-%E9%98%B2%E6%8A%96%E3%80%81%E8%8A%82%E6%B5%81"><span class="nav-number">9.</span> <span class="nav-text">10.防抖、节流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-ES6-%E7%9A%84%E6%96%B0%E7%89%B9%E6%80%A7"><span class="nav-number">10.</span> <span class="nav-text">11.ES6 的新特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-%E8%B7%A8%E5%9F%9F"><span class="nav-number">11.</span> <span class="nav-text">12.跨域</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E5%87%BA%E7%8E%B0%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98"><span class="nav-number">11.1.</span> <span class="nav-text">1.为什么会出现跨域问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%BB%80%E4%B9%88%E6%83%85%E5%86%B5%E6%89%8D%E7%AE%97%E5%81%9A%E8%B7%A8%E5%9F%9F"><span class="nav-number">11.2.</span> <span class="nav-text">2.什么情况才算做跨域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E4%B8%BA%E4%BB%80%E4%B9%88%E6%9C%89%E8%B7%A8%E5%9F%9F%E9%9C%80%E6%B1%82%EF%BC%9F"><span class="nav-number">11.3.</span> <span class="nav-text">3.为什么有跨域需求？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E8%B7%A8%E5%9F%9F"><span class="nav-number">11.4.</span> <span class="nav-text">4.如何实现跨域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E7%A7%8D%E8%B7%A8%E5%9F%9F%E6%96%B9%E6%B3%95"><span class="nav-number">11.5.</span> <span class="nav-text">三种跨域方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-JSONP-%E5%8F%AA%E8%83%BD%E8%A7%A3%E5%86%B3-get-%E8%B7%A8%E5%9F%9F"><span class="nav-number">11.5.1.</span> <span class="nav-text">1.JSONP 只能解决 get 跨域</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4"><span class="nav-number">11.5.1.1.</span> <span class="nav-text">步骤</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-CORS%EF%BC%9A%E8%B7%A8%E5%9F%9F%E8%B5%84%E6%BA%90%E5%85%B1%E4%BA%AB"><span class="nav-number">11.5.2.</span> <span class="nav-text">2.CORS：跨域资源共享</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E8%AE%BE%E7%BD%AE-document-domain"><span class="nav-number">11.5.3.</span> <span class="nav-text">3.设置 document.domain</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E7%94%A8-Apache-%E5%81%9A%E8%BD%AC%E5%8F%91-%E9%80%86%E5%90%91%E4%BB%A3%E7%90%86-%EF%BC%8C%E8%AE%A9%E8%B7%A8%E5%9F%9F%E5%8F%98%E5%90%8C%E5%9F%9F"><span class="nav-number">11.6.</span> <span class="nav-text">4.用 Apache 做转发(逆向代理)，让跨域变同域</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#13-TCP-IP-%E5%88%86%E4%B8%BA%E5%87%A0%E5%B1%82%EF%BC%9F%E5%90%84%E5%B1%82%E7%9A%84%E4%BD%9C%E7%94%A8%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">12.</span> <span class="nav-text">13.TCP&#x2F;IP 分为几层？各层的作用是什么?</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Colorfuls</p>
+  <div class="site-description" itemprop="description">前路浩浩荡荡，万事皆可期待。</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/maogecarry" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;maogecarry" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/07/%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E6%95%B4%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Colorfuls">
+      <meta itemprop="description" content="前路浩浩荡荡，万事皆可期待。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Colorfuls-Blogs">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          前端基础知识
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-03-07 11:03:00" itemprop="dateCreated datePublished" datetime="2021-03-07T11:03:00+08:00">2021-03-07</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-05-04 10:29:25" itemprop="dateModified" datetime="2021-05-04T10:29:25+08:00">2021-05-04</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="前端基础知识整理"><a href="#前端基础知识整理" class="headerlink" title="前端基础知识整理"></a>前端基础知识整理</h2><h3 id="1-typeof-返回的数据类型"><a href="#1-typeof-返回的数据类型" class="headerlink" title="1.typeof 返回的数据类型"></a>1.typeof 返回的数据类型</h3><p>typeof 返回的数据类型包括 undefined、 string、number、boolean、symbol、object、function、bigInt 类型</p>
+<a id="more"></a>
+
+<h3 id="2-检查数组的方式"><a href="#2-检查数组的方式" class="headerlink" title="2.检查数组的方式"></a>2.检查数组的方式</h3><ol>
+<li>isArray()方法</li>
+<li>Object.prototype.toString.call()</li>
+<li>instanceof Array</li>
+<li>constructor</li>
+<li>typeof()</li>
+</ol>
+<h3 id="3-js-中的-call、apply、bind-方法的区别"><a href="#3-js-中的-call、apply、bind-方法的区别" class="headerlink" title="3.js 中的 call、apply、bind 方法的区别"></a>3.js 中的 call、apply、bind 方法的区别</h3><p>js 中的 call apply bind 都是用来改变方法上下文(context)，就是可以使函数可以被其他对象调用。</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">let</span> hxy <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+  name<span class="token operator">:</span> <span class="token string">'hxy'</span><span class="token punctuation">,</span>
+  age<span class="token operator">:</span> <span class="token number">22</span><span class="token punctuation">,</span>
+  <span class="token function">say</span><span class="token punctuation">(</span><span class="token parameter">x<span class="token punctuation">,</span> y</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">+</span> <span class="token string">':'</span> <span class="token operator">+</span> <span class="token keyword">this</span><span class="token punctuation">.</span>age <span class="token operator">+</span> x <span class="token operator">+</span> y<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token keyword">let</span> yyw <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+  name<span class="token operator">:</span> <span class="token string">'yyw'</span><span class="token punctuation">,</span>
+  age<span class="token operator">:</span> <span class="token number">18</span><span class="token punctuation">,</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+hxy<span class="token punctuation">.</span><span class="token function">say</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 实际上是调用的this.say() this指的是hxy</span>
+hxy<span class="token punctuation">.</span><span class="token function">say</span><span class="token punctuation">.</span><span class="token function">apply</span><span class="token punctuation">(</span>yyw<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 调用apply后this改变指向，this指向yyw，相当于yyw.say()</span>
+hxy<span class="token punctuation">.</span><span class="token function">say</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span>yyw<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+hxy<span class="token punctuation">.</span><span class="token function">say</span><span class="token punctuation">.</span><span class="token function">bind</span><span class="token punctuation">(</span>yyw<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>运行结果：</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript">hxy<span class="token operator">:</span> <span class="token number">2212</span><span class="token punctuation">;</span>
+yyw<span class="token operator">:</span> <span class="token number">1812</span><span class="token punctuation">;</span>
+yyw<span class="token operator">:</span> <span class="token number">1812</span><span class="token punctuation">;</span>
+yyw<span class="token operator">:</span> <span class="token number">1812</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="4-闭包"><a href="#4-闭包" class="headerlink" title="4.闭包"></a>4.闭包</h2><p>简单来说，闭包就是指能读取其他函数内部变量的函数<br>闭包的简单应用:</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">function</span> <span class="token function">f1</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">var</span> n <span class="token operator">=</span> <span class="token number">99</span><span class="token punctuation">;</span>
+  <span class="token keyword">function</span> <span class="token function">f2</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> n<span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+  <span class="token keyword">return</span> f2<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">var</span> result <span class="token operator">=</span> <span class="token function">f1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">result</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">//返回n = 99;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>运行结果返回了 f1 中的变量 n</p>
+<p>闭包有三个特性:</p>
+<blockquote>
+<p>1.函数嵌套函数 2.函数内部可以引用外部的参数和变量 3.参数和变量不会被垃圾回收机制回收</p>
+</blockquote>
+<p>使用闭包主要是为了设计私有的方法和变量。闭包的优点是可以避免全局变量的污染，缺点是闭包会常驻内存，会增大内存使用量，使用不当很容易造成内存泄露。</p>
+<h3 id="5-js-事件机制"><a href="#5-js-事件机制" class="headerlink" title="5.js 事件机制"></a>5.js 事件机制</h3><p>DOM 事件流分为三个阶段：事件捕获阶段、处于目标阶段、事件冒泡阶段<br><strong>事件捕获（event capturing）</strong>：通俗的理解就是，当鼠标点击或者触发 dom 事件时，浏览器会从根节点开始由外到内进行事件传播，即点击了子元素，如果父元素通过事件捕获方式注册了对应的事件的话，会先触发父元素绑定的事件。<br><strong>事件冒泡（dubbed bubbling）</strong>：与事件捕获恰恰相反，事件冒泡顺序是由内到外进行事件传播，直到根节点。<br>dom 标准事件流的处理顺序为先捕获、再冒泡</p>
+<h3 id="6-常用的处理字符串方法"><a href="#6-常用的处理字符串方法" class="headerlink" title="6.常用的处理字符串方法"></a>6.常用的处理字符串方法</h3><p><strong>.charAt(index)</strong>:获取字符串索引对应的具体字符，参数 index 介于 0~length-1 之间。</p>
+<p><strong>.indexOf(value,index)</strong>:返回字符串第一次出现指定值的索引，没有找到指定值就返回-1。<br>字符串、数组都适用。<br>value：必需，规定需检索的字符串值。可选的整数参数。<br>index：规定在字符串中开始检索的位置。它的合法取值是 0 到 stringObject.length - 1。如省略该参数，则将从字符串的首字符开始检索。</p>
+<p><strong>.substr(start,length)</strong>:返回从指定位置开始到指定字符数的字符。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/16573783-49cd30241aecbd9b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/895/format/webp" alt="img"></p>
+<p><strong>.substring(indexStart,indexEnd)</strong>:返回一个字符串从开始索引到结束索引之间的新字符串。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/16573783-263e9cc74899752c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/877/format/webp" alt="img"></p>
+<p><strong>.split() 字符串</strong>：使用指定的分隔符字符串将一个<a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/String"><code>String</code></a>对象分割成子字符串数组，以一个指定的分割字串来决定每个拆分的位置。</p>
+<p><strong>.replace() 字符串</strong>：方法用于在字符串中用一些字符替换另一些字符，或替换一个与正则表达式匹配的子串</p>
+<p><strong>toLowerCase()</strong>:会将调用该方法的字符串值转为小写形式，并返回。</p>
+<p><strong>toUpperCase()</strong>:方法将调用该方法的字符串转为大写形式并返回（如果调用该方法的值不是字符串类型会被强制转换）。</p>
+<h2 id="7-window-对象-和-document-对象"><a href="#7-window-对象-和-document-对象" class="headerlink" title="7.window 对象 和 document 对象"></a>7.window 对象 和 document 对象</h2><p>window 对象：代表浏览器中一个打开的窗口<br>document 对象：代表整个 HTML 文档，可以用来访问页面中的所有元素，且每个载入浏览器的 HTML 文档都是 document 对象</p>
+<p>document 对象是 window 对象的一部分，可以有 window. document 来访问</p>
+<h2 id="html-部分"><a href="#html-部分" class="headerlink" title="html 部分"></a>html 部分</h2><h2 id="1-说说你对语义化的理解？"><a href="#1-说说你对语义化的理解？" class="headerlink" title="1.说说你对语义化的理解？"></a>1.说说你对语义化的理解？</h2><pre class="line-numbers language-none"><code class="language-none">1，去掉或者丢失样式的时候能够让页面呈现出清晰的结构
+2，有利于SEO：和搜索引擎建立良好沟通，有助于爬虫抓取更多的有效信息：爬虫依赖于标签来确定上下文和各个关键字的权重；
+3，方便其他设备解析（如屏幕阅读器、盲人阅读器、移动设备）以意译的方式来渲染网页；
+4，便于团队开发和维护，语义化更具可读性，是网页的重要动向，遵循W3C标准的团队都遵循这个标准，可以减少差异化。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="2-Doctype-作用-严格模式与混杂模式如何区分？它们有何意义"><a href="#2-Doctype-作用-严格模式与混杂模式如何区分？它们有何意义" class="headerlink" title="2.Doctype 作用? 严格模式与混杂模式如何区分？它们有何意义?"></a>2.Doctype 作用? 严格模式与混杂模式如何区分？它们有何意义?</h2><pre class="line-numbers language-none"><code class="language-none">（1）&lt;!DOCTYPE&gt; 声明位于文档中的最前面，处于 &lt;html&gt; 标签之前。告知浏览器以何种模式来渲染文档。
+
+（2）、严格模式的排版和 JS 运作模式是  以该浏览器支持的最高标准运行。
+
+（3）、在混杂模式中，页面以宽松的向后兼容的方式显示。模拟老式浏览器的行为以防止站点无法工作。
+
+（4）、DOCTYPE不存在或格式不正确会导致文档以混杂模式呈现。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="3-你知道多少种-Doctype-文档类型？"><a href="#3-你知道多少种-Doctype-文档类型？" class="headerlink" title="3.你知道多少种 Doctype 文档类型？"></a>3.你知道多少种 Doctype 文档类型？</h2><pre class="line-numbers language-none"><code class="language-none"> 该标签可声明三种 DTD 类型，分别表示严格版本、过渡版本以及基于框架的 HTML 文档。
+ HTML 4.01 规定了三种文档类型：Strict、Transitional 以及 Frameset。
+ XHTML 1.0 规定了三种 XML 文档类型：Strict、Transitional 以及 Frameset。
+Standards （标准）模式（也就是严格呈现模式）用于呈现遵循最新标准的网页，而 Quirks
+ （包容）模式（也就是松散呈现模式或者兼容模式）用于呈现为传统浏览器而设计的网页。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="4-DOM-操作——怎样添加、移除、移动、复制、创建和查找节点。"><a href="#4-DOM-操作——怎样添加、移除、移动、复制、创建和查找节点。" class="headerlink" title="4.DOM 操作——怎样添加、移除、移动、复制、创建和查找节点。"></a>4.DOM 操作——怎样添加、移除、移动、复制、创建和查找节点。</h2><pre class="line-numbers language-none"><code class="language-none">（1）创建新节点
+
+      createDocumentFragment()    &#x2F;&#x2F;创建一个DOM片段
+
+      createElement()   &#x2F;&#x2F;创建一个具体的元素
+
+      createTextNode()   &#x2F;&#x2F;创建一个文本节点
+
+（2）添加、移除、替换、插入
+
+      appendChild()
+
+      removeChild()
+
+      replaceChild()
+
+      insertBefore() &#x2F;&#x2F;在已有的子节点前插入一个新的子节点
+
+（3）查找
+
+      getElementsByTagName()    &#x2F;&#x2F;通过标签名称
+
+      getElementsByName()    &#x2F;&#x2F;通过元素的Name属性的值(IE容错能力较强，会得到一个数组，其中包括id等于name值的)
+
+      getElementById()    &#x2F;&#x2F;通过元素Id，唯一性<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="5-html5-有哪些新特性、移除了那些元素？如何处理-HTML5-新标签的浏览器兼容问题？如何区分-HTML-和-HTML5？"><a href="#5-html5-有哪些新特性、移除了那些元素？如何处理-HTML5-新标签的浏览器兼容问题？如何区分-HTML-和-HTML5？" class="headerlink" title="5.html5 有哪些新特性、移除了那些元素？如何处理 HTML5 新标签的浏览器兼容问题？如何区分 HTML 和 HTML5？"></a>5.html5 有哪些新特性、移除了那些元素？如何处理 HTML5 新标签的浏览器兼容问题？如何区分 HTML 和 HTML5？</h2><pre class="line-numbers language-none"><code class="language-none">* HTML5 现在已经不是 SGML 的子集，主要是关于图像，位置，存储，多任务等功能的增加。
+
+* 拖拽释放(Drag and drop) API
+  语义化更好的内容标签（header,nav,footer,aside,article,section）
+  音频、视频API(audio,video)
+  画布(Canvas) API
+  地理(Geolocation) API
+  本地离线存储 localStorage 长期存储数据，浏览器关闭后数据不丢失；
+  sessionStorage 的数据在浏览器关闭后自动删除
+
+  表单控件，calendar、date、time、email、url、search
+  新的技术webworker, websocket, Geolocation
+
+* 移除的元素
+
+纯表现的元素：basefont，big，center，font, s，strike，tt，u；
+
+对可用性产生负面影响的元素：frame，frameset，noframes；
+
+支持HTML5新标签：
+
+* IE8&#x2F;IE7&#x2F;IE6支持通过document.createElement方法产生的标签，
+  可以利用这一特性让这些浏览器支持HTML5新标签，
+
+  浏览器支持新标签后，还需要添加标签默认的样式：
+
+* 当然最好的方式是直接使用成熟的框架、使用最多的是html5shim框架
+   &lt;!--[if lt IE 9]&gt;
+   &lt;script&gt; src&#x3D;&quot;http:&#x2F;&#x2F;html5shim.googlecode.com&#x2F;svn&#x2F;trunk&#x2F;html5.js&quot;&lt;&#x2F;script&gt;
+   &lt;![endif]--&gt;
+如何区分：DOCTYPE声明新增的结构元素功能元素<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="6-documen-write-和-innerHTML-的区别"><a href="#6-documen-write-和-innerHTML-的区别" class="headerlink" title="6.documen.write 和 innerHTML 的区别"></a>6.documen.write 和 innerHTML 的区别</h2><pre class="line-numbers language-none"><code class="language-none">document.write只能重绘整个页面
+
+innerHTML可以重绘页面的一部分<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h2 id="7-什么是-HTML5-以及和-HTML-的区别是什么"><a href="#7-什么是-HTML5-以及和-HTML-的区别是什么" class="headerlink" title="7.什么是 HTML5 以及和 HTML 的区别是什么"></a>7.什么是 HTML5 以及和 HTML 的区别是什么</h2><h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>HTML5 是 HTML 的新标准，其主要目标是无需任何额外的插件如 Flash、Sliverlight 等，就可以传输所有内容。他囊括了动画、视频、丰富的图形用户界面等。</p>
+<h3 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h3><h4 id="从语义结构上看："><a href="#从语义结构上看：" class="headerlink" title="从语义结构上看："></a>从语义结构上看：</h4><ul>
+<li>HTML4.0：没有体现结构语义化的标签，通常都是是这样来命名的<code>&lt;div id=&quot;header&quot;&gt;&lt;/div&gt;</code>，这样表示网站的头部。</li>
+<li>HTML5：在语义上却有很大的优势。提供了一些新的标签，比如<header><article><footer><aside></li>
+</ul>
+<h2 id="8-行内元素有哪些？块级元素有哪些？-空-void-元素有那些？"><a href="#8-行内元素有哪些？块级元素有哪些？-空-void-元素有那些？" class="headerlink" title="8.行内元素有哪些？块级元素有哪些？ 空(void)元素有那些？"></a>8.行内元素有哪些？块级元素有哪些？ 空(void)元素有那些？</h2><ul>
+<li>行内元素： <code>a</code>, <code>span</code>, <code>img</code>, <code>input</code>, <code>select</code>, <code>strong</code>;</li>
+<li>块级元素： <code>div</code>, <code>ul</code>, <code>li</code>, <code>dl</code>, <code>dt</code>, <code>dd</code>, <code>h1-5</code>, <code>p</code>等；</li>
+<li>空元素： <code>&lt;br&gt;</code>, <code>&lt;hr&gt;</code>, <code>&lt;img&gt;</code>, <code>&lt;link&gt;</code>, <code>&lt;meta&gt;</code>;</li>
+</ul>
+<h2 id="9-WebSocket-的实现和应用"><a href="#9-WebSocket-的实现和应用" class="headerlink" title="9.WebSocket 的实现和应用"></a>9.WebSocket 的实现和应用</h2><h3 id="什么是-webSocket？"><a href="#什么是-webSocket？" class="headerlink" title="什么是 webSocket？"></a>什么是 webSocket？</h3><p>WebSocket 是 HTML5 中的协议，支持持久连续，http 协议不支持持久性连接。</p>
+<h3 id="WebSocket-是什么样的协议，具体有什么优点。"><a href="#WebSocket-是什么样的协议，具体有什么优点。" class="headerlink" title="WebSocket 是什么样的协议，具体有什么优点。"></a>WebSocket 是什么样的协议，具体有什么优点。</h3><p>WebSocket 是基于 Http 协议的，或者说借用了 Http 协议来完成一部分握手，在握手阶段与 Http 是相同的。</p>
+<h2 id="10-HTML-元素如何体现其嵌套关系"><a href="#10-HTML-元素如何体现其嵌套关系" class="headerlink" title="10.HTML 元素如何体现其嵌套关系"></a>10.HTML 元素如何体现其嵌套关系</h2><ul>
+<li>块级元素可以包含行内元素</li>
+<li>块级元素不一定能包含块级元素</li>
+<li>行内元素一般不能包含块级元素（a 元素例外）</li>
+</ul>
+<h2 id="11-对-HTML5-有什么了解？"><a href="#11-对-HTML5-有什么了解？" class="headerlink" title="11.对 HTML5 有什么了解？"></a>11.对 HTML5 有什么了解？</h2><ul>
+<li>良好的移动性，以移动设备为主；</li>
+<li>响应式设计，以适应自动变化的屏幕尺寸</li>
+<li>支持离线缓存技术，webStorage 本地缓存</li>
+<li>新增的地理位置等</li>
+<li>新增 webSocket/webwork 技术</li>
+</ul>
+<h1 id="CSS-部分"><a href="#CSS-部分" class="headerlink" title="CSS 部分"></a>CSS 部分</h1><h2 id="1-标准的-CSS-盒子模型及其和低版本的-IE-盒子模型的区别？"><a href="#1-标准的-CSS-盒子模型及其和低版本的-IE-盒子模型的区别？" class="headerlink" title="1.标准的 CSS 盒子模型及其和低版本的 IE 盒子模型的区别？"></a>1.标准的 CSS 盒子模型及其和低版本的 IE 盒子模型的区别？</h2><p>标准（W3C）盒子模型：<code>width</code> = 内容宽度<code>（content） + border + padding + margin</code></p>
+<p>低版本 IE 盒子模型： <code>width</code> = 内容宽度<code>（content + border + padding）+ margin</code></p>
+<h2 id="2-display-有哪些值？他们的作用是什么？"><a href="#2-display-有哪些值？他们的作用是什么？" class="headerlink" title="2.display 有哪些值？他们的作用是什么？"></a>2.display 有哪些值？他们的作用是什么？</h2><ul>
+<li>none：使用后元素将不会显示</li>
+<li>grid：定义一个容器属性为网格布局</li>
+<li>flex：定义一个弹性布局</li>
+<li>block：使用后元素将变为块级元素显示，元素前后带有换行符</li>
+<li>inline：display 默认值。使用后原色变为行内元素显示，前后无换行符</li>
+<li>list-item：使用后元素作为列表显示</li>
+<li>table：使用后将作为块级表格显示（类似<table>），前后带有换行符</li>
+</ul>
+<h2 id="3-用-CSS-创建一个三角形"><a href="#3-用-CSS-创建一个三角形" class="headerlink" title="3.用 CSS 创建一个三角形"></a>3.用 CSS 创建一个三角形</h2><pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>style</span><span class="token punctuation">></span></span><span class="token style"><span class="token language-css">
+  <span class="token selector">.content</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">width</span><span class="token punctuation">:</span> 0<span class="token punctuation">;</span>
+    <span class="token property">height</span><span class="token punctuation">:</span> 0<span class="token punctuation">;</span>
+    <span class="token property">border-top</span><span class="token punctuation">:</span> 40px solid transparent<span class="token punctuation">;</span>
+    <span class="token property">border-left</span><span class="token punctuation">:</span> 40px solid transparent<span class="token punctuation">;</span>
+    <span class="token property">border-right</span><span class="token punctuation">:</span> 40px solid transparent<span class="token punctuation">;</span>
+    <span class="token property">border-bottom</span><span class="token punctuation">:</span> 40px solid #ff0000<span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>style</span><span class="token punctuation">></span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>content<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="4-什么是响应式设计？响应式设计的基本原理是什么？"><a href="#4-什么是响应式设计？响应式设计的基本原理是什么？" class="headerlink" title="4.什么是响应式设计？响应式设计的基本原理是什么？"></a>4.什么是响应式设计？响应式设计的基本原理是什么？</h2><p>响应式网站设计是一个网站能够兼容多个终端，而不是为每一个终端做一个特定的版本。</p>
+<p>关于原理：基本原理是通过媒体查询（@media）查询检测不同的设备屏幕尺寸做处理。</p>
+<p>关于兼容：页面头部必须有 meta 生命的 viewport</p>
+<h2 id="5-浮动原理以及为什么会出现浮动和什么时候需要清除浮动？清除浮动的方式？"><a href="#5-浮动原理以及为什么会出现浮动和什么时候需要清除浮动？清除浮动的方式？" class="headerlink" title="5.浮动原理以及为什么会出现浮动和什么时候需要清除浮动？清除浮动的方式？"></a>5.浮动原理以及为什么会出现浮动和什么时候需要清除浮动？清除浮动的方式？</h2><p>非 IE 浏览器下，容器不设定高度且子元素浮动时，容器高度不能被内容撑开。此时，内容会溢出到容器外面而影响布局。此类现象被称为浮动（溢出）</p>
+<p>原理：</p>
+<ul>
+<li>浮动元素脱离文档流，不占据空间</li>
+<li>浮动元素碰到包含它的边框或其他浮动元素的边框停留。</li>
+</ul>
+<p>浮动会带来的问题：</p>
+<ul>
+<li>父级元素的高度将会无法被，会影响与父级元素同级的元素</li>
+<li>与浮动元素同级的非浮动元素（内联元素）会跟随其后</li>
+<li>若浮动的元素不是第一个元素，则该元素之前的元素也要浮动，否则会影响页面的显示结构。</li>
+</ul>
+<p>清除方式：</p>
+<ul>
+<li>父级盒子定义高度（height）</li>
+<li>最后一个浮动元素后面加一个 div 空标签，并且添加样式 clear:both</li>
+<li>包含浮动元素的父级标签添加样式 overflow 为 hidden/both</li>
+</ul>
+<h2 id="6-before-和-after-中双冒号和单冒号有什么区别？解释一下这-2-个伪元素的作用"><a href="#6-before-和-after-中双冒号和单冒号有什么区别？解释一下这-2-个伪元素的作用" class="headerlink" title="6.::before 和:after 中双冒号和单冒号有什么区别？解释一下这 2 个伪元素的作用"></a>6.::before 和:after 中双冒号和单冒号有什么区别？解释一下这 2 个伪元素的作用</h2><ul>
+<li>冒号用于 css3 伪类，双冒号用于 css3 伪元素</li>
+<li>::before 就是以一个子元素的存在，定义在元素主体内容之前的一个伪元素，并不存在于 dom 之中，只存在在页面之中。</li>
+</ul>
+<h2 id="7-display-float-position-有什么关系？"><a href="#7-display-float-position-有什么关系？" class="headerlink" title="7.display,float,position 有什么关系？"></a>7.display,float,position 有什么关系？</h2><ul>
+<li>如果 <code>display</code> 为<code>none</code>，那么<code>position</code>和<code>float</code>都不起作用，元素不显示；</li>
+<li>如果<code>position</code>值为<code>absolute</code>或者<code>fixed</code>，元素绝对定位，<code>float</code>的计算值为<code>none</code>，<code>display</code>根据下面的表格进行调整；</li>
+<li>如果<code>float</code>不是<code>none</code>，框是浮动的，<code>display</code>根据下表进行调整；</li>
+<li>其他情况下<code>display</code>的值为指定值 总结起来：绝对定位、浮动、根元素都需要调整 <code>display</code>；</li>
+</ul>
+<h2 id="8-什么是回流（重排）和重绘以及其区别？"><a href="#8-什么是回流（重排）和重绘以及其区别？" class="headerlink" title="8.什么是回流（重排）和重绘以及其区别？"></a>8.什么是回流（重排）和重绘以及其区别？</h2><ul>
+<li>回流（重排）reflow：当 render tree 中的一部分(或全部)因为元素的规模尺寸，布局，隐藏等改变时而需要重新构建；</li>
+<li>重绘(repaint)：当 redner tree 中的一些元素需要更新属性，而这些属性只影响元素的外观，网格，而不会影响布局时，称其为重绘，例如颜色改变等。</li>
+<li><strong>每个页面至少需要引发一次重排+重绘，而且重排(回流)一定会引发重绘。</strong></li>
+</ul>
+<h1 id="计算机网络知识"><a href="#计算机网络知识" class="headerlink" title="计算机网络知识"></a>计算机网络知识</h1><h2 id="1-浏览器内核"><a href="#1-浏览器内核" class="headerlink" title="1.浏览器内核"></a>1.浏览器内核</h2><p>浏览器主要分为两个部分：渲染引擎和 JS 引擎</p>
+<p>渲染引擎：主要负责获取页面内容和排班渲染页面</p>
+<p>JS 引擎：解析和执行 JS 来实现页面的动态效果，以及交互内容。</p>
+<h2 id="2-TCP-三次握手和四次挥手"><a href="#2-TCP-三次握手和四次挥手" class="headerlink" title="2.TCP 三次握手和四次挥手"></a>2.TCP 三次握手和四次挥手</h2><p>为什么要进行三次握手：为了确认对方的发送和接受能力。</p>
+<h3 id="三次握手"><a href="#三次握手" class="headerlink" title="三次握手"></a>三次握手</h3><p>三次握手主要流程：</p>
+<ul>
+<li>一开始双方处于 CLOSED 状态，然后服务端开始监听某个端口进入 LISTEN 状态</li>
+<li>然后客户端主动发起连接，发送 SYN，然后自己变为 SYN-SENT，seq=x</li>
+<li>服务端收到之后，返回 SYN seq=y 和 ACk ack=x+1(对于客户端发来的 SYN)，自己变成 SYN-REVD</li>
+<li>之后客户端发送 ACK seq= x+ 1,ack= y + 1 给服务端，自己变成 EASTBLISHED 状态，服务端收到 ACK，也进入 ESTABLISHED</li>
+</ul>
+<h3 id="为什么不是两次"><a href="#为什么不是两次" class="headerlink" title="为什么不是两次"></a>为什么不是两次</h3><blockquote>
+<p>无法确认客户端的接收能力。</p>
+</blockquote>
+<h3 id="四次挥手"><a href="#四次挥手" class="headerlink" title="四次挥手"></a>四次挥手</h3><ul>
+<li>一开始都处于 ESTABLISH 状态，然后客户端发送 FIN 报文，带上 seq = p,状态变为 FIN-WAIT-1</li>
+<li>服务端收到之后，发送 ACK 确认，ack = p + 1,然后进入 CLOSE-WAIT 状态</li>
+<li>客户端收到之后进入 FIN-WAIT-2 状态</li>
+<li>过了一会等数据处理完，再次发送 FIN、ACK、seq = q ,ack = p +1，进入 LAST-ACK 阶段</li>
+<li>客户端收到 FIN 之后，客户端进入 TIME_WAIT（等待 2MSL），然后发送 ACK 给服务端 ack= 1+1</li>
+<li>服务端收到之后进入 CLOSED 状态</li>
+</ul>
+<h2 id="3-浏览器输入-url-之后发生了什么"><a href="#3-浏览器输入-url-之后发生了什么" class="headerlink" title="3.浏览器输入 url 之后发生了什么"></a>3.浏览器输入 url 之后发生了什么</h2><ol>
+<li>浏览器向 DNS 服务器请求解析该 URL 中的域名所对应的 IP 地址；</li>
+<li>建立 TCP 连接（三次握手）；</li>
+<li>浏览器发出读取文件（URL 中域名后面部分对应的文件）的 HTTP 请求，该请求报文作为 TCP 三次握手的第三个报文的数据发送给服务器；</li>
+<li>服务器对浏览器请求作出响应，并把对应的 html 文本发送给浏览器；</li>
+<li>释放 TCP 连接（四次挥手）</li>
+<li>浏览器将该 html 文本导出并显示内容</li>
+</ol>
+<h2 id="4-Cookie、sessionStorage、localStorage-区别"><a href="#4-Cookie、sessionStorage、localStorage-区别" class="headerlink" title="4.Cookie、sessionStorage、localStorage 区别"></a>4.Cookie、sessionStorage、localStorage 区别</h2><p>共同点：都是保存在浏览器端，且同源的。</p>
+<p>区别：</p>
+<ol>
+<li>cookie 数据始终在同源的 http 请求中携带，即 cookie 在浏览器中和服务器间来回传递。sessionStorage 和 localStorage 不会自动把数据发给服务器，仅在本地保存。</li>
+<li>cookie 数据不能超过 4k(适合保存小数据)。sessionStorage 和 localStorage 容量较大。</li>
+<li>数据有效期不同<ul>
+<li>sessionStorage:仅在当前浏览器窗口关闭前有效。</li>
+<li>localStorage:始终有效，窗口或浏览器关闭也一直保存，需手动清除。</li>
+<li>cookie 只在设置的 cookie 过期时间之前一直有效，即使窗口或浏览器关闭。</li>
+</ul>
+</li>
+<li>作用域不同。<ul>
+<li>sessionStorage 不在不同的浏览器窗口中共享。</li>
+<li>localStorage 在所有同源窗口中都是共享的。</li>
+<li>cookie 也是在所有同源窗口中都是共享的。</li>
+</ul>
+</li>
+<li>应用场景<ul>
+<li>localStorage：常用于长期登录（+判断用户是否已登录），适合长期保存在本地的数据。</li>
+<li>sessionStorage：敏感账号一次性登录。</li>
+<li>cookie 与服务器交互。</li>
+</ul>
+</li>
+</ol>
+<h2 id="5-原型和原型链"><a href="#5-原型和原型链" class="headerlink" title="5.原型和原型链"></a>5.原型和原型链</h2><p>创建了一个函数就会为其创建一个 prototype 属性，指向这个函数的原型对象，原型对象会自动获得 constructor 属性，指向 prototype 属性所在函数。</p>
+<p>当一个对象调用某个方法或者属性的时候，先在自身查找，如果找到就调用，如果没有就顺着<strong>proto</strong>到原型对象中查找，如果还没有就继续去原型的原型中查找，一直到 null，这样形成一条链叫做原型链。</p>
+<h2 id="6-作用域和闭包"><a href="#6-作用域和闭包" class="headerlink" title="6.作用域和闭包"></a>6.作用域和闭包</h2><p>作用域可理解为该上下文中声明的<strong>变量和声明的作用范围</strong>。</p>
+<p>闭包属于一种特殊的作用域，称为静态作用域。它的定义可以理解为：<strong>父函数被销毁</strong>的情况下，返回出的子函数仍然可以继续访问到父级的变量对象，这样的函数称为闭包。</p>
+<ul>
+<li>闭包会产生一个很经典的问题：<ul>
+<li>多个子函数的都是同时指向父级，是完全共享的。因此当父级的变量对象被修改时，所有子函数都受到影响。</li>
+</ul>
+</li>
+</ul>
+<h2 id="7-this-的指向问题"><a href="#7-this-的指向问题" class="headerlink" title="7.this 的指向问题"></a>7.this 的指向问题</h2><p>口诀：箭头函数、new、bind、apply 和 call、欧比届点（obj.）、直接调用、不在函数里。</p>
+<h3 id="1-箭头函数"><a href="#1-箭头函数" class="headerlink" title="1.箭头函数"></a>1.箭头函数</h3><p>箭头函数 this 不会被改变</p>
+<ol>
+<li>创建箭头函数时，就已经确定了它的 this 指向。</li>
+<li>箭头韩式内的 this 指向<strong>外层的 this。</strong></li>
+</ol>
+<h3 id="2-new"><a href="#2-new" class="headerlink" title="2.new"></a>2.new</h3><p><strong>当使用 new 关键字调用函数时，函数中的 this 一定是 JS 创建的新对象</strong>。</p>
+<h3 id="3-bind"><a href="#3-bind" class="headerlink" title="3.bind"></a>3.bind</h3><p>bind 指 Function.prototype.bind()</p>
+<h4 id="多次-bind-时只认第一次-bind-的值"><a href="#多次-bind-时只认第一次-bind-的值" class="headerlink" title="多次 bind 时只认第一次 bind 的值"></a>多次 bind 时只认第一次 bind 的值</h4><pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">function</span> <span class="token function">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token function">func</span><span class="token punctuation">.</span><span class="token function">bind</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">bind</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="箭头函数中-this-不会被修改"><a href="#箭头函数中-this-不会被修改" class="headerlink" title="箭头函数中 this 不会被修改"></a>箭头函数中 this 不会被修改</h4><pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token function-variable function">func</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token function">func</span><span class="token punctuation">.</span><span class="token function">bind</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//window 口诀1优先</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="4-apply-和-call"><a href="#4-apply-和-call" class="headerlink" title="4.apply 和 call"></a>4.apply 和 call</h3><p><code>apply()</code>和<code>call()</code>的第一个参数都是 this，区别在于通过 apply 调用时实参是放到数组中的，而通过 call 调用时实参是逗号分隔的。</p>
+<h4 id="bind-函数中-this-不会被修改"><a href="#bind-函数中-this-不会被修改" class="headerlink" title="bind 函数中 this 不会被修改"></a>bind 函数中 this 不会被修改</h4><pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token function-variable function">func</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+  <span class="token comment">//这里this指向取决于外层this，参考口诀7不在函数里</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token function">func</span><span class="token punctuation">.</span><span class="token function">apply</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="5-欧比届点-obj"><a href="#5-欧比届点-obj" class="headerlink" title="5.欧比届点(obj.)"></a>5.欧比届点(obj.)</h3><pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">function</span> <span class="token function">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+obj <span class="token operator">=</span> <span class="token punctuation">&#123;</span> x<span class="token operator">:</span> <span class="token number">1</span> <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+obj<span class="token punctuation">.</span>func <span class="token operator">=</span> func<span class="token punctuation">;</span>
+obj<span class="token punctuation">.</span><span class="token function">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="6-直接调用"><a href="#6-直接调用" class="headerlink" title="6.直接调用"></a>6.直接调用</h3><p>在函数不满足前面的场景，被直接调用时，this 将指向全局对象。在浏览器环境中全局对象是 Window</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">function</span> <span class="token function">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token function">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//window</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="7-不在函数里"><a href="#7-不在函数里" class="headerlink" title="7.不在函数里"></a>7.不在函数里</h3><p>不在函数中的场景，可分为浏览器的 <code>&lt;script /&gt;</code> 标签里，或 Node.js 的模块文件里。</p>
+<ol>
+<li>在 <code>&lt;script /&gt;</code> 标签里，this 指向 Window。</li>
+<li>在 Node.js 的模块文件里，this 指向 Module 的默认导出对象，也就是 module.exports。</li>
+</ol>
+<h2 id="9-数组去重"><a href="#9-数组去重" class="headerlink" title="9.数组去重"></a>9.数组去重</h2><ol>
+<li>定义一个新数组，并存放原数组的第一个元素，然后将元素组一一和新数组的元素对比，若不同则存放在新数组中。</li>
+<li>先将原数组排序，再与相邻的进行比较，如果不同则存入新数组。</li>
+<li>利用对象属性存在的特性，如果没有该属性则存入新数组。</li>
+</ol>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token class-name">Array</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">unique</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">let</span> arr <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">,</span>
+    obj <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    result <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> arr<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>obj<span class="token punctuation">[</span>arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      <span class="token comment">//如果能查找到，证明数组元素重复了</span>
+      obj<span class="token punctuation">[</span>arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+      result<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span>
+  <span class="token keyword">return</span> result<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token keyword">let</span> a <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">let</span> b <span class="token operator">=</span> a<span class="token punctuation">.</span><span class="token function">unique</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//打印结果：(3)[1,2,3]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ol start="4">
+<li><p>使用 es6 set,Set 数据结构，它类似于数组，其成员的值都是唯一的</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">let</span> arr <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token operator">...</span><span class="token keyword">new</span> <span class="token class-name">Set</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
+<li><p>使用 filter 过滤函数去重</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">let</span> arr <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>arr<span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">v<span class="token punctuation">,</span> i<span class="token punctuation">,</span> arr</span><span class="token punctuation">)</span> <span class="token operator">=></span> arr<span class="token punctuation">.</span><span class="token function">indexOf</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span> <span class="token operator">===</span> i<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h2 id="10-防抖、节流"><a href="#10-防抖、节流" class="headerlink" title="10.防抖、节流"></a>10.防抖、节流</h2></li>
+</ol>
+<p>防抖：触发高频函数事件后，n 秒内函数只能执行一次，如果在 n 秒内这个事件再次被触发的话，那么会重新计算时间。</p>
+<p>​ 通常使用场景：用户输入，只需再输入完成后做一次输入校验即可。</p>
+<p>节流：指连续触发事件但是在 n 秒内只执行一次函数。节流会稀释函数的执行频率。</p>
+<p>​ 通常使用场景:滚动条事件或者 resize 事件，通常每隔 100~500ms 执行一次即可。</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">//防抖</span>
+<span class="token keyword">function</span> <span class="token function">debounce</span><span class="token punctuation">(</span><span class="token parameter">func<span class="token punctuation">,</span>wait</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+	<span class="token keyword">let</span> timeout<span class="token punctuation">;</span>
+	<span class="token keyword">return</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>itmeout<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+	<span class="token function">clearTimeout</span><span class="token punctuation">(</span>timeout<span class="token punctuation">)</span>
+	<span class="token punctuation">&#125;</span>
+	timeout <span class="token operator">=</span> <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=></span><span class="token punctuation">&#123;</span>
+	<span class="token function">func</span><span class="token punctuation">.</span><span class="token function">apply</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span>arguments<span class="token punctuation">)</span>
+	<span class="token punctuation">&#125;</span><span class="token punctuation">,</span>wait<span class="token punctuation">&#125;</span>
+	<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token comment">//节流</span>
+<span class="token keyword">function</span> <span class="token function">throttle</span><span class="token punctuation">(</span><span class="token parameter">func<span class="token punctuation">,</span>wait</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+	<span class="token keyword">let</span> timeout<span class="token punctuation">;</span>
+	<span class="token keyword">return</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>timeout<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+		timeout <span class="token operator">=</span> <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=></span><span class="token punctuation">&#123;</span>
+		timeout <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+		<span class="token function">func</span><span class="token punctuation">.</span><span class="token function">apply</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> arguments<span class="token punctuation">)</span>
+		<span class="token punctuation">&#125;</span><span class="token punctuation">,</span>wait<span class="token punctuation">)</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="11-ES6-的新特性"><a href="#11-ES6-的新特性" class="headerlink" title="11.ES6 的新特性"></a>11.ES6 的新特性</h2><ol>
+<li>声明 let / const</li>
+<li>解构赋值</li>
+<li>class/extend:类声明与继承</li>
+<li>Set / Map：新的数据结构</li>
+<li>箭头函数</li>
+<li>promise</li>
+<li>async/await</li>
+<li>数组/对象的扩展</li>
+</ol>
+<h2 id="12-跨域"><a href="#12-跨域" class="headerlink" title="12.跨域"></a>12.跨域</h2><h3 id="1-为什么会出现跨域问题"><a href="#1-为什么会出现跨域问题" class="headerlink" title="1.为什么会出现跨域问题"></a>1.为什么会出现跨域问题</h3><blockquote>
+<p>同源策略限制 不同源会造成跨域。以下任意一种情况不同，都是不同源。</p>
+</blockquote>
+<h3 id="2-什么情况才算做跨域"><a href="#2-什么情况才算做跨域" class="headerlink" title="2.什么情况才算做跨域"></a>2.什么情况才算做跨域</h3><p>非同源请求，均为跨域。名词解释：同源——如果两个页面拥有相同的协议(protocol)，端口(port)和主机(host)，那么这两个页面属于同一个源(origin)。</p>
+<h3 id="3-为什么有跨域需求？"><a href="#3-为什么有跨域需求？" class="headerlink" title="3.为什么有跨域需求？"></a>3.为什么有跨域需求？</h3><p>场景——工程服务化后，不同职责的服务分散在不同的工程中，往往这些工程的域名是不同的，但一个需求可能需要对应多个服务</p>
+<h3 id="4-如何实现跨域"><a href="#4-如何实现跨域" class="headerlink" title="4.如何实现跨域"></a>4.如何实现跨域</h3><h3 id="三种跨域方法"><a href="#三种跨域方法" class="headerlink" title="三种跨域方法"></a>三种跨域方法</h3><ul>
+<li>JSONP</li>
+<li>CORS</li>
+<li>postMessage</li>
+</ul>
+<h4 id="1-JSONP-只能解决-get-跨域"><a href="#1-JSONP-只能解决-get-跨域" class="headerlink" title="1.JSONP 只能解决 get 跨域"></a>1.JSONP 只能解决 get 跨域</h4><p><strong>单纯地为了实现跨域请求而创造的一个 trick。</strong></p>
+<p><strong>原理：动态创建一个 script 标签。利用 script 标签的 src 属性不受同源策略限制。因为所有的 src 属性和 href 属性都不受同源策略限制。可以请求第三方服务器数据内容。</strong></p>
+<h5 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h5><ol>
+<li><p>去创建一个 script 标签</p>
+</li>
+<li><p>script 的 src 属性设置接口地址</p>
+</li>
+<li><p>接口参数，必须要带一个自定义函数名，要不然后台无法返回数据</p>
+</li>
+<li><p>通过定义函数名器接受后台返回数据</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">//去创建一个script标签</span>
+<span class="token keyword">var</span> script <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">createElement</span><span class="token punctuation">(</span><span class="token string">'script'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">//script的src属性设置接口地址 并带一个callback回调函数名称</span>
+script<span class="token punctuation">.</span>src <span class="token operator">=</span> <span class="token string">'http://127.0.0.1:8888/index.php?callback=jsonpCallback'</span><span class="token punctuation">;</span>
+<span class="token comment">//插入到页面</span>
+document<span class="token punctuation">.</span>head<span class="token punctuation">.</span><span class="token function">appendChild</span><span class="token punctuation">(</span>script<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">//通过定义函数名去接收后台返回数据</span>
+<span class="token keyword">function</span> <span class="token function">jsonpCallback</span><span class="token punctuation">(</span><span class="token parameter">data</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token comment">//注意  jsonp返回的数据是json对象可以直接使用</span>
+  <span class="token comment">//ajax  取得数据是json字符串需要转换成json对象才可以使用。</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="2-CORS：跨域资源共享"><a href="#2-CORS：跨域资源共享" class="headerlink" title="2.CORS：跨域资源共享"></a>2.CORS：跨域资源共享</h4></li>
+</ol>
+<ul>
+<li><strong>原理：服务器设置 Access-Control-Allow-OriginHTTP 响应头之后，浏览器将会允许跨域请求</strong></li>
+<li><strong>限制：浏览器需要支持 HTML5，可以支持 POST，PUT 等方法兼容 ie9 以上</strong></li>
+</ul>
+<pre class="line-numbers language-html" data-language="html"><code class="language-html">需要后台设置 Access-Control-Allow-Origin: * //允许所有域名访问，或者
+Access-Control-Allow-Origin: http://a.com //只允许所有域名访问<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h4 id="3-设置-document-domain"><a href="#3-设置-document-domain" class="headerlink" title="3.设置 document.domain"></a>3.设置 document.domain</h4><ul>
+<li><strong>原理：相同主域名不同子域名下的页面，可以设置 document.domain 让他们同域</strong></li>
+<li><strong>限制：同域 document 提供的是页面间的互操作，需要载入 iframe 页面</strong></li>
+</ul>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// URL http://a.com/foo</span>
+<span class="token keyword">var</span> ifr <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">createElement</span><span class="token punctuation">(</span><span class="token string">'iframe'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ifr<span class="token punctuation">.</span>src <span class="token operator">=</span> <span class="token string">'http://b.a.com/bar'</span><span class="token punctuation">;</span>
+ifr<span class="token punctuation">.</span><span class="token function-variable function">onload</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">var</span> ifrdoc <span class="token operator">=</span> ifr<span class="token punctuation">.</span>contentDocument <span class="token operator">||</span> ifr<span class="token punctuation">.</span>contentWindow<span class="token punctuation">.</span>document<span class="token punctuation">;</span>
+    ifrdoc<span class="token punctuation">.</span><span class="token function">getElementsById</span><span class="token punctuation">(</span><span class="token string">"foo"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>innerHTML<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+ifr<span class="token punctuation">.</span>style<span class="token punctuation">.</span>display <span class="token operator">=</span> <span class="token string">'none'</span><span class="token punctuation">;</span>
+document<span class="token punctuation">.</span>body<span class="token punctuation">.</span><span class="token function">appendChild</span><span class="token punctuation">(</span>ifr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="4-用-Apache-做转发-逆向代理-，让跨域变同域"><a href="#4-用-Apache-做转发-逆向代理-，让跨域变同域" class="headerlink" title="4.用 Apache 做转发(逆向代理)，让跨域变同域"></a>4.用 Apache 做转发(逆向代理)，让跨域变同域</h3><h2 id="13-TCP-IP-分为几层？各层的作用是什么"><a href="#13-TCP-IP-分为几层？各层的作用是什么" class="headerlink" title="13.TCP/IP 分为几层？各层的作用是什么?"></a>13.TCP/IP 分为几层？各层的作用是什么?</h2><ol>
+<li>应用层 2.传输层 3.网络层 4.网络接口层</li>
+</ol>
+<ul>
+<li>1、应用层<ul>
+<li>TCP/IP 协议族在这一层面有着很多协议来支持不同的应用，许多大家所熟悉的基于 Internet 的应用的实现就离不开这些协议。如我们进行万维网（WWW）访问用到了 HTTP 协议、文件传输用 FTP 协议、电子邮件发送用 SMTP、域名的解析用 DNS 协议、远程登录用 Telnet 协议等等，都是属于 TCP/IP 应用层的；就用户而言，看到的是由一个个软件所构筑的大多为图形化的操作界面，而实际后台运行的便是上述协议。（FTP、SMTP、telnet、DNS、tftp）</li>
+</ul>
+</li>
+<li>2、传输层<ul>
+<li>这一层的的功能主要是提供应用程序间的通信，TCP/IP 协议族在这一层的协议有 TCP 和 UDP。（UDP）</li>
+</ul>
+</li>
+<li>3、 网络层<ul>
+<li>是 TCP/IP 协议族中非常关键的一层，主要定义了 IP 地址格式，从而能够使得不同应用类型的数据在 Internet 上通畅地传输，IP 协议就是一个网络层协议。（IP 数据包）</li>
+</ul>
+</li>
+<li>4、网络接口层<ul>
+<li>这是 TCP/IP 软件的最低层，负责接收 IP 数据包并通过网络发送之，或者从网络上接收物理帧，抽出 IP 数据报，交给 IP 层。(帧，网络接口协议)</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/front/" rel="tag"># front</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/03/07/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="prev" title="前端面试题">
+                  <i class="fa fa-chevron-left"></i> 前端面试题
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/03/22/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/" rel="next" title="数据结构和算法">
+                  数据结构和算法 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Colorfuls</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共32.2k字</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+    <div class="pjax">
+
+
+  
+    </div>
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+</body>
+</html>
