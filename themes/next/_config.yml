@@ -11,7 +11,7 @@
 
 auto_excerpt:
   enable: true
-  length: 150
+  length: 100
 
 # Allow to cache content generation.
 cache:
