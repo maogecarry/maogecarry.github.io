@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","version":"8.2.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="此内容是我在工作对数据处理时遇到的问题，对该问题进行总结。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据排序换行合并">
+<meta property="og:url" content="http://example.com/2021/08/14/%E6%95%B0%E6%8D%AE%E6%8E%92%E5%BA%8F%E6%8D%A2%E8%A1%8C%E5%90%88%E5%B9%B6/index.html">
+<meta property="og:site_name" content="Colorfuls-Blogs">
+<meta property="og:description" content="此内容是我在工作对数据处理时遇到的问题，对该问题进行总结。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-08-14T10:23:55.000Z">
+<meta property="article:modified_time" content="2021-08-14T02:41:13.177Z">
+<meta property="article:author" content="Colorfuls">
+<meta property="article:tag" content="antd">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2021/08/14/%E6%95%B0%E6%8D%AE%E6%8E%92%E5%BA%8F%E6%8D%A2%E8%A1%8C%E5%90%88%E5%B9%B6/">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>数据排序换行合并 | Colorfuls-Blogs</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Colorfuls-Blogs</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">追风去</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-article"><a href="/article" rel="section"><i class="fa fa-newspaper fa-fw"></i>文章</a></li>
+        <li class="menu-item menu-item-teach"><a href="/teach" rel="section"><i class="fa fa-address-card fa-fw"></i>教程</a></li>
+        <li class="menu-item menu-item-site"><a href="/site" rel="section"><i class="fa fa-star fa-fw"></i>站点</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Colorfuls</p>
+  <div class="site-description" itemprop="description">前路浩浩荡荡，万事皆可期待。</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/maogecarry" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;maogecarry" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/14/%E6%95%B0%E6%8D%AE%E6%8E%92%E5%BA%8F%E6%8D%A2%E8%A1%8C%E5%90%88%E5%B9%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Colorfuls">
+      <meta itemprop="description" content="前路浩浩荡荡，万事皆可期待。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Colorfuls-Blogs">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          数据排序换行合并
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-08-14 10:23:55 / 修改时间：02:41:13" itemprop="dateCreated datePublished" datetime="2021-08-14T10:23:55+00:00">2021-08-14</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>此内容是我在工作对数据处理时遇到的问题，对该问题进行总结。</p>
+<a id="more"></a>
+
+<p>原数据如下</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">const</span> originData <span class="token operator">=</span> <span class="token punctuation">[</span>
+  <span class="token punctuation">&#123;</span> shr<span class="token operator">:</span> <span class="token string">'成-古力·古力'</span><span class="token punctuation">,</span> shsj<span class="token operator">:</span> <span class="token string">'2021-08-12 17:29:56'</span><span class="token punctuation">,</span> shyj<span class="token operator">:</span> <span class="token string">''</span><span class="token punctuation">,</span> sphj<span class="token operator">:</span> <span class="token string">'任务发起人'</span><span class="token punctuation">,</span> spjg<span class="token operator">:</span> <span class="token string">'【同意】'</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token punctuation">&#123;</span> shr<span class="token operator">:</span> <span class="token string">'凉皮'</span><span class="token punctuation">,</span> shsj<span class="token operator">:</span> <span class="token string">'2021-08-12 17:33:06'</span><span class="token punctuation">,</span> shyj<span class="token operator">:</span> <span class="token string">'1'</span><span class="token punctuation">,</span> sphj<span class="token operator">:</span> <span class="token string">'发起人部长'</span><span class="token punctuation">,</span> spjg<span class="token operator">:</span> <span class="token string">'【同意】'</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token punctuation">&#123;</span> shr<span class="token operator">:</span> <span class="token string">'系统管理员'</span><span class="token punctuation">,</span> shsj<span class="token operator">:</span> <span class="token string">'2021-08-12 17:42:58'</span><span class="token punctuation">,</span> shyj<span class="token operator">:</span> <span class="token string">'所有子流程结束后办理子流程节点任务'</span><span class="token punctuation">,</span> sphj<span class="token operator">:</span> <span class="token string">'子流程'</span><span class="token punctuation">,</span> spjg<span class="token operator">:</span> <span class="token string">'【同意】'</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token punctuation">&#123;</span> shr<span class="token operator">:</span> <span class="token string">'凉皮'</span><span class="token punctuation">,</span> shsj<span class="token operator">:</span> <span class="token string">'2021-08-12 17:33:06'</span><span class="token punctuation">,</span> shyj<span class="token operator">:</span> <span class="token string">''</span><span class="token punctuation">,</span> sphj<span class="token operator">:</span> <span class="token string">'所有角色确认'</span><span class="token punctuation">,</span> spjg<span class="token operator">:</span> <span class="token string">'【同意】'</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token punctuation">&#123;</span> shr<span class="token operator">:</span> <span class="token string">'凉皮'</span><span class="token punctuation">,</span> shsj<span class="token operator">:</span> <span class="token string">'2021-08-12 17:37:00'</span><span class="token punctuation">,</span> shyj<span class="token operator">:</span> <span class="token string">'123'</span><span class="token punctuation">,</span> sphj<span class="token operator">:</span> <span class="token string">'业务部门部长组'</span><span class="token punctuation">,</span> spjg<span class="token operator">:</span> <span class="token string">'【同意】'</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token punctuation">&#123;</span> shr<span class="token operator">:</span> <span class="token string">'凉皮'</span><span class="token punctuation">,</span> shsj<span class="token operator">:</span> <span class="token string">'2021-08-12 17:37:00'</span><span class="token punctuation">,</span> shyj<span class="token operator">:</span> <span class="token string">'234'</span><span class="token punctuation">,</span> sphj<span class="token operator">:</span> <span class="token string">'业务部门部长组'</span><span class="token punctuation">,</span> spjg<span class="token operator">:</span> <span class="token string">'【同意】'</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token punctuation">&#123;</span> shr<span class="token operator">:</span> <span class="token string">'凉皮'</span><span class="token punctuation">,</span> shsj<span class="token operator">:</span> <span class="token string">'2021-08-12 17:33:06'</span><span class="token punctuation">,</span> shyj<span class="token operator">:</span> <span class="token string">''</span><span class="token punctuation">,</span> sphj<span class="token operator">:</span> <span class="token string">'所有角色确认'</span><span class="token punctuation">,</span> spjg<span class="token operator">:</span> <span class="token string">'【同意】'</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token punctuation">&#123;</span> shr<span class="token operator">:</span> <span class="token string">'凉皮'</span><span class="token punctuation">,</span> shsj<span class="token operator">:</span> <span class="token string">'2021-08-12 17:33:06'</span><span class="token punctuation">,</span> shyj<span class="token operator">:</span> <span class="token string">''</span><span class="token punctuation">,</span> sphj<span class="token operator">:</span> <span class="token string">'所有角色确认'</span><span class="token punctuation">,</span> spjg<span class="token operator">:</span> <span class="token string">'【同意】'</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token punctuation">&#123;</span> shr<span class="token operator">:</span> <span class="token string">'凉皮'</span><span class="token punctuation">,</span> shsj<span class="token operator">:</span> <span class="token string">'2021-08-12 17:41:59'</span><span class="token punctuation">,</span> shyj<span class="token operator">:</span> <span class="token string">'567'</span><span class="token punctuation">,</span> sphj<span class="token operator">:</span> <span class="token string">'业务部门部长组'</span><span class="token punctuation">,</span> spjg<span class="token operator">:</span> <span class="token string">'【同意】'</span> <span class="token punctuation">&#125;</span>
+<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>因为业务要求，我们需要把数据中的对象进行排序，所以需要对数据进行格式化。</p>
+<p>要求顺序是<code>[&#39;任务发起人&#39;, &#39;发起人部长&#39;, &#39;子流程&#39;, &#39;业务部门部长组&#39;, &#39;所有角色确认&#39;]</code></p>
+<p>因此需要用<code>map</code>和<code>fiter</code>进行数组的格式化，下面为格式化的代码。</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">const</span> <span class="token function-variable function">getFormatData</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">originData</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">const</span> initOrder <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'任务发起人'</span><span class="token punctuation">,</span> <span class="token string">'发起人部长'</span><span class="token punctuation">,</span> <span class="token string">'子流程'</span><span class="token punctuation">,</span> <span class="token string">'业务部门部长组'</span><span class="token punctuation">,</span> <span class="token string">'所有角色确认'</span><span class="token punctuation">]</span>
+  <span class="token keyword">const</span> result <span class="token operator">=</span> initOrder
+    <span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">initOrderItem</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+      <span class="token keyword">const</span> filterItems <span class="token operator">=</span> originData<span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">originDataItem</span><span class="token punctuation">)</span> <span class="token operator">=></span> originDataItem<span class="token punctuation">.</span>sphj <span class="token operator">===</span> initOrderItem<span class="token punctuation">)</span>
+      <span class="token keyword">const</span> count <span class="token operator">=</span> filterItems<span class="token punctuation">.</span>length
+      <span class="token keyword">return</span> filterItems<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">filterItem<span class="token punctuation">,</span> index</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">const</span> rowSpan <span class="token operator">=</span> index <span class="token operator">===</span> <span class="token number">0</span> <span class="token operator">?</span> count <span class="token operator">:</span> <span class="token number">0</span>
+        <span class="token keyword">return</span> <span class="token punctuation">&#123;</span>
+          <span class="token operator">...</span>filterItem<span class="token punctuation">,</span>
+          rowSpan
+        <span class="token punctuation">&#125;</span>
+      <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">flat</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword">return</span> result
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这个代码的思路是这样的，我们对自己创建的数组进行遍历，然后用<code>filter</code>去过滤，当发现原数组对象中有审批环节和数组中的内容对应了，即放在一起，拆解下来是这样的。</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">const</span> <span class="token function-variable function">getFormatData</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">originData</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">const</span> initOrder <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'任务发起人'</span><span class="token punctuation">,</span> <span class="token string">'发起人部长'</span><span class="token punctuation">,</span> <span class="token string">'子流程'</span><span class="token punctuation">,</span> <span class="token string">'业务部门部长组'</span><span class="token punctuation">,</span> <span class="token string">'所有角色确认'</span><span class="token punctuation">]</span>
+  <span class="token keyword">const</span> result <span class="token operator">=</span> initOrder
+    <span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">initOrderItem</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+      <span class="token keyword">return</span> originData<span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">originDataItem</span><span class="token punctuation">)</span> <span class="token operator">=></span> originDataItem<span class="token punctuation">.</span>sphj <span class="token operator">===</span> initOrderItem<span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">flat</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword">return</span> result
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这段代码即是将数据内容进行排序，因为在进行遍历时，会有两层数组嵌套，所以要使用flat将数组进行扁平化处理。</p>
+<p>下面的换行则要对内部的数据进行处理。</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">const</span> <span class="token function-variable function">getFormatData</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">originData</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">const</span> initOrder <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'任务发起人'</span><span class="token punctuation">,</span> <span class="token string">'发起人部长'</span><span class="token punctuation">,</span> <span class="token string">'子流程'</span><span class="token punctuation">,</span> <span class="token string">'业务部门部长组'</span><span class="token punctuation">,</span> <span class="token string">'所有角色确认'</span><span class="token punctuation">]</span>
+  <span class="token keyword">const</span> result <span class="token operator">=</span> initOrder
+    <span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">initOrderItem</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+      <span class="token keyword">const</span> filterItems <span class="token operator">=</span> originData<span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">originDataItem</span><span class="token punctuation">)</span> <span class="token operator">=></span> originDataItem<span class="token punctuation">.</span>sphj <span class="token operator">===</span> initOrderItem<span class="token punctuation">)</span>
+      <span class="token keyword">const</span> count <span class="token operator">=</span> filterItems<span class="token punctuation">.</span>length
+      <span class="token keyword">return</span> filterItems<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">filterItem<span class="token punctuation">,</span> index</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">const</span> rowSpan <span class="token operator">=</span> index <span class="token operator">===</span> <span class="token number">0</span> <span class="token operator">?</span> count <span class="token operator">:</span> <span class="token number">0</span>
+        <span class="token keyword">return</span> <span class="token punctuation">&#123;</span>
+          <span class="token operator">...</span>filterItem<span class="token punctuation">,</span>
+          rowSpan
+        <span class="token punctuation">&#125;</span>
+      <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">flat</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword">return</span> result
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>数据中的<code>filterItems</code>是相同类型的对象放在一个数组里面，因此我们先得到它的长度，在<code>antd</code>中，我们将<code>rowSpan</code>置为0，则不渲染下一行，所以这里要对数据长度进行判断，再进行一次数据的遍历，使用map的第二个可选属性，<code>index</code>，index指数组的索引，从0开始，在这里我们使用三元运算符判断，如果<code>index===0</code>，则说明它是第一个元素，将长度赋给<code>rowSpan</code>，多出的元素则将<code>rowSpan</code>置为0，不对该行进行渲染，则可以实现行的合并，由此，所有的内容都可实现行合并，该函数可以在其他地方也被调用，只需要更改数组中的数据即可，个人认为可复用性较大。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/antd/" rel="tag"># antd</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/08/01/Axios/" rel="prev" title="Axios">
+                  <i class="fa fa-chevron-left"></i> Axios
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Colorfuls</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共35.1k字</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+    <div class="pjax">
+
+
+  
+    </div>
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+</body>
+</html>
