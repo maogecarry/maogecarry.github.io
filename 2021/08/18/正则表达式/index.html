@@ -31,7 +31,7 @@
 <meta property="og:description" content="正则表达式其实就是在执行搜索时的格式，它由一些字母和数字组合而成。 例如：一个正则表达式 the，它表示一个规则：由字母t开始，接着是h，再接着是e。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-08-18T14:39:11.000Z">
-<meta property="article:modified_time" content="2021-08-19T07:38:49.692Z">
+<meta property="article:modified_time" content="2021-08-19T07:51:59.353Z">
 <meta property="article:author" content="Colorfuls">
 <meta property="article:tag" content="正则表达式">
 <meta name="twitter:card" content="summary">
@@ -286,7 +286,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-08-19 07:38:49" itemprop="dateModified" datetime="2021-08-19T07:38:49+00:00">2021-08-19</time>
+        <time title="修改时间：2021-08-19 07:51:59" itemprop="dateModified" datetime="2021-08-19T07:51:59+00:00">2021-08-19</time>
       </span>
 
   
@@ -299,7 +299,68 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>正则表达式其实就是在执行搜索时的格式，它由一些字母和数字组合而成。 例如：一个正则表达式 the，它表示一个规则：由字母t开始，接着是h，再接着是e。<br>   <a id="more"></a><br>您需要检查数据库中的所有用户名。以下是用户在创建用户名时必须遵循的一些简单规则。</p>
+        <p>正则表达式其实就是在执行搜索时的格式，它由一些字母和数字组合而成。 例如：一个正则表达式 the，它表示一个规则：由字母t开始，接着是h，再接着是e。<br>   <a id="more"></a><br>     正则表达式提供一些常用的字符集简写。如下:</p>
+<table>
+<thead>
+<tr>
+<th>简写</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>.</td>
+<td>除换行符外的所有字符</td>
+</tr>
+<tr>
+<td>\w</td>
+<td>匹配所有字母数字，等同于 <code>[a-zA-Z0-9_]</code></td>
+</tr>
+<tr>
+<td>\W</td>
+<td>匹配所有非字母数字，即符号，等同于： <code>[^\w]</code></td>
+</tr>
+<tr>
+<td>\d</td>
+<td>匹配数字： <code>[0-9]</code></td>
+</tr>
+<tr>
+<td>\D</td>
+<td>匹配非数字： <code>[^\d]</code></td>
+</tr>
+<tr>
+<td>\s</td>
+<td>匹配所有空格字符，等同于： <code>[\t\n\f\r\p&#123;Z&#125;]</code></td>
+</tr>
+<tr>
+<td>\S</td>
+<td>匹配所有非空格字符： <code>[^\s]</code></td>
+</tr>
+<tr>
+<td>\f</td>
+<td>匹配一个换页符</td>
+</tr>
+<tr>
+<td>\n</td>
+<td>匹配一个换行符</td>
+</tr>
+<tr>
+<td>\r</td>
+<td>匹配一个回车符</td>
+</tr>
+<tr>
+<td>\t</td>
+<td>匹配一个制表符</td>
+</tr>
+<tr>
+<td>\v</td>
+<td>匹配一个垂直制表符</td>
+</tr>
+<tr>
+<td>\p</td>
+<td>匹配 CR/LF（等同于 <code>\r\n</code>），用来匹配 DOS 行终止符</td>
+</tr>
+</tbody></table>
+<p>您需要检查数据库中的所有用户名。以下是用户在创建用户名时必须遵循的一些简单规则。</p>
 <ol>
 <li>用户名只能使用字母数字字符。</li>
 <li>用户名中唯一的数字必须在末尾。最后可以有零个或多个。用户名不能以数字开头。</li>
@@ -439,7 +500,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共35.9k字</span>
+  <span class="post-count">博客全站共36.1k字</span>
 </div>
 
     </div>
