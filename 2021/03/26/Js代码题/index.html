@@ -30,8 +30,8 @@
 <meta property="og:site_name" content="Colorfuls-Blogs">
 <meta property="og:description" content="function Bar() &amp;#123;   return;   &amp;#123;     a: 1;   &amp;#125; &amp;#125; const f &#x3D; Bar(); console.log(f.a); 输出 error，因为return后没有值，即使格式化也没有用，因此下方的Object和return没有关联">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-03-26T06:46:50.000Z">
-<meta property="article:modified_time" content="2021-05-10T07:32:55.509Z">
+<meta property="article:published_time" content="2021-03-26T14:46:50.000Z">
+<meta property="article:modified_time" content="2021-08-19T07:38:49.692Z">
 <meta property="article:author" content="Colorfuls">
 <meta property="article:tag" content="JavaScript">
 <meta name="twitter:card" content="summary">
@@ -190,7 +190,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#js-%E5%B0%86%E5%A4%9A%E5%B1%82%E5%B5%8C%E5%A5%97%E7%9A%84%E6%95%B0%E7%BB%84%E8%BD%AC%E6%8D%A2%E4%B8%BA%E4%B8%80%E5%B1%82%E6%95%B0%E7%BB%84"><span class="nav-number">1.</span> <span class="nav-text">js 将多层嵌套的数组转换为一层数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%8B%E5%86%99%E9%98%B2%E6%8A%96%E8%8A%82%E6%B5%81"><span class="nav-number">2.</span> <span class="nav-text">手写防抖节流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E9%81%93%E7%BB%8F%E5%85%B8%E9%9D%A2%E8%AF%95%E9%A2%98%E2%80%94setTimeout-function-0"><span class="nav-number">3.</span> <span class="nav-text">一道经典面试题—setTimeout(function(){},0)</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#js-%E5%B0%86%E5%A4%9A%E5%B1%82%E5%B5%8C%E5%A5%97%E7%9A%84%E6%95%B0%E7%BB%84%E8%BD%AC%E6%8D%A2%E4%B8%BA%E4%B8%80%E5%B1%82%E6%95%B0%E7%BB%84"><span class="nav-number">1.</span> <span class="nav-text">js 将多层嵌套的数组转换为一层数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%8B%E5%86%99%E9%98%B2%E6%8A%96%E8%8A%82%E6%B5%81"><span class="nav-number">2.</span> <span class="nav-text">手写防抖节流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E9%81%93%E7%BB%8F%E5%85%B8%E9%9D%A2%E8%AF%95%E9%A2%98%E2%80%94setTimeout-function-0"><span class="nav-number">3.</span> <span class="nav-text">一道经典面试题—setTimeout(function(){},0)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D"><span class="nav-number">4.</span> <span class="nav-text">实现一个简单的数组去重</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -279,14 +279,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2021-03-26 06:46:50" itemprop="dateCreated datePublished" datetime="2021-03-26T06:46:50+00:00">2021-03-26</time>
+      <time title="创建时间：2021-03-26 14:46:50" itemprop="dateCreated datePublished" datetime="2021-03-26T14:46:50+00:00">2021-03-26</time>
     </span>
       <span class="post-meta-item">
         <span class="post-meta-item-icon">
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-05-10 07:32:55" itemprop="dateModified" datetime="2021-05-10T07:32:55+00:00">2021-05-10</time>
+        <time title="修改时间：2021-08-19 07:38:49" itemprop="dateModified" datetime="2021-08-19T07:38:49+00:00">2021-08-19</time>
       </span>
 
   
@@ -379,6 +379,14 @@ console<span class="token punctuation">.</span><span class="token function">log<
   console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
 <span class="token comment">//输出为0,1,2,0,1,2</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="实现一个简单的数组去重"><a href="#实现一个简单的数组去重" class="headerlink" title="实现一个简单的数组去重"></a>实现一个简单的数组去重</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">let</span> arr <span class="token operator">=</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">]</span>
+arr<span class="token punctuation">.</span><span class="token function">reduce</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">accumulator<span class="token punctuation">,</span> currentValue</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>accumulator<span class="token punctuation">.</span><span class="token function">includes</span><span class="token punctuation">(</span>currentValue<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      <span class="token keyword">return</span>  <span class="token punctuation">[</span> <span class="token operator">...</span>accumulator<span class="token punctuation">,</span> currentValue <span class="token punctuation">]</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> accumulator
+<span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
     </div>
 
     
