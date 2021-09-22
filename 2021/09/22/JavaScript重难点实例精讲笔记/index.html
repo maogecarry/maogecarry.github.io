@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","version":"8.2.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="在JavaScript中，每种数据类型都会使用3bit表示。   000表示Object类型的数据。  001表示Int类型的数据。  010表示Double类型的数据。  100表示String类型的数据。  110表示Boolean类型的数据。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript重难点实例精讲笔记">
+<meta property="og:url" content="http://example.com/2021/09/22/JavaScript%E9%87%8D%E9%9A%BE%E7%82%B9%E5%AE%9E%E4%BE%8B%E7%B2%BE%E8%AE%B2%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="Colorfuls-Blogs">
+<meta property="og:description" content="在JavaScript中，每种数据类型都会使用3bit表示。   000表示Object类型的数据。  001表示Int类型的数据。  010表示Double类型的数据。  100表示String类型的数据。  110表示Boolean类型的数据。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-09-22T17:38:09.000Z">
+<meta property="article:modified_time" content="2021-09-22T09:41:12.929Z">
+<meta property="article:author" content="Colorfuls">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2021/09/22/JavaScript%E9%87%8D%E9%9A%BE%E7%82%B9%E5%AE%9E%E4%BE%8B%E7%B2%BE%E8%AE%B2%E7%AC%94%E8%AE%B0/">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>JavaScript重难点实例精讲笔记 | Colorfuls-Blogs</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Colorfuls-Blogs</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">追风去</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-article"><a href="/article" rel="section"><i class="fa fa-newspaper fa-fw"></i>文章</a></li>
+        <li class="menu-item menu-item-teach"><a href="/teach" rel="section"><i class="fa fa-address-card fa-fw"></i>教程</a></li>
+        <li class="menu-item menu-item-site"><a href="/site" rel="section"><i class="fa fa-star fa-fw"></i>站点</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%97%E5%8F%B7%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">1.</span> <span class="nav-text">逗号运算符</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8for%E5%BE%AA%E7%8E%AF%E4%B8%AD%E6%89%B9%E9%87%8F%E6%89%A7%E8%A1%8C%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">1.1.</span> <span class="nav-text">在for循环中批量执行表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E4%BA%8E%E4%BA%A4%E6%8D%A2%E5%8F%98%E9%87%8F%EF%BC%8C%E6%97%A0%E9%A1%BB%E9%A2%9D%E5%A4%96%E5%8F%98%E9%87%8F"><span class="nav-number">1.2.</span> <span class="nav-text">用于交换变量，无须额外变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E4%BA%8E%E7%AE%80%E5%8C%96%E4%BB%A3%E7%A0%81"><span class="nav-number">1.3.</span> <span class="nav-text">用于简化代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E5%B0%8F%E6%8B%AC%E5%8F%B7%E4%BF%9D%E8%AF%81%E9%80%97%E5%8F%B7%E8%BF%90%E7%AE%97%E7%AC%A6%E7%9A%84%E4%BC%98%E5%85%88%E7%BA%A7"><span class="nav-number">1.4.</span> <span class="nav-text">用小括号保证逗号运算符的优先级</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#toString-%E5%87%BD%E6%95%B0%E4%B8%8EvalueOf-%E5%87%BD%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">toString()函数与valueOf()函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#toString-%E5%87%BD%E6%95%B0"><span class="nav-number">2.1.</span> <span class="nav-text">toString()函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#valueOf-%E5%87%BD%E6%95%B0"><span class="nav-number">2.2.</span> <span class="nav-text">valueOf()函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JavaScript%E5%B8%B8%E7%94%A8%E7%9A%84%E5%88%A4%E7%A9%BA%E6%96%B9%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">JavaScript常用的判空方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A4%E6%96%AD%E5%8F%98%E9%87%8F%E4%B8%BA%E7%A9%BA%E5%AF%B9%E8%B1%A1"><span class="nav-number">3.1.</span> <span class="nav-text">判断变量为空对象</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%A4%E6%96%AD%E5%8F%98%E9%87%8F%E4%B8%BAnull%E6%88%96%E8%80%85undefined"><span class="nav-number">3.1.1.</span> <span class="nav-text">判断变量为null或者undefined</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%A4%E6%96%AD%E5%8F%98%E9%87%8F%E6%98%AF%E5%90%A6%E4%B8%BA%E7%A9%BA%E5%AF%B9%E8%B1%A1"><span class="nav-number">3.1.2.</span> <span class="nav-text">判断变量是否为空对象{}</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%A4%E6%96%AD%E5%8F%98%E9%87%8F%E4%B8%BA%E7%A9%BA%E6%95%B0%E7%BB%84"><span class="nav-number">3.1.3.</span> <span class="nav-text">判断变量为空数组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%A4%E6%96%AD%E5%8F%98%E9%87%8F%E4%B8%BA%E7%A9%BA%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">3.1.4.</span> <span class="nav-text">判断变量为空字符串</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%A4%E6%96%AD%E5%8F%98%E9%87%8F%E4%B8%BA0%E6%88%96%E8%80%85NaN"><span class="nav-number">3.1.5.</span> <span class="nav-text">判断变量为0或者NaN</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E7%94%A8%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">4.</span> <span class="nav-text">引用数据类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Object%E7%B1%BB%E5%9E%8B%E7%9A%84%E9%9D%99%E6%80%81%E5%87%BD%E6%95%B0"><span class="nav-number">5.</span> <span class="nav-text">Object类型的静态函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#object-create-%E5%87%BD%E6%95%B0"><span class="nav-number">5.1.</span> <span class="nav-text">object.create()函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Array%E7%B1%BB%E5%9E%8B"><span class="nav-number">5.2.</span> <span class="nav-text">Array类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%A4%E6%96%AD%E4%B8%80%E4%B8%AA%E5%8F%98%E9%87%8F%E6%98%AF%E6%95%B0%E7%BB%84%E8%BF%98%E6%98%AF%E5%AF%B9%E8%B1%A1"><span class="nav-number">5.2.1.</span> <span class="nav-text">判断一个变量是数组还是对象</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#instanceof%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">5.2.1.1.</span> <span class="nav-text">instanceof运算符</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%A4%E6%96%AD%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="nav-number">5.2.2.</span> <span class="nav-text">判断构造函数</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Colorfuls</p>
+  <div class="site-description" itemprop="description">前路浩浩荡荡，万事皆可期待。</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/maogecarry" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;maogecarry" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/22/JavaScript%E9%87%8D%E9%9A%BE%E7%82%B9%E5%AE%9E%E4%BE%8B%E7%B2%BE%E8%AE%B2%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Colorfuls">
+      <meta itemprop="description" content="前路浩浩荡荡，万事皆可期待。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Colorfuls-Blogs">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JavaScript重难点实例精讲笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-09-22 17:38:09 / 修改时间：09:41:12" itemprop="dateCreated datePublished" datetime="2021-09-22T17:38:09+00:00">2021-09-22</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>在JavaScript中，每种数据类型都会使用3bit表示。</p>
+<ul>
+<li> 000表示Object类型的数据。</li>
+<li> 001表示Int类型的数据。</li>
+<li> 010表示Double类型的数据。</li>
+<li> 100表示String类型的数据。</li>
+<li> 110表示Boolean类型的数据。<a id="more"></a>
+
+</li>
+</ul>
+<p>由于null代表的是空指针，大多数平台中值为0x00，因此null的类型标签就成了0，所以使用typeof运算符时会判断为object类型，返回‘object’</p>
+<h2 id="逗号运算符"><a href="#逗号运算符" class="headerlink" title="逗号运算符"></a>逗号运算符</h2><ol>
+<li><h3 id="在for循环中批量执行表达式"><a href="#在for循环中批量执行表达式" class="headerlink" title="在for循环中批量执行表达式"></a>在for循环中批量执行表达式</h3></li>
+<li><h3 id="用于交换变量，无须额外变量"><a href="#用于交换变量，无须额外变量" class="headerlink" title="用于交换变量，无须额外变量"></a>用于交换变量，无须额外变量</h3><p>一般情况下</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">let</span> a <span class="token operator">=</span> <span class="token string">'a'</span>
+<span class="token keyword">let</span> b <span class="token operator">=</span> <span class="token string">'b'</span>
+<span class="token keyword">let</span> c
+c <span class="token operator">=</span> a 
+a <span class="token operator">=</span> b
+b <span class="token operator">=</span> c<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>使用逗号运算符</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">let</span> a <span class="token operator">=</span> <span class="token string">'a'</span>
+<span class="token keyword">let</span> b <span class="token operator">=</span> <span class="token string">'b'</span>
+<span class="token comment">// 方案1</span>
+a <span class="token operator">=</span> <span class="token punctuation">[</span>b<span class="token punctuation">,</span>b <span class="token operator">=</span> a<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token comment">// 方案2</span>
+a <span class="token operator">=</span> <span class="token punctuation">[</span>b<span class="token punctuation">]</span><span class="token punctuation">[</span>b <span class="token operator">=</span> a<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>在方案1中，前一部分[b, b = a]是一个一维数组，数组第二项值是b = a，实际会将a值赋给b，然后返回“’a’”，因此数组最终的值为[‘b’, ‘a’]，然后取索引0的值为’b’，赋给变量a，最终实现a = ‘b’, b = ‘a’。<br>在方案2中，前一部分[b]是一个一维数组，后一部分[b = a, 0]，实际会先执行b = a，将a值赋给b，然后返回“0”，因此后一部分实际是修改了b的值并返回索引“0”，最终是a = [b][0]，即a = b，实现了a与b的交换。</p>
+</li>
+<li><h3 id="用于简化代码"><a href="#用于简化代码" class="headerlink" title="用于简化代码"></a>用于简化代码</h3><p>因为逗号运算符可以使多个表达式先后执行，并且返回最后一个表达式的值</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">if</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token keyword">return</span> <span class="token function">bar</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">return</span> <span class="token number">1</span>
+<span class="token punctuation">&#125;</span>
+<span class="token comment">// 使用逗号运算符简写后</span>
+x <span class="token operator">?</span> <span class="token punctuation">(</span><span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token function">bar</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token number">1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li><h3 id="用小括号保证逗号运算符的优先级"><a href="#用小括号保证逗号运算符的优先级" class="headerlink" title="用小括号保证逗号运算符的优先级"></a>用小括号保证逗号运算符的优先级</h3><p>在所有的运算符中，逗号运算符的优先级是最低的，因此对于某些涉及优先级的问题，我们需要使用到小括号，将含有逗号运算符的表达式括起来。</p>
+</li>
+</ol>
+<h2 id="toString-函数与valueOf-函数"><a href="#toString-函数与valueOf-函数" class="headerlink" title="toString()函数与valueOf()函数"></a>toString()函数与valueOf()函数</h2><ol>
+<li><h3 id="toString-函数"><a href="#toString-函数" class="headerlink" title="toString()函数"></a>toString()函数</h3><p>toString()函数的作用是把一个逻辑值转换为字符串，并返回结果。</p>
+</li>
+<li><h3 id="valueOf-函数"><a href="#valueOf-函数" class="headerlink" title="valueOf()函数"></a>valueOf()函数</h3><p>valueOf()函数的作用是返回最适合引用类型的原始值，如果没有原始值，则会返回引用类型自身。</p>
+</li>
+</ol>
+<h2 id="JavaScript常用的判空方法"><a href="#JavaScript常用的判空方法" class="headerlink" title="JavaScript常用的判空方法"></a>JavaScript常用的判空方法</h2><p>对变量进行取反，然后判断是否为true</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>x<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+	<span class="token keyword">return</span> <span class="token boolean">true</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h3 id="判断变量为空对象"><a href="#判断变量为空对象" class="headerlink" title="判断变量为空对象"></a>判断变量为空对象</h3><ol>
+<li><h4 id="判断变量为null或者undefined"><a href="#判断变量为null或者undefined" class="headerlink" title="判断变量为null或者undefined"></a>判断变量为null或者undefined</h4><p>判断一个变量是否为空时，可以直接将变量与null或者undefined相比较</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">if</span><span class="token punctuation">(</span>obj <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span> <span class="token comment">// 可以判断null或者undeﬁned</span>
+
+<span class="token keyword">if</span><span class="token punctuation">(</span>obj <span class="token operator">===</span> undeﬁned<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span> <span class="token comment">// 只能判断undeﬁned</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
+<li><h4 id="判断变量是否为空对象"><a href="#判断变量是否为空对象" class="headerlink" title="判断变量是否为空对象{}"></a>判断变量是否为空对象{}</h4><p>判断一个变量是否为空对象时，可以通过for…in语句遍历变量的属性，然后调用hasOwnProperty()函数，判断是否有自身存在的属性，如果存在则不为空对象，如果不存在自身的属性（不包括继承的属性），那么变量为空对象。</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token parameter">obj</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">let</span> key <span class="token keyword">in</span> obj<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>obj<span class="token punctuation">.</span><span class="token function">hasOwnProperty</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span> <span class="token boolean">false</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> <span class="token boolean">true</span>
+<span class="token punctuation">&#125;</span>
+<span class="token comment">// 定义空的对象字面量</span>
+<span class="token keyword">var</span> o <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">function</span> <span class="token function">Person</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+<span class="token class-name">Person</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">'kingx'</span><span class="token punctuation">;</span>
+<span class="token comment">// 通过new操作符获取对象</span>
+<span class="token keyword">var</span> p <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Person</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">isEmpty</span><span class="token punctuation">(</span>o<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// true</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">isEmpty</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// true</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li><h4 id="判断变量为空数组"><a href="#判断变量为空数组" class="headerlink" title="判断变量为空数组"></a>判断变量为空数组</h4><pre class="line-numbers language-js" data-language="js"><code class="language-js">arr <span class="token keyword">instanceof</span> <span class="token class-name">Array</span> <span class="token operator">&amp;&amp;</span> arr<span class="token punctuation">.</span>length <span class="token operator">===</span> <span class="token number">0</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+<li><h4 id="判断变量为空字符串"><a href="#判断变量为空字符串" class="headerlink" title="判断变量为空字符串"></a>判断变量为空字符串</h4><p>判断变量是否为空字符串时，可以直接将其与空字符串相比较，或者调用trim()函数去掉前后的空格，然后判断字符串的长度。</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js">str <span class="token operator">===</span> <span class="token string">''</span> <span class="token operator">||</span> str<span class="token punctuation">.</span><span class="token function">trim</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>length <span class="token operator">===</span> <span class="token number">0</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+<li><h4 id="判断变量为0或者NaN"><a href="#判断变量为0或者NaN" class="headerlink" title="判断变量为0或者NaN"></a>判断变量为0或者NaN</h4><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token operator">!</span><span class="token punctuation">(</span><span class="token function">Number</span><span class="token punctuation">(</span>num<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> num<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token boolean">true</span><span class="token punctuation">;</span> <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h2 id="引用数据类型"><a href="#引用数据类型" class="headerlink" title="引用数据类型"></a>引用数据类型</h2></li>
+</ol>
+<p>在JavaScript中，如果函数没有return值，则默认return this。</p>
+<p>创建一个对象实例，new操作符做了3件事情。</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">Cat</span><span class="token punctuation">(</span><span class="token parameter">name<span class="token punctuation">,</span> age</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+   <span class="token keyword">var</span> Cat <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+   Cat<span class="token punctuation">.</span>name <span class="token operator">=</span> name<span class="token punctuation">;</span>
+   Cat<span class="token punctuation">.</span>age <span class="token operator">=</span> age<span class="token punctuation">;</span>
+   <span class="token keyword">return</span> Cat<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">let</span> cat <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Cat</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 相当于</span>
+<span class="token keyword">let</span> cat <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span> 
+cat<span class="token punctuation">.</span>__proto__ <span class="token operator">=</span> <span class="token class-name">Cat</span><span class="token punctuation">.</span>prototype
+<span class="token function">Cat</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span>cat<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>第一行：创建一个空对象。</p>
+<p>第二行：将空对象的__proto__属性指向Cat对象的prototype属性。</p>
+<p>第三行：将Cat()函数中的this指向cat变量。</p>
+<p>自定义一个类似new功能的函数</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">Cat</span><span class="token punctuation">(</span><span class="token parameter">name<span class="token punctuation">,</span> age</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name<span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>age <span class="token operator">=</span> age<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token class-name">Cat</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">sayHi</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'hi'</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">function</span> <span class="token function">New</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">let</span> obj <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    obj<span class="token punctuation">.</span>__proto__ <span class="token operator">=</span> <span class="token class-name">Cat</span><span class="token punctuation">.</span>prototype <span class="token comment">// 核心代码，用于继承</span>
+    <span class="token keyword">let</span> res <span class="token operator">=</span> <span class="token function">Cat</span><span class="token punctuation">.</span><span class="token function">apply</span><span class="token punctuation">(</span>obj<span class="token punctuation">,</span>arguments<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token keyword">typeof</span> res <span class="token operator">===</span> <span class="token string">'object'</span> <span class="token operator">?</span> res <span class="token operator">:</span> obj
+<span class="token punctuation">&#125;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">New</span><span class="token punctuation">(</span><span class="token string">'mimi'</span><span class="token punctuation">,</span> <span class="token number">18</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">sayHi</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">//hi</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="Object类型的静态函数"><a href="#Object类型的静态函数" class="headerlink" title="Object类型的静态函数"></a>Object类型的静态函数</h2><h3 id="object-create-函数"><a href="#object-create-函数" class="headerlink" title="object.create()函数"></a>object.create()函数</h3><p>属性描述符的格式如下所示</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js">propertyName<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+   value<span class="token operator">:</span> <span class="token string">''</span><span class="token punctuation">,</span> <span class="token comment">// 设置此属性的值</span>
+   writable<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token comment">// 设置此属性是否可写入；默认为false：只读</span>
+   enumerable<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token comment">// 设置此属性是否可枚举；默认为false：不可枚举</span>
+   conﬁgurable<span class="token operator">:</span> <span class="token boolean">true</span> <span class="token comment">// 设置此属性是否可配置，如是否可以修改属性的特性及是否可以删除属性；默认为false</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 建立一个自定义对象，设置name和age属性</span>
+<span class="token keyword">var</span> obj <span class="token operator">=</span> Object<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token keyword">null</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span>
+   name<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+       value<span class="token operator">:</span> <span class="token string">'tom'</span><span class="token punctuation">,</span>
+       writable<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+       enumerable<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+       conﬁgurable<span class="token operator">:</span> <span class="token boolean">true</span>
+   <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+   age<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+       value<span class="token operator">:</span> <span class="token number">22</span>
+   <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>obj<span class="token punctuation">.</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// tom</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>obj<span class="token punctuation">.</span>age<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 22</span>
+obj<span class="token punctuation">.</span>age <span class="token operator">=</span> <span class="token number">28</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>obj<span class="token punctuation">.</span>age<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 22 ：age属性的writable默认为false，此属性为只读</span>
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">var</span> p <span class="token keyword">in</span> obj<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+   console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// name ：只输出name属性；age属性的enumerable默认为false，不能通过for...in 枚举</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="Array类型"><a href="#Array类型" class="headerlink" title="Array类型"></a>Array类型</h3><h4 id="判断一个变量是数组还是对象"><a href="#判断一个变量是数组还是对象" class="headerlink" title="判断一个变量是数组还是对象"></a>判断一个变量是数组还是对象</h4><ol>
+<li><h5 id="instanceof运算符"><a href="#instanceof运算符" class="headerlink" title="instanceof运算符"></a>instanceof运算符</h5><p>instanceof运算符用于通过查找原型链来检测某个变量是否为某个类型数据的实例，使用instanceof运算符可以判断一个变量是数组还是对象。</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">let</span> a<span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>a <span class="token keyword">instanceof</span> <span class="token class-name">Array</span><span class="token punctuation">)</span> <span class="token comment">// true</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>a <span class="token keyword">instanceof</span> <span class="token class-name">Object</span><span class="token punctuation">)</span> <span class="token comment">// true </span>
+<span class="token keyword">let</span> b <span class="token operator">=</span> <span class="token punctuation">&#123;</span>name<span class="token operator">:</span> <span class="token string">'kingx'</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>b <span class="token keyword">instanceof</span> <span class="token class-name">Array</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// false</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>b <span class="token keyword">instanceof</span> <span class="token class-name">Object</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// true</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>封装函数判断变量是数组还是对象</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 判断变量是数组还是对象</span>
+<span class="token keyword">function</span> <span class="token function">getDataType</span><span class="token punctuation">(</span><span class="token parameter">o</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>o instance <span class="token keyword">of</span> Array<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token string">'Array'</span>
+    <span class="token punctuation">&#125;</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>o <span class="token keyword">instanceof</span> <span class="token class-name">Object</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token string">'Object'</span>
+    <span class="token punctuation">&#125;</span><span class="token keyword">else</span><span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token string">'param is not object type'</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li><h4 id="判断构造函数"><a href="#判断构造函数" class="headerlink" title="判断构造函数"></a>判断构造函数</h4><p>判断一个变量是否是数组或者对象，从另一个层面讲，就是判断变量的构造函数是Array类型还是Object类型。因为一个对象的实例都是通过构造函数生成的，所以，我们可以直接判断一个变量的constructor属性。</p>
+</li>
+</ol>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">let</span> a <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>a<span class="token punctuation">.</span>constructor <span class="token operator">===</span> Array<span class="token punctuation">)</span> <span class="token comment">// true</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>a<span class="token punctuation">.</span>constructor <span class="token operator">===</span> Object<span class="token punctuation">)</span> <span class="token comment">// false</span>
+
+<span class="token keyword">let</span> b <span class="token operator">=</span> <span class="token punctuation">&#123;</span>name<span class="token operator">:</span> <span class="token string">'kingx'</span><span class="token punctuation">&#125;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>a<span class="token punctuation">.</span>constructor <span class="token operator">===</span> Array<span class="token punctuation">)</span> <span class="token comment">// false</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>a<span class="token punctuation">.</span>constructor <span class="token operator">===</span> Object<span class="token punctuation">)</span> <span class="token comment">// true</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/09/12/%E5%AD%A6%E4%B9%A0%E7%BD%91%E7%AB%99%E6%B1%87%E6%80%BB/" rel="prev" title="学习网站汇总">
+                  <i class="fa fa-chevron-left"></i> 学习网站汇总
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Colorfuls</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共38.7k字</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+    <div class="pjax">
+
+
+  
+    </div>
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+</body>
+</html>
