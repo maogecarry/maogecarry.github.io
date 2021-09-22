@@ -276,4 +276,34 @@ let b = {name: 'kingx'}
 console.log(a.constructor === Array) // false
 console.log(a.constructor === Object) // true
 ```
+每个变量都会有一个__proto__属性，表示的是隐式原型。一个对象的隐式原型指向的是构造该对象的构造函数的原型，用数组举例。
 
+```js
+[].__proto__ === [].constructor.prototype // true
+[].__proto__ === Array.prototype; // true
+```
+
+上面直接通过constructor属性判断的语句也可以改写成下面的形式
+
+```js
+let a = [1, 2, 3]
+console.log(a.__proto__.constructor === Array) // true
+console.log(a.__proto__.constructor === Object) // false
+```
+
+同时，也可以将代码进行封装，得到一个判断变量是数组还是对象的通用函数。
+
+```js
+// 判断变量是数组还是对象
+function getDataType(o) {
+   // 获取构造函数
+   var constructor = o._ _proto_ _.constructor || o.constructor;
+   if (constructor === Array) {
+       return 'Array';
+   } else if (constructor === Object) {
+       return 'Object';
+   } else {
+       return 'param is not object type';
+   }
+}
+```
