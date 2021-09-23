@@ -307,3 +307,44 @@ function getDataType(o) {
    }
 }
 ```
+4. ##### Array.isArray()函数
+
+   Array.isArray()函数只能判断变量是否为数组。
+
+### reduce()函数累加器处理数组元素
+
+reduce()函数的语法如下所示
+
+```js
+arr.reduce(callback[, initialValue]);
+```
+
+initialValue用作callback的第一个参数值，如果没有设置，则会使用数组的第一个元素值。
+
+1. #### 求数组每个元素相加的和
+
+   ```js
+   let arr = [1, 2, 3, 4, 5]
+   let sum = arr.reduce((accumulator,currentValue)=>{
+   	return accumulator + currentValue
+   }, 0)
+   console.log(sum)
+   ```
+
+2. #### 统计数组中每个元素出现的次数
+
+   ```js
+   let countOccurrences = (arr) => {
+     return arr.reduce((accumulator, currentValue) => {
+       accumulator[currentValue]
+         ? accumulator[currentValue]++
+         : (accumulator[currentValue] = 1);
+       return accumulator;
+     }, {});
+   };
+   // 测试代码
+   countOccurrences([1, 2, 2, 3, 4, 4]);
+   ```
+
+### 
+
