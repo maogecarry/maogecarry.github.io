@@ -854,3 +854,58 @@ f1(11) // 11
 
 - 消耗内存：通常来说，函数的活动对象会随着执行上下文环境一起被销毁，但是，由于闭包引用的是外部函数的活动对象，因此这个活动对象无法被销毁，这意味着，闭包比一般的函数需要消耗更多的内存。
 - 泄露内存：在IE9之前，如果闭包的作用于链中存在DOM对象，则意味着该DOM对象无法被销毁，造成内存泄露。
+
+## this使用
+
+### this指向全局对象
+
+当函数没有所属对象而直接调用时，this指向的是全局对象。
+
+#### this指向所属对象
+
+谁调用它，它就指向谁。
+
+#### this指向对象实例
+
+当通过new操作符调用构造函数生成对象的实例时，this指向该实例。
+
+```js
+//全局变量
+let number = 10
+function Person(){
+    // 复写全局变量
+    number = 20;
+    // 实例变量
+    this.number =30
+}
+// 原型函数
+Person.prototype.getNumber = function () {
+    return this.number
+}
+// 通过new操作符获取对象的实例
+let p = new Person()
+console.log(p.getNumber()) // 30
+```
+
+#### this指向call()函数、apply()函数、bind()函数调用后重新绑定的对象
+
+```js
+// 全局变量
+let value = 10;
+let obj = {
+    value: 20
+}
+// 全局函数
+let method = function() {
+    console.log(this.value)
+}
+method(); // 10
+method.call(obj); // 20
+method.apply(obj); // 20
+let newMethod = method.bind(obj)
+newMethod(); // 20
+```
+
+#### 闭包中的this
+
+函数的this变量只能被自身访问，其内部函数无法访问。因此在遇到闭包时，闭包内部的this关键字无法访问到外部函数的this变量。
