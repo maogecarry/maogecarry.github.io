@@ -1411,6 +1411,10 @@ console.log(cat.eat("猫粮"));
 
 1. 既能继承父类实例的属性和函数，又能继承原型对象上的属性和函数
 2. 既是子类的实例，又是父类的实例
+```js
+console.log(cat instanceof Cat);   // true
+console.log(cat instanceof Animal);// true
+```
 3. 不存在引用属性共享的问题
 4. 可以向父类的构造函数中传递参数
 ###### 组合继承的缺点
