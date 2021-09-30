@@ -1073,3 +1073,346 @@ console.log(result, '打印result');
 console.log(origin.c.constructor);
 console.log(result.c.constructor);
 ```
+
+### 原型对象、构造函数、实例之间的关系
+
+每一个函数在创建时都会被赋予一个prototype属性。在默认情况下，所有的原型对象都会增加一个constructor属性，指向prototype属性所在的函数，即构造函数。
+
+当我们通过new操作符调用构造函数创建一个实例时，实例具有一个__proto__属性，指向构造函数的原型对象，因此__proto__属性可以看做是一个连续实例与构造函数的原型对象的桥梁。
+
+```js
+function Person(){}
+Person.prototype.name = 'Tom'
+Person.prototype.age = 29
+Person.prototype.job = 'Software Enginner'
+Person.prototype.sayName = function(){
+    console.log(name)
+}
+let person1 = new Person()
+let person2 = new Person()
+```
+
+构造函数的Person有个prototype属性，指向的是Person的原型对象。在原型对象中有constructor属性和另外4个原型对象上的属性，其中constructor属性指向构造函数本身。
+
+通过new操作符创建的两个实例person1和person2，都具有一个__proto__属性，指向的是Person的原型对象。
+
+### 实例的属性读取顺序
+
+当我们通过对象的实例读取某个属性时，它会先在实例本身去找指定的属性，如果找到了，则直接返回该属性的值；如果没找到则会继续沿着原型对象寻找，如果在原型对象中找到了该属性，则返回该属性的值。
+
+改造上方代码
+
+```js
+function Person(){
+    this.name = 'kingx'
+}
+Person.prototype.name = 'Tom'
+Person.prototype.age = 29
+Person.prototype.job = 'Software Enginner'
+Person.prototype.sayName = function(){
+    console.log(name)
+}
+let person1 = new Person() 
+console.log(person1.name) // kingx
+```
+
+### 重写原型对象
+
+```js
+function Person(){}
+Person.prototype = {
+    constructor: Person, // 重要
+    name: 'Nicholas',
+    age: 29,
+    job: 'Software Engineer',
+    sayName: function(){
+        console.log(name)
+    }
+}
+```
+
+将一个对象字面量赋给prototype属性的方式实际是重写了原型对象，等同于切断了构造函数和最初原型之间的关系，因此有一点需要的是，如果仍然想使用constructor属性做后续处理，则应该在对象字面量增加一个constructor属性，指向构造函数本身，否则原型的constructor属性会指向Object类型的构造函数，从而导致constructor属性与构造函数的脱离，而且必须要按照顺序执行，在最后进行新的对象的创建。
+
+### 原型链
+
+在JS中几乎所有的对象都具有__proto__属性，由__proto__属性连接而成的链路构成了JS的原型链，原型链的顶端是Object.prototype，它的__proto__属性为null。
+
+```js
+function Person(){}
+let person = new Person 
+// person实例沿着原型链第一次追溯，__proto__属性指向Person()构造函数的原型对象
+person.__proto__ === Person.prototype
+// person实例沿着原型链第二次追溯，Person原型对象的__protos__属性指向Object类型的原型对象。
+person.__proto__.__proto__ === Person.prototype.__proto__ === Object.prototype
+// person实例沿着原型链第三次追溯，Object类型的原型对象的__proto__属性为null
+person.__proto__.__proto__.__proto__ === Object.prototype.__proto__ === null
+```
+
+#### 原型链的特点
+
+1. 由于原型链的存在，属性查找的过程不再是只查找自身的原型对象，而是会沿着整个原型链一直向上，直到追溯到Object.prototype。如果Object.prototype上，直到追溯到Object.prototype。如果Object.prootype上也找不到该属性，则返回'undefined'。如果期间在实例本身或者某个原型对象上找到了该属性，则会直接返回结果，因此会存在属性覆盖的问题。
+
+   在生成自定义对象的实例时，也可以调用到某些未在自定义构造函数上的函数，例如toString()函数
+
+   ```js
+   function Person(){}
+   let p = new Person()
+   p.toString() // [object Object] 实际调用的是Object.prototype.toString()函数
+   ```
+
+2. 由于属性查找会经历整个原型链，因此查找的链路越长，对性能的影响越大。
+
+#### 属性区分
+
+对象属性的寻找往往会设计整个原型链，Object()构造函数的原型对象中提供了一个hasOwnProperty()函数，用于判断属性是否为自身拥有的。
+
+```js
+function Person(name){
+    // 实例属性name
+    this.name = name
+}
+// 原型对象上的属性age
+Person.prototype.age = 12
+let person = new Person('kingx')
+console.log(person.hasOwnProperty('name')) // true
+console.log(person.hasOwnProperty('age')) // false
+```
+
+在使用for...in运算符遍历对象的属性时，一般可以配合hasOwnProperty()函数一起使用，检测是否是对象自身的属性，然后做后续处理。
+
+```js
+for (let prop in person){
+    if(person.hasOwnproperty(prop)){
+ 		...       
+    }
+}
+```
+
+#### 内置构造函数
+
+JavaScript中有一些特定的内置构造函数，如String()构造函数、Number()构造函数，Array()构造函数、Object()构造函数等。
+
+它们本身的__proto__属性都统一指向Function.prototype。
+
+```js
+String.__proto__ === Function.prototype // true
+Number.__proto__ === Function.prototype // true
+Array.__proto__ === Function.prototype // true
+Date.__proto__ === Function.prototype // true
+Object.__proto__ === Function.prototype // true
+Function.__proto__ === Function.prototype // true
+```
+
+#### __proto__属性
+
+```js
+Function.prototype.a = 'a'
+Object.prototype.b = 'b'
+
+function Person(){}
+
+let p = new Person();
+
+console.log('p.a', p.a)
+console.log('p.b', p.b)
+```
+
+实例p的原型链
+
+```js
+// 实例p直接原型
+p.__proto__ = Person.prototype
+// Person原型对象的原型
+Person.prototype.__proto__ = Object.prototype
+```
+
+#### 继承
+
+##### 原型链继承
+
+原型链继承的主要思想是：重写子类的prototype属性，将其指向父类的实例
+
+```js
+// 子类Cat
+function Cat(name) {
+    this.name = name
+}
+// 原型继承
+Cat.prototype = new Animal();
+// 很关键的一句，将Cat的构造函数指向自身
+Cat.prototype.constructor = Cat;
+
+let cat = new Cat('coffee')
+```
+
+###### 原型链继承的优点
+
+1. 简单、易于实现
+
+2. 继承关系纯粹
+
+   生成的实例既是子类的实例，也是父类的实例。
+
+3. 可通过子类直接访问父类原型链属性和函数
+
+   通过原型链继承的子类，可以直接访问到父类原型链上新增的函数和属性。
+
+###### 原型链继承的缺点
+
+1. 子类的所有实例将共享父类的属性
+2. 在创建子类实例时，无法向父类的构造函数传递参数
+3. 无法实现多继承
+4. 为子类增加原型对象上的属性和函数时，必须放在new Animal()函数之后
+
+##### 构造继承
+
+构造继承的主要思想是在子类的构造函数中通过call()函数改变this指向，调用父类的构造函数，从而能将父类的实例的属性和函数绑定到子类的this中
+
+```js
+// 父类
+function Animal(age) {
+  // 属性
+  this.name = "Animal";
+  this.age = age;
+  // 实例函数
+  this.sleep = function () {
+    return this.name + "正在睡觉！";
+  };
+}
+// 父类原型函数
+Animal.prototype.eat = function (food) {
+  return this.name + "正在吃：" + food;
+};
+// 子类
+function Cat(name) {
+  // 核心，通过call()函数实现Animal的实例的属性和函数的继承
+  Animal.call(this);
+  this.name = name || "tom";
+}
+// 生成子类的实例
+let cat = new Cat("tony");
+// 可以正常调用父类实例函数
+console.log(cat.sleep());
+// 不能调用父类原型函数
+console.log(cat.eat());
+```
+
+###### 构造继承的优点
+
+1. 可解决子类实例共享父类属性的问题
+
+2. 创建子类的实例时，可以向父类传递参数
+
+   在call()函数中，可以传递参数，将参数传递给父类。
+
+3. 可以实现多继承
+
+   在子类的构造函数中，可以通过多次调用call()函数来继承多个父对象，每调用一次call()函数就会将父类的实例的属性和函数
+
+###### 构造继承的缺点
+
+1. 实例只是子类的实例，并不是父类的实例
+2. 只能继承父类实例的属性和函数，并不能继承原型对象上的属性和函数
+3. 无法复用父类的实例函数
+
+复制继承
+
+复制继承的主要思想是首先生成父类的实例，然后通过for...in遍历父类实例的属性和函数，并将其依次设置为子类实例的属性和函数或者原型对象上的属性和函数。
+
+```js
+// 父类
+function Animal(parentAge) {
+  // 实例属性
+  this.name = "Animal";
+  this.age = parentAge;
+  // 实例函数
+  this.sleep = function () {
+    return this.name + "正在睡觉";
+  };
+}
+// 原型函数
+Animal.prototype.eat = function (food) {
+  return this.name + "正在吃：" + food;
+};
+// 子类
+function Cat(name, age) {
+  let animal = new Animal(age);
+  // 父类的属性和函数，全部添加至子类中
+  for (const key in animal) {
+    if (Object.hasOwnProperty.call(key)) {
+      this[key] = animal[key];
+    } else {
+      // 原型对象上的属性和函数
+      Cat.prototype[key] = animal[key];
+    }
+  }
+  // 子类自身的属性
+  this.name = name;
+}
+// 子类自身原型函数
+Cat.prototype.eat = function (food) {
+  return this.name + "正在吃" + food;
+};
+
+let cat = new Cat("tony", 12);
+console.log(cat.age);
+console.log(cat.sleep());
+console.log(cat.eat("猫粮"));
+```
+
+###### 复制继承的优点
+
+1. 支持多继承
+2. 能同时继承实例的属性和函数与原型对象上的属性和函数
+3. 可以向父类构造函数中传递值
+
+###### 复制继承的缺点
+
+1. 父类的所有属性都需要复制，消耗内存
+2. 实例只是子类的实例，并不是父类的实例
+
+##### 组合继承
+
+组合继承的主要思想是组合了构造函数和原型函数两种方法，一方面在子类的构造函数中通过call()函数调用父类的构造函数，将父类的实例的属性和函数绑定到子类的this中，另一方面，通过改变子类的prototype属性，继承父类的原型对象上的属性和函数
+
+```js
+// 父类
+function Animal(parentAge) {
+  // 实例属性
+  this.name = "Animal";
+  this.age = parentAge;
+  // 实例函数
+  this.sleep = function () {
+    return this.name + "正在睡觉";
+  };
+  this.feature = ["fat", "thin", "tall"];
+}
+// 原型函数
+Animal.prototype.eat = function (food) {
+  return this.name + "正在吃：" + food;
+};
+// 子类
+function Cat(name) {
+  // 通过构造函数继承实例的属性和函数
+  Animal.call(this);
+  this.name = name;
+}
+// 通过原型继承原型对象上的属性和函数
+Cat.prototype = new Animal();
+Cat.prototype.constructor = Cat;
+
+let cat = new Cat("tony");
+console.log(cat.name);
+console.log(cat.sleep());
+console.log(cat.eat("猫粮"));
+```
+
+###### 组合继承的优点
+
+1. 既能继承父类实例的属性和函数，又能继承原型对象上的属性和函数
+2. 既是子类的实例，又是父类的实例
+3. 不存在引用属性共享的问题
+4. 可以向父类的构造函数中传递参数
+###### 组合继承的缺点
+
+组合继承的缺点为父类的实例属性会绑定两次
