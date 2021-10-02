@@ -1442,3 +1442,57 @@ function Cat(name) {
   Cat.prototype.constructor = Cat;
 })();
 ```
+
+## instanceof运算符
+
+instanceof运算符的语法如下。
+
+```js
+target instanceof constructor
+```
+
+上面的代码标识的是构造函数constructor()的prototype属性是否出现在target对象的原型链中，即target对象是不是构造函数constructor()的实例。
+
+### instanceof运算符的常规用法
+
+```js
+let stringObject = new String('hello world')
+stringObject instanceOf String; // true
+```
+
+判断变量stringObject是否是String类型的实例，因为变量stringObject是通过new操作符，由String的构造函数生成的，所以变量是stringObject是String类型的实例，最终返回'true'。
+
+### instanceof运算符用于继承判断
+
+instanceof运算符可以在继承关系中，判断一个实例对象是否属于它的父类，
+
+```js
+// 定义构造函数
+function C(){}
+function D(){}
+// 生成C()构造函数的一个实例
+let o = new C()
+// 判断对象o是否为C()的一个实例，结果为true
+o instanceof C // true
+// 判断对象o是否为D()构造函数的一个实例，结果返回false
+o instanceof D // false，因为D.prototype属性不存在o的原型链上
+// 判断对象o是否为Object()函数的一个实例，结果返回ture
+o instanceof Object // true
+// 通过将D()构造函数的prototype属性指向C()构造函数的一个实例可以产生继承关系
+D.prototype = new C() // 继承
+// 生成D()构造函数的一个实例o2
+let o2 = new D()
+// 判断实例o2是否为D()构造函数的一个实例，结果返回true
+o2 instanceof D // true
+// 判断实例o2是否为C()构造函数的一个实例，结果返回true
+o2 instanceof C // true，因为通过继承关系，C.prototype出现在o2的原型链上
+// 修改D.prototype属性，将其指向一个空对象
+D.prototype = {}
+// 再次生成一个D()构造函数的实例
+let o3 = new D()
+// 判断实例o3是否为C()构造函数和D()构造函数的实例
+o3 instanceof D; // tue
+o3 instanceof C; // false
+// 因为D.protoype属性指向了一个空对象，那么C()构造函数的prototype属性将不再处于实例o3的原型链上，因此返回false
+```
+
