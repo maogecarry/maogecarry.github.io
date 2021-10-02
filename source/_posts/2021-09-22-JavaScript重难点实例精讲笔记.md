@@ -1420,3 +1420,25 @@ console.log(cat instanceof Animal);// true
 ###### 组合继承的缺点
 
 组合继承的缺点为父类的实例属性会绑定两次
+
+##### 寄生组合继承
+
+```js
+/* 寄生组合继承 */
+// 在进行子类的prototype属性的设置时，可以去掉父类实例的属性和函数
+// 子类
+function Cat(name) {
+  // 继承父类的实例属性和函数
+  Animal.call(this);
+  this.name = name;
+}
+// 立即执行函数
+(function () {
+  // 设置任意函数Super()
+  let Super = function () {};
+  // 关键语句,Super()函数的原型指向父类Animal的原型，去掉父类的实例属性
+  Super.prototype = Animal.prototype;
+  Cat.prototype = new Super();
+  Cat.prototype.constructor = Cat;
+})();
+```
