@@ -10,9 +10,8 @@ date: 2021-02-27 12:48:11
 
 ## 电影网站
 
-[片库](https://www.mypianku.com/)
-[No 视频](https://www.novipnoad.com/)
-[bt 之家](https://mebtbtt.com/)
+[片库](https://www.btnull.org/)
+[bt 之家](http://btbtt12.com/)
 
 ## 游戏资源网站
 
@@ -22,7 +21,6 @@ date: 2021-02-27 12:48:11
 ## 资源网站
 
 [52 破解网站](https://www.52pojie.cn/)
-[IT 从零开始网](http://www.cong0sousuo.top/)
 [三六五网络学院](https://www.365exe.com/)
 [福利吧导航](https://fuliba123.net/)
 [鸠摩搜索](https://www.jiumodiary.com/)

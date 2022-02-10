@@ -22,6 +22,15 @@ date: 2021-02-23 21:59:11
 [cookie，localStorage，sessionStorage 的区别](https://blog.csdn.net/jiang7701037/article/details/89118086)
 [图解前端](https://lucifer.ren/fe-interview/#/)
 
+## React
+[useEffect 完整指南](https://overreacted.io/zh-hans/a-complete-guide-to-useeffect/)
+[React技术解密](https://react.iamkasong.com/)
+[图解React](https://7kms.github.io/react-illustration-series/main/macro-structure/)
+[awesome-react](https://github.com/huaize2020/awesome-react)
+
+## 前端单元测试
+[如何做前端单元测试](https://mp.weixin.qq.com/s/Y0RH8YjzrVPDPtXBeJIm8g)
+
 ## Vue
 
 [Vue 开发必须知道的 36 个技巧](https://segmentfault.com/a/1190000020620972)
