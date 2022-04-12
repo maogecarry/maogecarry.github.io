@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","version":"8.2.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="nginx代理配置小记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="nginx小记">
+<meta property="og:url" content="http://example.com/2022/04/12/nginx%E5%B0%8F%E8%AE%B0/index.html">
+<meta property="og:site_name" content="Colorfuls-Blogs">
+<meta property="og:description" content="nginx代理配置小记">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-04-12T15:46:05.000Z">
+<meta property="article:modified_time" content="2022-04-12T07:47:42.824Z">
+<meta property="article:author" content="Colorfuls">
+<meta property="article:tag" content="nginx">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2022/04/12/nginx%E5%B0%8F%E8%AE%B0/">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>nginx小记 | Colorfuls-Blogs</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Colorfuls-Blogs</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">追风去</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-article"><a href="/article" rel="section"><i class="fa fa-newspaper fa-fw"></i>文章</a></li>
+        <li class="menu-item menu-item-teach"><a href="/teach" rel="section"><i class="fa fa-address-card fa-fw"></i>教程</a></li>
+        <li class="menu-item menu-item-site"><a href="/site" rel="section"><i class="fa fa-star fa-fw"></i>站点</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#nginx%E4%BB%A3%E7%90%86%E9%85%8D%E7%BD%AE%E5%B0%8F%E8%AE%B0"><span class="nav-number">1.</span> <span class="nav-text">nginx代理配置小记</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E4%B8%AD%E4%B9%8B%E9%87%8D%EF%BC%8Cnginx-%E6%AF%8F%E4%B8%AA%E6%8C%87%E4%BB%A4%E5%90%8E%E5%BF%85%E9%A1%BB%E6%9C%89%E5%88%86%E5%8F%B7%E7%BB%93%E6%9D%9F%EF%BC%8C%E5%90%A6%E5%88%99-nginx-%E6%9C%8D%E5%8A%A1%E6%97%A0%E6%B3%95%E6%88%90%E5%8A%9F%E5%90%AF%E5%8A%A8%E3%80%82"><span class="nav-number">1.1.</span> <span class="nav-text">重中之重，nginx 每个指令后必须有分号结束，否则 nginx 服务无法成功启动。</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Colorfuls</p>
+  <div class="site-description" itemprop="description">前路浩浩荡荡，万事皆可期待。</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/maogecarry" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;maogecarry" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/12/nginx%E5%B0%8F%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Colorfuls">
+      <meta itemprop="description" content="前路浩浩荡荡，万事皆可期待。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Colorfuls-Blogs">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          nginx小记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-04-12 15:46:05 / 修改时间：07:47:42" itemprop="dateCreated datePublished" datetime="2022-04-12T15:46:05+00:00">2022-04-12</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="nginx代理配置小记"><a href="#nginx代理配置小记" class="headerlink" title="nginx代理配置小记"></a><code>nginx</code>代理配置小记</h2><a id="more"></a>
+
+<p>在进行月度考核作业的时候，由于需要使用天气<code>api</code>进行数据查询，因此在网上找到了<a target="_blank" rel="noopener" href="http://www.weatherdt.com/">气象大数据平台</a>这个网站，但是在使用该网站的 api 的时候，出现了跨域问题，一般情况下在使用 Jquery 封装的 ajax 请求时，如果要兼容 IE 低版本，那么需要加上<code>jQuery.support.cors = true;</code>，该网站在服务端设置了跨域限制问题，因此解决办法就改为了使用<code>nginx</code>反向代理实现 http 请求。</p>
+<p>nginx 配置时，需要在<a target="_blank" rel="noopener" href="https://www.nginx.com/">nginx 官网</a>下载 nginx，然后解压到本地硬盘中，在 nginx 的文件夹中，找到 conf 文件夹，使用记事本打开 nginx.conf 对里面的内容进行编辑，这次 nginx 的代理配置如下。</p>
+<h3 id="重中之重，nginx-每个指令后必须有分号结束，否则-nginx-服务无法成功启动。"><a href="#重中之重，nginx-每个指令后必须有分号结束，否则-nginx-服务无法成功启动。" class="headerlink" title="重中之重，nginx 每个指令后必须有分号结束，否则 nginx 服务无法成功启动。"></a>重中之重，nginx 每个指令后必须有分号结束，否则 nginx 服务无法成功启动。</h3><pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token comment">#user  nobody; # 配置用户或者组，默认为nobody</span>
+<span class="token keyword">worker_processes</span>  <span class="token number">1</span><span class="token punctuation">;</span>  <span class="token comment"># 允许生成的进程数，默认为1</span>
+<span class="token comment">#全局块，配置影响nginx全局的指令。一般有运行nginx服务器的用户组，nginx进程pid存放路径，日志存放路径，配置文件引入，允许生成worker process数等。</span>
+<span class="token comment"># 指定日志路径，日志级别</span>
+<span class="token comment">#error_log  logs/error.log;</span>
+<span class="token comment">#error_log  logs/error.log  notice;</span>
+<span class="token comment">#error_log  logs/error.log  info;</span>
+<span class="token comment"># 指定nginx进程文件存放地址</span>
+<span class="token comment">#pid        logs/nginx.pid;</span>
+
+<span class="token comment"># 配置影响nginx服务器或与用户的网络连接</span>
+<span class="token keyword">events</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">worker_connections</span>  <span class="token number">1024</span><span class="token punctuation">;</span> <span class="token comment"># 最大连接数，默认为512</span>
+<span class="token punctuation">&#125;</span>
+
+
+<span class="token keyword">http</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">include</span>       mime<span class="token punctuation">.</span><span class="token keyword">types</span><span class="token punctuation">;</span>  <span class="token comment">#文件扩展名与文件类型映射表</span>
+    <span class="token keyword">default_type</span>  application<span class="token operator">/</span>octet<span class="token operator">-</span>stream<span class="token punctuation">;</span> <span class="token comment"># 默认文件类型，默认为text/plain</span>
+
+    <span class="token comment">#log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '</span>
+    <span class="token comment">#                  '$status $body_bytes_sent "$http_referer" '</span>
+    <span class="token comment">#                  '"$http_user_agent" "$http_x_forwarded_for"';</span>
+
+    <span class="token comment">#access_log  logs/access.log  main;</span>
+
+    <span class="token keyword">sendfile</span>        on<span class="token punctuation">;</span> <span class="token comment"># 允许sendfile方式传输文件，默认为off，可以在http块，server块，location块</span>
+    <span class="token comment">#tcp_nopush     on;</span>
+
+    <span class="token comment">#keepalive_timeout  0;</span>
+    <span class="token keyword">keepalive_timeout</span>  <span class="token number">65</span><span class="token punctuation">;</span> <span class="token comment">#连接超时时间，默认为75s,可以在http块，server块，location块</span>
+
+    <span class="token comment">#gzip  on;</span>
+	<span class="token comment"># 一般情况下 http下可以用多个server进行配置</span>
+    <span class="token keyword">server</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">listen</span>       <span class="token number">5500</span><span class="token punctuation">;</span> <span class="token comment"># 监听端口</span>
+        <span class="token keyword">server_name</span>  localhost<span class="token punctuation">;</span> <span class="token comment"># 监听地址</span>
+        <span class="token keyword">root</span> E<span class="token punctuation">:</span>\demo\weather<span class="token operator">-</span>plugin\weatherPlugin<span class="token punctuation">;</span> <span class="token comment"># 静态资源根目录</span>
+
+        <span class="token comment">#charset koi8-r;</span>
+
+        <span class="token comment">#access_log  logs/host.access.log  main;</span>
+	    <span class="token comment">#查找在静态资源根目录中的对应文件</span>
+        <span class="token comment">#$uri 查找该文件夹一级目录中是否有该文件</span>
+        <span class="token comment">#$uri/ 查找该文件夹二级目录中是否有该文件</span>
+        <span class="token comment">#@router 可以解释为@router默认会去读取前端的首页</span>
+        <span class="token keyword">location</span> <span class="token operator">/</span> <span class="token punctuation">&#123;</span>
+		   <span class="token keyword">try_files</span> <span class="token variable">$uri</span> <span class="token variable">$uri</span><span class="token operator">/</span> @router<span class="token punctuation">;</span>
+            <span class="token keyword">index</span>  <span class="token keyword">index</span><span class="token punctuation">.</span>html <span class="token keyword">index</span><span class="token punctuation">.</span>htm<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token comment"># 使用正则表达式匹配路径+重写uri路径</span>
+        <span class="token keyword">location</span> <span class="token operator">^</span><span class="token operator">~</span> <span class="token operator">/</span>common<span class="token operator">/</span> <span class="token punctuation">&#123;</span>
+             <span class="token keyword">proxy_pass</span> <span class="token string">'http://api.weatherdt.com/common/'</span><span class="token punctuation">;</span> <span class="token comment"># 反向代理的地址</span>
+             <span class="token comment"># 一些反向代理的配置(可选择性配置)</span>
+             <span class="token comment"># 用于设置发送到后端服务器的requset的请求头</span>
+			<span class="token keyword">proxy_set_header</span> X<span class="token operator">-</span>Forwarded<span class="token operator">-</span>For <span class="token variable">$proxy_add_x_forwarded_for</span><span class="token punctuation">;</span> <span class="token comment">#后端的Web服务器可以通过X-Forwarded-For获取用户真实IP</span>
+			<span class="token keyword">proxy_set_header</span> X<span class="token operator">-</span>Forwarded<span class="token operator">-</span>Proto <span class="token variable">$scheme</span><span class="token punctuation">;</span> <span class="token comment"># 用来确定客户端与代理服务器或者负载均衡服务器之间的连接所采用的传输协议（HTTP 或HTTPS）后端可以通过读取header X-Forwarded-Proto来获得对应的scheme。</span>
+			<span class="token keyword">proxy_set_header</span> X<span class="token operator">-</span>Forwarded<span class="token operator">-</span>Port <span class="token variable">$server_port</span><span class="token punctuation">;</span>  <span class="token comment">#表示浏览器在访问时的实际端口时，如nginx提供http服务，则为80，如果是https，则为 443。如果为标准服务，此项可以不用设置,仅用于非标准端口时才使用</span>
+             <span class="token comment"># nginx使用Proxy模块时，默认的读取超时时间是60s</span>
+			<span class="token keyword">proxy_connect_timeout</span> <span class="token number">300</span>s<span class="token punctuation">;</span> <span class="token comment">#后端服务器连接的超时时间_发起握手等候响应超时时间</span>
+			<span class="token keyword">proxy_send_timeout</span> <span class="token number">300</span>s<span class="token punctuation">;</span> <span class="token comment"># 后端服务器数据回传时间_就是在规定时间之内后端服务器必须传完所有的数据</span>
+			<span class="token keyword">proxy_read_timeout</span> <span class="token number">300</span>s<span class="token punctuation">;</span> <span class="token comment"># 连接成功后_等候后端服务器响应时间_其实已经进入后端的排队之中等候处理（也可以说是后端服务器处理请求的时间）</span>
+        <span class="token punctuation">&#125;</span>
+		<span class="token comment"># 配置@router的路径进行重定向</span>
+		<span class="token keyword">location</span> @router <span class="token punctuation">&#123;</span>
+			<span class="token keyword">rewrite</span> <span class="token operator">^</span><span class="token punctuation">.</span><span class="token operator">*</span>$ <span class="token operator">/</span><span class="token keyword">index</span><span class="token punctuation">.</span>html last<span class="token punctuation">;</span>
+		<span class="token punctuation">&#125;</span>
+	    <span class="token comment"># 在部署多套系统时，使用nginx反向代理服务。如果这时候服务突然宕机了，或者由于服务重新部署导致nginx代理的地址访问失败，会直接在用户的浏览器上显示nginx自带错误页面，如：50x.html,因服务问题导致错误，重定向到静态页面。</span>
+        <span class="token keyword">location</span> <span class="token operator">=</span> <span class="token operator">/</span><span class="token number">50</span>x<span class="token punctuation">.</span>html <span class="token punctuation">&#123;</span>
+            <span class="token keyword">root</span>   html<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+
+    <span class="token punctuation">&#125;</span>
+
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/nginx/" rel="tag"># nginx</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/03/01/prettier%E9%85%8D%E7%BD%AE/" rel="prev" title="prettier配置">
+                  <i class="fa fa-chevron-left"></i> prettier配置
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Colorfuls</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共51.7k字</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+    <div class="pjax">
+
+
+  
+    </div>
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+</body>
+</html>
