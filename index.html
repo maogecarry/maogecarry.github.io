@@ -275,7 +275,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2022-04-12 15:47:15 / 修改时间：07:48:48" itemprop="dateCreated datePublished" datetime="2022-04-12T15:47:15+00:00">2022-04-12</time>
+      <time title="创建时间：2022-04-12 15:47:15 / 修改时间：07:59:48" itemprop="dateCreated datePublished" datetime="2022-04-12T15:47:15+00:00">2022-04-12</time>
     </span>
 
   
@@ -289,52 +289,14 @@
     
     <div class="post-body" itemprop="articleBody">
           <h2 id="成员属性、静态属性、私有属性、原型属性"><a href="#成员属性、静态属性、私有属性、原型属性" class="headerlink" title="成员属性、静态属性、私有属性、原型属性"></a>成员属性、静态属性、私有属性、原型属性</h2><hr>
-<ol>
-<li><h3 id="成员属性和成员方法"><a href="#成员属性和成员方法" class="headerlink" title="成员属性和成员方法"></a>成员属性和成员方法</h3><p>在构造函数中，通过 this.属性声明，或者实例化出对象后，通过<code>对象.属性</code>追加的，都属于成员属性或成员方法，也叫实例属性和实例方法。</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">Person</span><span class="token punctuation">(</span><span class="token parameter">name</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-  <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name<span class="token punctuation">;</span> <span class="token comment">// 声明成员属性</span>
-  <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function-variable function">say</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token comment">// 声明成员方法</span>
-    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"haha"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
-
-<span class="token keyword">const</span> p <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Preson</span><span class="token punctuation">(</span><span class="token string">"p"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-p<span class="token punctuation">.</span>age <span class="token operator">=</span> <span class="token number">18</span><span class="token punctuation">;</span> <span class="token comment">// 追加成员属性</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>p<span class="token punctuation">.</span><span class="token function">say</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
-<li><h3 id="静态属性和静态方法"><a href="#静态属性和静态方法" class="headerlink" title="静态属性和静态方法"></a>静态属性和静态方法</h3><p>通过<code>类名.属性名</code>，<code>类名.方法名</code>声明的变量，称为静态属性、静态方法，也叫类属性、类方法，类属性、类方法是属于类的(构造函数的)，这类属性或方法必须通过<code>类名.属性</code>调用，而不能通过对象名调用。</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">Person</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
-Person<span class="token punctuation">.</span>age <span class="token operator">=</span> <span class="token number">21</span><span class="token punctuation">;</span>
-Person<span class="token punctuation">.</span><span class="token function-variable function">say</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-  <span class="token function">alert</span><span class="token punctuation">(</span><span class="token string">"haha"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>Person<span class="token punctuation">.</span>age<span class="token punctuation">,</span> <span class="token number">111</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 21 111</span>
-Person<span class="token punctuation">.</span><span class="token function">say</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// haha</span>
-<span class="token keyword">var</span> chaiting <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Person</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>chaiting<span class="token punctuation">.</span>age<span class="token punctuation">,</span> <span class="token number">222</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// undefined 222</span>
-chaiting<span class="token punctuation">.</span><span class="token function">say</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// chaiting.say is not a function</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
-<li><h3 id="私有属性和私有方法"><a href="#私有属性和私有方法" class="headerlink" title="私有属性和私有方法"></a>私有属性和私有方法</h3><p>在构造函数中，通过<code>var,let,const</code>声明的属性，称为私有属性，私有属性的作用域仅在当前函数有效，对外不公开，通过对象/类都无法调用到。</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">Person</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-  <span class="token keyword">var</span> sex <span class="token operator">=</span> <span class="token string">"male"</span><span class="token punctuation">;</span>
-  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>sex<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// male 私有属性只能在类内使用</span>
-<span class="token punctuation">&#125;</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>Person<span class="token punctuation">.</span>sex<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// undefined 无法调用，私有属性只能在类内使用，且js变量具有函数作用域</span>
-<span class="token keyword">const</span> chaiting <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Person</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>chaiting<span class="token punctuation">.</span>sex<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// undefined 无法调用，私有属性只能在类内使用</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
-<li><h3 id="原型属性和原型方法"><a href="#原型属性和原型方法" class="headerlink" title="原型属性和原型方法"></a>原型属性和原型方法</h3><p>写在构造函数的 prototype 上，当使用构造函数实例化对象时，该属性方法会进入新对象的 proto 上。</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">Person</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
-<span class="token class-name">Person</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">"chaiting"</span><span class="token punctuation">;</span> <span class="token comment">// 声明原型属性</span>
-<span class="token class-name">Person</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">say</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-  <span class="token comment">// 声明原型方法</span>
-  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"haha"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-<span class="token keyword">const</span> person <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Person</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>person<span class="token punctuation">.</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// chaiting 使用对象调用原型属性</span>
-person<span class="token punctuation">.</span><span class="token function">say</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// haha 使用对象调用原型方法</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>​</p>
-</li>
-</ol>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/04/12/%E6%88%90%E5%91%98%E5%B1%9E%E6%80%A7%E3%80%81%E9%9D%99%E6%80%81%E5%B1%9E%E6%80%A7%E3%80%81%E7%A7%81%E6%9C%89%E5%B1%9E%E6%80%A7%E3%80%81%E5%8E%9F%E5%9E%8B%E5%B1%9E%E6%80%A7/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -385,7 +347,7 @@ person<span class="token punctuation">.</span><span class="token function">say</
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2022-04-12 15:46:05 / 修改时间：07:48:48" itemprop="dateCreated datePublished" datetime="2022-04-12T15:46:05+00:00">2022-04-12</time>
+      <time title="创建时间：2022-04-12 15:46:05 / 修改时间：07:59:48" itemprop="dateCreated datePublished" datetime="2022-04-12T15:46:05+00:00">2022-04-12</time>
     </span>
 
   
@@ -463,7 +425,7 @@ person<span class="token punctuation">.</span><span class="token function">say</
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-04-12 07:48:48" itemprop="dateModified" datetime="2022-04-12T07:48:48+00:00">2022-04-12</time>
+        <time title="修改时间：2022-04-12 07:59:48" itemprop="dateModified" datetime="2022-04-12T07:59:48+00:00">2022-04-12</time>
       </span>
 
   
@@ -541,7 +503,7 @@ person<span class="token punctuation">.</span><span class="token function">say</
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-04-12 07:48:48" itemprop="dateModified" datetime="2022-04-12T07:48:48+00:00">2022-04-12</time>
+        <time title="修改时间：2022-04-12 07:59:48" itemprop="dateModified" datetime="2022-04-12T07:59:48+00:00">2022-04-12</time>
       </span>
 
   
@@ -622,7 +584,7 @@ person<span class="token punctuation">.</span><span class="token function">say</
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-04-12 07:48:48" itemprop="dateModified" datetime="2022-04-12T07:48:48+00:00">2022-04-12</time>
+        <time title="修改时间：2022-04-12 07:59:48" itemprop="dateModified" datetime="2022-04-12T07:59:48+00:00">2022-04-12</time>
       </span>
 
   
@@ -700,7 +662,7 @@ person<span class="token punctuation">.</span><span class="token function">say</
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-04-12 07:48:48" itemprop="dateModified" datetime="2022-04-12T07:48:48+00:00">2022-04-12</time>
+        <time title="修改时间：2022-04-12 07:59:48" itemprop="dateModified" datetime="2022-04-12T07:59:48+00:00">2022-04-12</time>
       </span>
 
   
@@ -778,7 +740,7 @@ person<span class="token punctuation">.</span><span class="token function">say</
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-04-12 07:48:48" itemprop="dateModified" datetime="2022-04-12T07:48:48+00:00">2022-04-12</time>
+        <time title="修改时间：2022-04-12 07:59:48" itemprop="dateModified" datetime="2022-04-12T07:59:48+00:00">2022-04-12</time>
       </span>
 
   
@@ -862,7 +824,7 @@ person<span class="token punctuation">.</span><span class="token function">say</
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-04-12 07:48:48" itemprop="dateModified" datetime="2022-04-12T07:48:48+00:00">2022-04-12</time>
+        <time title="修改时间：2022-04-12 07:59:48" itemprop="dateModified" datetime="2022-04-12T07:59:48+00:00">2022-04-12</time>
       </span>
 
   
@@ -940,7 +902,7 @@ person<span class="token punctuation">.</span><span class="token function">say</
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-04-12 07:48:48" itemprop="dateModified" datetime="2022-04-12T07:48:48+00:00">2022-04-12</time>
+        <time title="修改时间：2022-04-12 07:59:48" itemprop="dateModified" datetime="2022-04-12T07:59:48+00:00">2022-04-12</time>
       </span>
 
   
@@ -1018,7 +980,7 @@ person<span class="token punctuation">.</span><span class="token function">say</
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-04-12 07:48:48" itemprop="dateModified" datetime="2022-04-12T07:48:48+00:00">2022-04-12</time>
+        <time title="修改时间：2022-04-12 07:59:48" itemprop="dateModified" datetime="2022-04-12T07:59:48+00:00">2022-04-12</time>
       </span>
 
   
