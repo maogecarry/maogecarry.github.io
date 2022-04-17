@@ -23,18 +23,21 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","version":"8.2.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
-<meta name="description" content="前路浩浩荡荡，万事皆可期待。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Colorfuls-Blogs">
-<meta property="og:url" content="http://example.com/archives/2022/03/index.html">
+<meta name="description" content="配置vue&#x2F;test-utils">
+<meta property="og:type" content="article">
+<meta property="og:title" content="配置vue单元测试">
+<meta property="og:url" content="http://example.com/2022/04/17/%E9%85%8D%E7%BD%AEvue%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/index.html">
 <meta property="og:site_name" content="Colorfuls-Blogs">
-<meta property="og:description" content="前路浩浩荡荡，万事皆可期待。">
+<meta property="og:description" content="配置vue&#x2F;test-utils">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-04-17T13:36:54.000Z">
+<meta property="article:modified_time" content="2022-04-17T05:38:53.661Z">
 <meta property="article:author" content="Colorfuls">
+<meta property="article:tag" content="vue">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/archives/2022/03/">
+<link rel="canonical" href="http://example.com/2022/04/17/%E9%85%8D%E7%BD%AEvue%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/">
 
 
 <script data-pjax class="page-configurations">
@@ -42,11 +45,11 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
-<title>归档 | Colorfuls-Blogs</title>
+<title>配置vue单元测试 | Colorfuls-Blogs</title>
   
 
 
@@ -174,7 +177,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -187,6 +190,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEvue-test-utils"><span class="nav-number">1.</span> <span class="nav-text">配置vue&#x2F;test-utils</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -240,49 +244,137 @@
 </noscript>
 
 
-    <div class="main-inner archive posts-collapse">
+    <div class="main-inner post posts-expand">
 
 
   
-  
-  
-  <div class="post-block">
-    <div class="post-content">
-      <div class="collection-title">
-        <span class="collection-header">嗯..! 目前共计 24 篇日志。 继续努力。</span>
-      </div>
 
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/17/%E9%85%8D%E7%BD%AEvue%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Colorfuls">
+      <meta itemprop="description" content="前路浩浩荡荡，万事皆可期待。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Colorfuls-Blogs">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          配置vue单元测试
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
       
-    <div class="collection-year">
-      <span class="collection-header">2022</span>
+
+      <time title="创建时间：2022-04-17 13:36:54 / 修改时间：05:38:53" itemprop="dateCreated datePublished" datetime="2022-04-17T13:36:54+00:00">2022-04-17</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="配置vue-test-utils"><a href="#配置vue-test-utils" class="headerlink" title="配置vue/test-utils"></a>配置<code>vue/test-utils</code></h1><a id="more"></a>
+
+<p>配置test-utils有两种方式</p>
+<ol>
+<li><p>第一种是在已创建好的vue项目里使用</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">vue add test-utils<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>使用该命令之后，vue会自动下载依赖，并且给出一个组件测试的例子。</p>
+</li>
+<li><p>手动配置</p>
+<p>首先需要下载依赖，注意一点，在vue2中，需要下载@vue/test-utils@1 版本，在vue3中在下载默认版本即可，本文默认下载vue2中的依赖包。</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">npm i -D @babel&#x2F;preset-env @vue&#x2F;cli-plugin-unit-jest @vue&#x2F;vue2-jest babel-core@7.0.0-bridge.0 babel-jest jest jest-serializer-vue vue-jest<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>下载完依赖以后，需要在babel.config.js中加入设置</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token punctuation">&#123;</span>
+  <span class="token string">"presets"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"@babel/preset-env"</span><span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>然后在jest.config.js中增加如下设置</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js">module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+  <span class="token comment">//use jsdom environment since jest v27</span>
+  testEnvironment<span class="token operator">:</span> <span class="token string">'jsdom'</span><span class="token punctuation">,</span>
+  <span class="token comment">// 表示是否应该在运行期间报告每个单独的测试。所有的错误在执行后仍然会显示在底部。注意，如果只有一个测试文件在运行，它将默认为 "true"。   </span>
+  verbose<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+  <span class="token comment">// 这个选项设置了jsdom环境的URL。它反映在诸如location.href等属性中。</span>
+  testURL<span class="token operator">:</span> <span class="token string">'http://localhost/'</span><span class="token punctuation">,</span>
+  <span class="token comment">// 告诉jest需要解析的文件</span>
+  moduleFileExtensions<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'js'</span><span class="token punctuation">,</span> <span class="token string">'ts'</span><span class="token punctuation">,</span> <span class="token string">'json'</span><span class="token punctuation">,</span> <span class="token string">'vue'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token comment">// 告诉jest去哪里找模块资源，同webpack中的modules</span>
+  moduleDirectories<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'src'</span><span class="token punctuation">,</span> <span class="token string">'node_modules'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token comment">// 告诉jest针对不同类型的文件如何转义</span>
+  transform<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token string">'.*\\.(vue)$'</span><span class="token operator">:</span> <span class="token string">'vue-jest'</span><span class="token punctuation">,</span>
+    <span class="token string">'.*\\.(js)$'</span><span class="token operator">:</span> <span class="token string">'babel-jest'</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token comment">// 告诉jest在编辑的过程中可以忽略哪些文件，默认为node_modules下的所有文件</span>
+  transformIgnorePatterns<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'&lt;rootDir>/node_modules/'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token comment">// 别名，同webpack中的alias</span>
+  moduleNameMapper<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token string">'^@/(.*)$'</span><span class="token operator">:</span> <span class="token string">'&lt;rootDir>/src/$1'</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token comment">// 快照的序列化工具</span>
+  snapshotSerializers<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'jest-serializer-vue'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token comment">// 告诉jest去哪里找我们编写的测试文件</span>
+  testMatch<span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token string">'**/tests/unit/**/*.spec.(js|jsx|ts|tsx)'</span><span class="token punctuation">,</span>
+    <span class="token string">'**/__tests__/unit/*.(spec|test).(js|jsx|ts|tsx)'</span>
+  <span class="token punctuation">]</span>
+  <span class="token comment">// 在执行测试用例之前需要先执行的文件</span>
+  <span class="token comment">// setupFiles: ['jest-canvas-mock']</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>在配置完如上的这些配置以后，就可以在test/unit文件或者__tests/unit下编写单元测试。</p>
+</li>
+</ol>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2022-03-01T19:16:23+00:00"
-              content="2022-03-01">
-          03-01
-        </time>
-      </div>
+    
+    
+    
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2022/03/01/prettier%E9%85%8D%E7%BD%AE/" itemprop="url">
-            <span itemprop="name">prettier配置</span>
-          </a>
-      </div>
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/vue/" rel="tag"># vue</a>
+          </div>
 
-      
-    </header>
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/04/12/%E6%88%90%E5%91%98%E5%B1%9E%E6%80%A7%E3%80%81%E9%9D%99%E6%80%81%E5%B1%9E%E6%80%A7%E3%80%81%E7%A7%81%E6%9C%89%E5%B1%9E%E6%80%A7%E3%80%81%E5%8E%9F%E5%9E%8B%E5%B1%9E%E6%80%A7/" rel="prev" title="成员属性、静态属性、私有属性、原型属性">
+                  <i class="fa fa-chevron-left"></i> 成员属性、静态属性、私有属性、原型属性
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
   </article>
+</div>
 
 
-    </div>
-  </div>
-  
-  
-  
+
+
+
 
 
 <script>
