@@ -23,19 +23,19 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","version":"8.2.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
-<meta name="description" content="单元测试什么是单元测试 单元测试（英语：Unit Testing）又称为模块测试，是针对程序模块（软件设计的最小单位）来进行正确性检验的测试工作。程序单元是应用的最小可测试部件。在过程化编程中，一个单元就是单个程序、函数、过程等；对于面向对象编程，最小单元就是方法，包括基类（超类）、抽象类、或者派生类（子类）中的方法。 ——维基百科  单元测试就是开发过程中模块、功能、函数等最小单位的测试。 单元">
+<meta name="description" content="单元测试什么是单元测试 单元测试（英语：Unit Testing）又称为模块测试，是针对程序模块（软件设计的最小单位）来进行正确性检验的测试工作。程序单元是应用的最小可测试部件。在过程化编程中，一个单元就是单个程序、函数、过程等；对于面向对象编程，最小单元就是方法，包括基类（超类）、抽象类、或者派生类（子类）中的方法。 ——维基百科  单元测试就是开发过程中模块、功能、函数等最小单位的测试。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="单元测试">
 <meta property="og:url" content="http://example.com/2022/05/10/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/index.html">
 <meta property="og:site_name" content="Colorfuls-Blogs">
-<meta property="og:description" content="单元测试什么是单元测试 单元测试（英语：Unit Testing）又称为模块测试，是针对程序模块（软件设计的最小单位）来进行正确性检验的测试工作。程序单元是应用的最小可测试部件。在过程化编程中，一个单元就是单个程序、函数、过程等；对于面向对象编程，最小单元就是方法，包括基类（超类）、抽象类、或者派生类（子类）中的方法。 ——维基百科  单元测试就是开发过程中模块、功能、函数等最小单位的测试。 单元">
+<meta property="og:description" content="单元测试什么是单元测试 单元测试（英语：Unit Testing）又称为模块测试，是针对程序模块（软件设计的最小单位）来进行正确性检验的测试工作。程序单元是应用的最小可测试部件。在过程化编程中，一个单元就是单个程序、函数、过程等；对于面向对象编程，最小单元就是方法，包括基类（超类）、抽象类、或者派生类（子类）中的方法。 ——维基百科  单元测试就是开发过程中模块、功能、函数等最小单位的测试。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/images/CI-CD.png">
 <meta property="og:image" content="http://example.com/images/%E6%B5%8B%E8%AF%95%E9%80%9A%E8%BF%87.png">
 <meta property="og:image" content="http://example.com/images/代码覆盖率.png">
 <meta property="og:image" content="http://example.com/images/TDD.png">
 <meta property="article:published_time" content="2022-05-10T21:28:18.000Z">
-<meta property="article:modified_time" content="2022-05-10T15:50:05.376Z">
+<meta property="article:modified_time" content="2022-05-10T15:50:52.332Z">
 <meta property="article:author" content="Colorfuls">
 <meta property="article:tag" content="test">
 <meta name="twitter:card" content="summary">
@@ -285,7 +285,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2022-05-10 21:28:18 / 修改时间：15:50:05" itemprop="dateCreated datePublished" datetime="2022-05-10T21:28:18+00:00">2022-05-10</time>
+      <time title="创建时间：2022-05-10 21:28:18 / 修改时间：15:50:52" itemprop="dateCreated datePublished" datetime="2022-05-10T21:28:18+00:00">2022-05-10</time>
     </span>
 
   
@@ -302,6 +302,7 @@
 <p><strong>单元测试</strong>（英语：Unit Testing）又称为<strong>模块测试</strong>，是针对<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%A8%A1%E7%B5%84_(%E7%A8%8B%E5%BC%8F%E8%A8%AD%E8%A8%88)">程序模块</a>（<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1">软件设计</a>的最小单位）来进行正确性检验的测试工作。程序单元是应用的最小可测试部件。在<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E9%81%8E%E7%A8%8B%E5%8C%96%E7%B7%A8%E7%A8%8B">过程化编程</a>中，一个单元就是单个程序、函数、过程等；对于面向对象编程，最小单元就是方法，包括基类（超类）、抽象类、或者派生类（子类）中的方法。 ——维基百科</p>
 </blockquote>
 <p>单元测试就是开发过程中模块、功能、函数等最小单位的测试。</p>
+<a id="more"></a>
 <h2 id="单元测试在-CI-CD-中的作用？"><a href="#单元测试在-CI-CD-中的作用？" class="headerlink" title="单元测试在 CI/CD 中的作用？"></a>单元测试在 CI/CD 中的作用？</h2><p><strong>CI/CD</strong>通常指的是<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90">持续集成</a>和<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%8C%81%E7%BA%8C%E4%BA%A4%E4%BB%98">持续交付</a>或<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%8C%81%E7%BA%8C%E9%83%A8%E7%BD%B2">持续部署</a>的组合实践。</p>
 <h4 id="CI-持续集成（Continuous-Integration）"><a href="#CI-持续集成（Continuous-Integration）" class="headerlink" title="CI 持续集成（Continuous Integration）"></a>CI 持续集成（Continuous Integration）</h4><p>成功的 CI 意味着应用代码的新更改会定期构建、测试并合并到共享存储库中。该解决方案可以解决在一次开发中有太多应用分支，从而导致相互冲突的问题。</p>
 <h4 id="CD-持续交付和-或持续部署（Continuous-Delivery）-（Continuous-Deployment）"><a href="#CD-持续交付和-或持续部署（Continuous-Delivery）-（Continuous-Deployment）" class="headerlink" title="CD 持续交付和/或持续部署（Continuous Delivery）/（Continuous Deployment）"></a>CD 持续交付和/或持续部署（Continuous Delivery）/（Continuous Deployment）</h4><h5 id="持续交付"><a href="#持续交付" class="headerlink" title="持续交付"></a>持续交付</h5><p>完成 CI 中构建及单元测试和集成测试的自动化流程后，持续交付可自动将已验证的代码发布到存储库。</p>
