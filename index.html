@@ -275,7 +275,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2022-05-10 21:28:18 / 修改时间：13:43:03" itemprop="dateCreated datePublished" datetime="2022-05-10T21:28:18+00:00">2022-05-10</time>
+      <time title="创建时间：2022-05-10 21:28:18 / 修改时间：15:50:05" itemprop="dateCreated datePublished" datetime="2022-05-10T21:28:18+00:00">2022-05-10</time>
     </span>
 
   
@@ -288,20 +288,182 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="单元测试"><a href="#单元测试" class="headerlink" title="单元测试"></a>单元测试</h1><hr>
-<ol>
-<li><h2 id="什么是单元测试"><a href="#什么是单元测试" class="headerlink" title="什么是单元测试"></a>什么是单元测试</h2><blockquote>
+          <h1 id="单元测试"><a href="#单元测试" class="headerlink" title="单元测试"></a>单元测试</h1><h2 id="什么是单元测试"><a href="#什么是单元测试" class="headerlink" title="什么是单元测试"></a>什么是单元测试</h2><blockquote>
 <p><strong>单元测试</strong>（英语：Unit Testing）又称为<strong>模块测试</strong>，是针对<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%A8%A1%E7%B5%84_(%E7%A8%8B%E5%BC%8F%E8%A8%AD%E8%A8%88)">程序模块</a>（<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1">软件设计</a>的最小单位）来进行正确性检验的测试工作。程序单元是应用的最小可测试部件。在<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E9%81%8E%E7%A8%8B%E5%8C%96%E7%B7%A8%E7%A8%8B">过程化编程</a>中，一个单元就是单个程序、函数、过程等；对于面向对象编程，最小单元就是方法，包括基类（超类）、抽象类、或者派生类（子类）中的方法。 ——维基百科</p>
 </blockquote>
-<p> 单元测试就是开发过程中模块、功能、函数等最小单位的测试。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/05/10/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+<p>单元测试就是开发过程中模块、功能、函数等最小单位的测试。</p>
+<h2 id="单元测试在-CI-CD-中的作用？"><a href="#单元测试在-CI-CD-中的作用？" class="headerlink" title="单元测试在 CI/CD 中的作用？"></a>单元测试在 CI/CD 中的作用？</h2><p><strong>CI/CD</strong>通常指的是<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90">持续集成</a>和<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%8C%81%E7%BA%8C%E4%BA%A4%E4%BB%98">持续交付</a>或<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%8C%81%E7%BA%8C%E9%83%A8%E7%BD%B2">持续部署</a>的组合实践。</p>
+<h4 id="CI-持续集成（Continuous-Integration）"><a href="#CI-持续集成（Continuous-Integration）" class="headerlink" title="CI 持续集成（Continuous Integration）"></a>CI 持续集成（Continuous Integration）</h4><p>成功的 CI 意味着应用代码的新更改会定期构建、测试并合并到共享存储库中。该解决方案可以解决在一次开发中有太多应用分支，从而导致相互冲突的问题。</p>
+<h4 id="CD-持续交付和-或持续部署（Continuous-Delivery）-（Continuous-Deployment）"><a href="#CD-持续交付和-或持续部署（Continuous-Delivery）-（Continuous-Deployment）" class="headerlink" title="CD 持续交付和/或持续部署（Continuous Delivery）/（Continuous Deployment）"></a>CD 持续交付和/或持续部署（Continuous Delivery）/（Continuous Deployment）</h4><h5 id="持续交付"><a href="#持续交付" class="headerlink" title="持续交付"></a>持续交付</h5><p>完成 CI 中构建及单元测试和集成测试的自动化流程后，持续交付可自动将已验证的代码发布到存储库。</p>
+<h5 id="持续部署"><a href="#持续部署" class="headerlink" title="持续部署"></a>持续部署</h5><p>作为持续交付——自动将生产就绪型构建版本发布到代码存储库——的延伸，持续部署可以自动将应用发布到生产环境。</p>
+<p><img src="/images/CI-CD.png" alt="CI-CD"></p>
+<p>一般情况下，在进行代码的持续集成时，一旦开发人员对应用所做的更改被合并，系统就会通过自动构建应用并运行不同级别的自动化测试（通常是单元测试和集成测试）来验证这些更改，确保这些更改没有对应用造成破坏。</p>
+<h2 id="为什么需要单元测试"><a href="#为什么需要单元测试" class="headerlink" title="为什么需要单元测试"></a>为什么需要单元测试</h2><ol>
+<li>必要性：JavaScript 缺少类型检查，编译期间无法定位到错误，单元测试可以帮助你测试多种异常情况。</li>
+<li>正确性：测试可以验证代码的正确性，在上线前做到心里有底。</li>
+<li>自动化：通过编写测试用例，可以做到一次编写，多次运行。</li>
+<li>保证重构：保证代码重构的安全性，在重构代码之后，测试用例能保证重构后的代码功能正常。</li>
+<li>测试驱动开发，指导设计：代码被测试的前提是代码本身的可测试性，那么要保证代码的可测试性，就需要在开发中注意 API 的设计，TDD 将测试前移就是起到这么一个作用，同时测试用例也相当于一个开发文档。</li>
+</ol>
+<h2 id="测试框架"><a href="#测试框架" class="headerlink" title="测试框架"></a>测试框架</h2><table>
+<thead>
+<tr>
+<th align="left">框架</th>
+<th align="left">断言</th>
+<th align="left">异步</th>
+<th align="left">代码覆盖率</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Mocha</td>
+<td align="left">不支持（需要其他库支持）chai</td>
+<td align="left">友好</td>
+<td align="left">不支持（需要其他库支持）</td>
+</tr>
+<tr>
+<td align="left">Jest</td>
+<td align="left">默认支持</td>
+<td align="left">友好</td>
+<td align="left">支持</td>
+</tr>
+</tbody></table>
+<ul>
+<li>Jest 开箱即用。</li>
+<li>Mocha 生态较好，但是需要配合其他库一起使用。</li>
+</ul>
+<h2 id="什么是断言？"><a href="#什么是断言？" class="headerlink" title="什么是断言？"></a>什么是断言？</h2><p>”断言“，个人理解即为”用彼代码断定测试此代码的正确性，检验并暴露此代码的错误。就是判断源码的实际执行结果与预期结果是否一致，如果不一致就抛出一个错误。</p>
+<h2 id="怎么做单元测试"><a href="#怎么做单元测试" class="headerlink" title="怎么做单元测试"></a>怎么做单元测试</h2><ol>
+<li><p>安装依赖</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">npm i jest @types&#x2F;jest babel-jest @babel&#x2F;core @babel&#x2F;preset-env -D<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>babel.config.js</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js">module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+  presets<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token string">"@babel/preset-env"</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span> targets<span class="token operator">:</span> <span class="token punctuation">&#123;</span> node<span class="token operator">:</span> <span class="token string">"current"</span> <span class="token punctuation">&#125;</span> <span class="token punctuation">&#125;</span><span class="token punctuation">]</span><span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
+<li><p>一个简单的例子尝试</p>
+<p>./sum.js</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">sum</span><span class="token punctuation">(</span><span class="token parameter">a<span class="token punctuation">,</span> b</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">return</span> a <span class="token operator">+</span> b<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+module<span class="token punctuation">.</span>exports <span class="token operator">=</span> sum<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>创建一个 math.test.js 文件</p>
+<pre class="line-numbers language-none"><code class="language-none">const sum &#x3D; require(&#39;..&#x2F;sum&#39;);
+
+test(&#39;adds 1 + 2 to equal 3&#39;, () &#x3D;&gt; &#123;
+  expect(sum(1, 2)).toBe(3);
+&#125;);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>在 package.json 文件里面加上测试命令</p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+  <span class="token property">"scripts"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">"test"</span><span class="token operator">:</span> <span class="token string">"jest"</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><img src="/images/%E6%B5%8B%E8%AF%95%E9%80%9A%E8%BF%87.png" alt="image-20220411142925995"></p>
+</li>
+<li><p>进行测试并统计覆盖率命令</p>
+<img src="/images/代码覆盖率.png" alt="image-20220426090936416"  />
+
+<h4 id="覆盖率统计项"><a href="#覆盖率统计项" class="headerlink" title="覆盖率统计项"></a>覆盖率统计项</h4><p>从覆盖率的图片可以看到一共有 4 个统计项：</p>
+<ul>
+<li>Stmts(statements)：语句覆盖率，程序中的每个语句是否都已执行。</li>
+<li>Branch：分支覆盖率，是否执行了每个分支。</li>
+<li>Funcs：函数覆盖率，是否执行了每个函数。</li>
+<li>Lines：行覆盖率，是否执行了每一行代码。</li>
+</ul>
+</li>
+</ol>
+<h2 id="前端自动化测试"><a href="#前端自动化测试" class="headerlink" title="前端自动化测试"></a>前端自动化测试</h2><h3 id="TDD-Test-driven-development"><a href="#TDD-Test-driven-development" class="headerlink" title="TDD (Test-driven development)"></a>TDD (Test-driven development)</h3><p>TDD—测试驱动开发，侧重点偏向开发，通过测试用例来规范约束开发者编写出质量更高、bug 更少的代码。先写测试用例，再写功能模块。</p>
+<blockquote>
+<p><strong>测试驱动开发</strong>（英语：Test-driven development，缩写为 TDD）是一种<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E8%BF%87%E7%A8%8B">软件开发过程</a>中的应用方法，由<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%9E%81%E9%99%90%E7%BC%96%E7%A8%8B">极限编程</a>中倡导，以其倡导先写测试程序，然后编码实现其功能得名。测试驱动开发始于 20 世纪 90 年代。测试驱动开发的目的是取得快速反馈并使用“illustrate the main line”方法来构建程序。 ——维基百科</p>
+</blockquote>
+<h3 id="TDD-基本流程"><a href="#TDD-基本流程" class="headerlink" title="TDD 基本流程"></a>TDD 基本流程</h3><img src="/images/TDD.png" alt="image-20220411115056651" style="zoom: 33%;" />
+
+<h3 id="TDD-的优点"><a href="#TDD-的优点" class="headerlink" title="TDD 的优点"></a>TDD 的优点</h3><ul>
+<li>保证代码质量</li>
+<li>测试覆盖率高，因为后编写代码，因此测试用例基本都能照顾到;</li>
+</ul>
+<h3 id="TDD-的缺点"><a href="#TDD-的缺点" class="headerlink" title="TDD 的缺点"></a>TDD 的缺点</h3><ul>
+<li>代码量增多，大多数情况下测试代码是功能代码的两倍甚至更多;</li>
+<li>业务耦合度高，测试用例中使用了业务中一些模拟的数据，当业务代码变更的时候，要去重新组织测试用例;</li>
+</ul>
+<h3 id="BDD-Behavior-driven-development"><a href="#BDD-Behavior-driven-development" class="headerlink" title="BDD (Behavior-driven development)"></a>BDD (Behavior-driven development)</h3><p>BDD — 行为驱动开发，由外到内的开发方式，从外部定义业务成果，再深入到能实现这些成果，每个成果会转化成为相应的包含验收标准。先写主功能模块，再写测试用例。</p>
+<blockquote>
+<p><strong>行为驱动开发</strong>（英语：Behavior-driven development，缩写<strong>BDD</strong>）是一种<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%95%8F%E6%8D%B7%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91">敏捷软件开发</a>的技术，它鼓励软件项目中的开发者、<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%93%81%E8%B3%AA%E4%BF%9D%E8%AD%89">QA</a>和非技术人员或商业参与者之间的协作。BDD 最初是由 Dan North 在 2003 年命名[<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E8%A1%8C%E4%B8%BA%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91#cite_note-origin-1">1]</a>，它包括验收测试和客户测试驱动等的<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%9E%81%E9%99%90%E7%BC%96%E7%A8%8B">极限编程</a>的实践，作为对<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%B5%8B%E8%AF%95%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91">测试驱动开发</a>的回应。 ——维基百科</p>
+</blockquote>
+<h3 id="BDD-的开发流程"><a href="#BDD-的开发流程" class="headerlink" title="BDD 的开发流程"></a>BDD 的开发流程</h3><p>1、开发人员和非开发人员一起讨论确认需求</p>
+<p>2、以一种自动化的方式将需求建立起来，并确认是否一致</p>
+<p>3、最后，实现每个文档示例描述的行为，并从自动化测试开始以指导代码的开发</p>
+<p><strong>BDD 的优点：</strong></p>
+<ul>
+<li>由于仅关注功能，不关注实现细节，有利于测试代码和实际代码解耦</li>
+<li>由于大多数为编写集成测试，相比 TDD 有更好的开发效率</li>
+</ul>
+<p><strong>BDD 的缺点：</strong></p>
+<ul>
+<li>因为以功能性的集成测试为主，因此不是那么关注每个函数功能，测试覆盖率比较低</li>
+<li>没有 TDD 那么严格的保证代码质量</li>
+</ul>
+<h3 id="TDD-VS-BDD"><a href="#TDD-VS-BDD" class="headerlink" title="TDD VS BDD"></a>TDD VS BDD</h3><table>
+<thead>
+<tr>
+<th>功能</th>
+<th>TDD(Test-driven development)</th>
+<th>BDD(Behavior-driven development)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>定义</td>
+<td>测试驱动开发</td>
+<td>行为驱动开发</td>
+</tr>
+<tr>
+<td>思想</td>
+<td>白盒测试，从代码角度出发，完成高质量代码为目的。</td>
+<td>黑盒测试，从用户角度出发，完成需求为目的。</td>
+</tr>
+<tr>
+<td>开发流程</td>
+<td>编写单元测试<br />编写代码<br />通过测试<br />代码重构<br />重复步骤</td>
+<td>编写代码<br />编写测试用例<br />通过测试<br />代码重构<br />重复步骤</td>
+</tr>
+<tr>
+<td>代码覆盖率</td>
+<td>高</td>
+<td>低</td>
+</tr>
+<tr>
+<td>测试类型</td>
+<td>单元测试</td>
+<td>集成测试</td>
+</tr>
+<tr>
+<td>代码质量</td>
+<td>高</td>
+<td>一般</td>
+</tr>
+<tr>
+<td>测试代码量</td>
+<td>高</td>
+<td>低</td>
+</tr>
+</tbody></table>
+<p>因此个人建议：</p>
+<ul>
+<li>在开发组价库，工具函数库时使用 TDD</li>
+<li>在开发业务系统时使用 BDD</li>
+</ul>
+<h2 id="问题与反思"><a href="#问题与反思" class="headerlink" title="问题与反思"></a>问题与反思</h2><ol>
+<li>单元测试具有学习成本，在哪些地方适合编写单元测试？</li>
+<li>单元测试是否可以实现不同浏览器下的差异性测试？</li>
+<li>在公司项目中进行测试代码的编写可行性有多大？</li>
+</ol>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><p><a target="_blank" rel="noopener" href="https://jestjs.io/zh-Hans/">jest 官方文档</a></p>
+<p><a target="_blank" rel="noopener" href="https://gitbook.cn/gitchat/column/5aa795539c3cf94d49162f03/topic/5aaa1abe0bb9e857450e7a9e">浅谈 CI/CD 和软件测试</a></p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7039108357554176037#heading-16">如何做前端单元测试</a></p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903624301084680#heading-0">浅谈前端单元测试</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/340615580">如何做好前端单元测试</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.redhat.com/zh/topics/devops/what-is-ci-cd">CI/CD 是什么？如何理解持续集成、持续交付和持续部署</a></p>
+
       
     </div>
 
@@ -351,14 +513,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2022-05-05 10:11:08" itemprop="dateCreated datePublished" datetime="2022-05-05T10:11:08+00:00">2022-05-05</time>
+      <time title="创建时间：2022-05-05 02:11:08" itemprop="dateCreated datePublished" datetime="2022-05-05T02:11:08+00:00">2022-05-05</time>
     </span>
       <span class="post-meta-item">
         <span class="post-meta-item-icon">
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-05-10 13:43:03" itemprop="dateModified" datetime="2022-05-10T13:43:03+00:00">2022-05-10</time>
+        <time title="修改时间：2022-05-10 13:42:02" itemprop="dateModified" datetime="2022-05-10T13:42:02+00:00">2022-05-10</time>
       </span>
 
   
@@ -1058,7 +1220,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共55.9k字</span>
+  <span class="post-count">博客全站共55.6k字</span>
 </div>
 
     </div>
