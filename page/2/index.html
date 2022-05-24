@@ -200,7 +200,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-count">28</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -241,6 +241,78 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/10/%E9%97%AD%E5%8C%85%E7%BB%88%E4%BA%86%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Colorfuls">
+      <meta itemprop="description" content="前路浩浩荡荡，万事皆可期待。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Colorfuls-Blogs">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/02/10/%E9%97%AD%E5%8C%85%E7%BB%88%E4%BA%86%E8%A7%A3/" class="post-title-link" itemprop="url">闭包终了解</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-02-10 02:42:50 / 修改时间：03:23:31" itemprop="dateCreated datePublished" datetime="2022-02-10T02:42:50+00:00">2022-02-10</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>闭包这个话题，在前端的学习中始终摆脱不掉，我看书，视频学习闭包多次的情况下，终于把闭包弄明白了。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/02/10/%E9%97%AD%E5%8C%85%E7%BB%88%E4%BA%86%E8%A7%A3/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -948,85 +1020,6 @@ console<span class="token punctuation">.</span><span class="token function">log<
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/23/Vue%E6%9F%A5%E6%BC%8F%E8%A1%A5%E7%BC%BA/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Colorfuls">
-      <meta itemprop="description" content="前路浩浩荡荡，万事皆可期待。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Colorfuls-Blogs">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/03/23/Vue%E6%9F%A5%E6%BC%8F%E8%A1%A5%E7%BC%BA/" class="post-title-link" itemprop="url">Vue查漏补缺</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-03-23 07:43:12" itemprop="dateCreated datePublished" datetime="2021-03-23T07:43:12+00:00">2021-03-23</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-07-26 13:35:36" itemprop="dateModified" datetime="2021-07-26T13:35:36+00:00">2021-07-26</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="Vue-查漏补缺"><a href="#Vue-查漏补缺" class="headerlink" title="Vue 查漏补缺"></a>Vue 查漏补缺</h1><ol>
-<li><h2 id="data-为什么被定义成函数"><a href="#data-为什么被定义成函数" class="headerlink" title="data 为什么被定义成函数"></a>data 为什么被定义成函数</h2><p>避免组件中的数据互相影响。同一个组件被复用多次会创建多个实例，如果 data 是一个对象的话，这些实例用的是同一个构造函数。为了保证组件的数据独立，要求每个组件都必须通过 data 函数返回一个对象作为组件的状态。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/03/23/Vue%E6%9F%A5%E6%BC%8F%E8%A1%A5%E7%BC%BA/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
@@ -1073,7 +1066,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共55.9k字</span>
+  <span class="post-count">博客全站共56.7k字</span>
 </div>
 
     </div>

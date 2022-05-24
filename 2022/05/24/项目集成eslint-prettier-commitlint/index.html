@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","version":"8.2.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="项目集成eslint，prettier，commitlint一. 代码规范">
+<meta property="og:type" content="article">
+<meta property="og:title" content="项目集成eslint,prettier,commitlint">
+<meta property="og:url" content="http://example.com/2022/05/24/%E9%A1%B9%E7%9B%AE%E9%9B%86%E6%88%90eslint-prettier-commitlint/index.html">
+<meta property="og:site_name" content="Colorfuls-Blogs">
+<meta property="og:description" content="项目集成eslint，prettier，commitlint一. 代码规范">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-05-24T17:24:37.000Z">
+<meta property="article:modified_time" content="2022-05-24T09:26:42.884Z">
+<meta property="article:author" content="Colorfuls">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2022/05/24/%E9%A1%B9%E7%9B%AE%E9%9B%86%E6%88%90eslint-prettier-commitlint/">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>项目集成eslint,prettier,commitlint | Colorfuls-Blogs</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Colorfuls-Blogs</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">追风去</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-article"><a href="/article" rel="section"><i class="fa fa-newspaper fa-fw"></i>文章</a></li>
+        <li class="menu-item menu-item-teach"><a href="/teach" rel="section"><i class="fa fa-address-card fa-fw"></i>教程</a></li>
+        <li class="menu-item menu-item-site"><a href="/site" rel="section"><i class="fa fa-star fa-fw"></i>站点</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E9%9B%86%E6%88%90eslint%EF%BC%8Cprettier%EF%BC%8Ccommitlint"><span class="nav-number">1.</span> <span class="nav-text">项目集成eslint，prettier，commitlint</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80-%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83"><span class="nav-number">1.1.</span> <span class="nav-text">一. 代码规范</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E9%9B%86%E6%88%90editorconfig%E9%85%8D%E7%BD%AE"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1. 集成editorconfig配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E4%BD%BF%E7%94%A8prettier%E5%B7%A5%E5%85%B7"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2. 使用prettier工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-%E4%BD%BF%E7%94%A8ESLint%E6%A3%80%E6%B5%8B"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.3. 使用ESLint检测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-git-Husky%E5%92%8Ceslint"><span class="nav-number">1.1.4.</span> <span class="nav-text">1.4. git Husky和eslint</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-git-commit%E8%A7%84%E8%8C%83"><span class="nav-number">1.1.5.</span> <span class="nav-text">1.5. git commit规范</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-5-1-%E4%BB%A3%E7%A0%81%E6%8F%90%E4%BA%A4%E9%A3%8E%E6%A0%BC"><span class="nav-number">1.1.5.1.</span> <span class="nav-text">1.5.1. 代码提交风格</span></a></li></ol></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Colorfuls</p>
+  <div class="site-description" itemprop="description">前路浩浩荡荡，万事皆可期待。</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/maogecarry" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;maogecarry" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/24/%E9%A1%B9%E7%9B%AE%E9%9B%86%E6%88%90eslint-prettier-commitlint/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Colorfuls">
+      <meta itemprop="description" content="前路浩浩荡荡，万事皆可期待。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Colorfuls-Blogs">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          项目集成eslint,prettier,commitlint
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-05-24 17:24:37 / 修改时间：09:26:42" itemprop="dateCreated datePublished" datetime="2022-05-24T17:24:37+00:00">2022-05-24</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="项目集成eslint，prettier，commitlint"><a href="#项目集成eslint，prettier，commitlint" class="headerlink" title="项目集成eslint，prettier，commitlint"></a>项目集成eslint，prettier，commitlint</h1><h2 id="一-代码规范"><a href="#一-代码规范" class="headerlink" title="一. 代码规范"></a>一. 代码规范</h2><a id="more"></a>
+<h3 id="1-1-集成editorconfig配置"><a href="#1-1-集成editorconfig配置" class="headerlink" title="1.1. 集成editorconfig配置"></a>1.1. 集成editorconfig配置</h3><p>EditorConfig 有助于为不同 IDE 编辑器上处理同一项目的多个开发人员维护一致的编码风格。</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token comment"># http://editorconfig.org</span>
+
+root = true
+
+<span class="token punctuation">[</span>*<span class="token punctuation">]</span> <span class="token comment"># 表示所有文件适用</span>
+charset = utf<span class="token punctuation">-</span><span class="token number">8</span> <span class="token comment"># 设置文件字符集为 utf-8</span>
+indent_style = space <span class="token comment"># 缩进风格（tab | space）</span>
+indent_size = 2 <span class="token comment"># 缩进大小</span>
+end_of_line = lf <span class="token comment"># 控制换行类型(lf | cr | crlf)</span>
+trim_trailing_whitespace = true <span class="token comment"># 去除行首的任意空白字符</span>
+insert_final_newline = true <span class="token comment"># 始终在文件末尾插入一个新行</span>
+
+<span class="token punctuation">[</span><span class="token important">*.md</span><span class="token punctuation">]</span> <span class="token comment"># 表示仅 md 文件适用以下规则</span>
+max_line_length = off
+trim_trailing_whitespace = false<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>VSCode需要安装一个插件：EditorConfig for VS Code</p>
+<h3 id="1-2-使用prettier工具"><a href="#1-2-使用prettier工具" class="headerlink" title="1.2. 使用prettier工具"></a>1.2. 使用prettier工具</h3><p>1.安装prettier</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">npm install prettier -D<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>2.配置.prettierrc文件：</p>
+<ul>
+<li>useTabs：使用tab缩进还是空格缩进，选择false；</li>
+<li>tabWidth：tab是空格的情况下，是几个空格，选择2个；</li>
+<li>printWidth：当行字符的长度，推荐80，也有人喜欢100或者120；</li>
+<li>singleQuote：使用单引号还是双引号，选择true，使用单引号；</li>
+<li>trailingComma：在多行输入的尾逗号是否添加，设置为 <code>none</code>；</li>
+<li>semi：语句末尾是否要加分号，默认值true，选择false表示不加；</li>
+</ul>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+  <span class="token property">"useTabs"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+  <span class="token property">"tabWidth"</span><span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">,</span>
+  <span class="token property">"printWidth"</span><span class="token operator">:</span> <span class="token number">80</span><span class="token punctuation">,</span>
+  <span class="token property">"singleQuote"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+  <span class="token property">"trailingComma"</span><span class="token operator">:</span> <span class="token string">"none"</span><span class="token punctuation">,</span>
+  <span class="token property">"semi"</span><span class="token operator">:</span> <span class="token boolean">false</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>3.创建.prettierignore忽略文件</p>
+<pre class="line-numbers language-none"><code class="language-none">&#x2F;dist&#x2F;*
+.local
+.output.js
+&#x2F;node_modules&#x2F;**
+
+**&#x2F;*.svg
+**&#x2F;*.sh
+
+&#x2F;public&#x2F;*<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>4.VSCode需要安装prettier的插件</p>
+<p>5.测试prettier是否生效</p>
+<ul>
+<li>测试一：在代码中保存代码；</li>
+<li>测试二：配置一次性修改的命令；</li>
+</ul>
+<p>在package.json中配置一个scripts：</p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token property">"prettier"</span><span class="token operator">:</span> <span class="token string">"prettier --write ."</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="1-3-使用ESLint检测"><a href="#1-3-使用ESLint检测" class="headerlink" title="1.3. 使用ESLint检测"></a>1.3. 使用ESLint检测</h3><p>1.VSCode需要安装ESLint插件</p>
+<p>2.解决eslint和prettier冲突的问题：</p>
+<p>安装插件：</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">npm i eslint eslint-plugin-prettier eslint-config-prettier -D<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>设置eslint内部配置</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">npm init @eslint&#x2F;config<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>选择完这些配置之后，eslint会生成一个.eslintrc.js的文件</p>
+<p>增加.eslintignore文件</p>
+<pre class="line-numbers language-none"><code class="language-none">node_modules
+package.json
+package-lock.json<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>添加prettier插件：</p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json">extends<span class="token operator">:</span> <span class="token punctuation">[</span>
+  <span class="token string">"some-other-config-you-use"</span><span class="token punctuation">,</span>
+  <span class="token string">"prettier"</span>
+<span class="token punctuation">]</span><span class="token punctuation">,</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="1-4-git-Husky和eslint"><a href="#1-4-git-Husky和eslint" class="headerlink" title="1.4. git Husky和eslint"></a>1.4. git Husky和eslint</h3><p>我们希望保证代码仓库中的代码都是符合eslint规范的，我们需要在执行 <code>git commit </code> 命令的时候对其进行校验，如果不符合eslint规范，那么自动通过规范进行修复；</p>
+<p>那么如何做到这一点呢？可以通过Husky工具：</p>
+<ul>
+<li>husky是一个git hook工具，可以帮助我们触发git提交的各个阶段：pre-commit、commit-msg、pre-push</li>
+</ul>
+<p>如何使用husky呢？</p>
+<p>这里我们可以使用自动配置命令：</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">npx husky-init &amp;&amp; npm install<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>这里会做三件事：</p>
+<p>1.安装husky相关的依赖</p>
+<p>2.在项目目录下创建 <code>.husky</code> 文件夹：</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">npx huksy install<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>3.在package.json中添加两个脚本：</p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token property">"prepare"</span><span class="token operator">:</span> <span class="token string">"husky install"</span><span class="token punctuation">,</span>
+<span class="token property">"lint"</span><span class="token operator">:</span> <span class="token string">"eslint --ext .js,.ts,.vue.jsx,.tsx src"</span><span class="token punctuation">,</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>4.在husky文件夹中加入两个文件</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">pre-commit
+<span class="token comment">#!/bin/sh</span>
+<span class="token builtin class-name">.</span> <span class="token string">"<span class="token variable"><span class="token variable">$(</span><span class="token function">dirname</span> <span class="token string">"<span class="token variable">$0</span>"</span><span class="token variable">)</span></span>/_/husky.sh"</span>
+
+<span class="token function">npm</span> run lint<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">commit-msg
+<span class="token comment">#!/bin/sh</span>
+<span class="token builtin class-name">.</span> <span class="token string">"<span class="token variable"><span class="token variable">$(</span><span class="token function">dirname</span> <span class="token string">"<span class="token variable">$0</span>"</span><span class="token variable">)</span></span>/_/husky.sh"</span>
+
+npx --no-install commitlint --edit <span class="token string">"<span class="token variable">$1</span>"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="1-5-git-commit规范"><a href="#1-5-git-commit规范" class="headerlink" title="1.5. git commit规范"></a>1.5. git commit规范</h3><h4 id="1-5-1-代码提交风格"><a href="#1-5-1-代码提交风格" class="headerlink" title="1.5.1. 代码提交风格"></a>1.5.1. 代码提交风格</h4><p>git commit按照统一的风格来提交，这样可以快速定位每次提交的内容，方便之后对版本进行控制。</p>
+<p>使用工具：<code>Commitizen</code></p>
+<p>1.安装 @commitlint/config-conventional 和 @commitlint/cli</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">npm</span> i @commitlint/config-conventional @commitlint/cli -D<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>2.在根目录创建commitlint.config.js文件，配置commitlint</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js">module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">extends</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'@commitlint/config-conventional'</span><span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>3.使用husky生成commit-msg文件，验证提交信息：</p>
+<p>这个就是上面新增的husky文件的命令行方式，但是在执行时会出现问题，目前还没解决。</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">npx husky <span class="token function">add</span> .husky/commit-msg <span class="token string">"npx --no-install commitlint --edit <span class="token variable">$1</span>"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/05/20/%E9%A1%B5%E9%9D%A2%E5%85%B3%E9%97%AD%E6%88%96%E8%80%85%E5%88%B7%E6%96%B0%E6%96%B9%E6%B3%95%E5%88%A4%E6%96%AD/" rel="prev" title="页面关闭或者刷新方法判断">
+                  <i class="fa fa-chevron-left"></i> 页面关闭或者刷新方法判断
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Colorfuls</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共56.7k字</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+    <div class="pjax">
+
+
+  
+    </div>
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+</body>
+</html>
