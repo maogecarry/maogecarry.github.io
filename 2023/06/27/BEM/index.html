@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","version":"8.2.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="什么是 BEM？BEM（块（Block）、元素（Element）、修饰符（Modifier））是一种基于组件的网页开发方法。其理念是将用户界面划分为独立的块。这样即使在复杂的界面下，界面开发也变得简单快捷，并且可以重复使用现有的代码，无需复制粘贴——Yandex">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BEM">
+<meta property="og:url" content="http://example.com/2023/06/27/BEM/index.html">
+<meta property="og:site_name" content="Colorfuls-Blogs">
+<meta property="og:description" content="什么是 BEM？BEM（块（Block）、元素（Element）、修饰符（Modifier））是一种基于组件的网页开发方法。其理念是将用户界面划分为独立的块。这样即使在复杂的界面下，界面开发也变得简单快捷，并且可以重复使用现有的代码，无需复制粘贴——Yandex">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/image-20230616105708504.png">
+<meta property="og:image" content="http://example.com/images/image-20230616105940692.png">
+<meta property="og:image" content="http://example.com/images/image-20230616113518133.png">
+<meta property="article:published_time" content="2023-06-27T02:08:48.000Z">
+<meta property="article:modified_time" content="2023-06-27T02:11:28.456Z">
+<meta property="article:author" content="Colorfuls">
+<meta property="article:tag" content="CSS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/image-20230616105708504.png">
+
+
+<link rel="canonical" href="http://example.com/2023/06/27/BEM/">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>BEM | Colorfuls-Blogs</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Colorfuls-Blogs</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">追风去</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-article"><a href="/article" rel="section"><i class="fa fa-newspaper fa-fw"></i>文章</a></li>
+        <li class="menu-item menu-item-teach"><a href="/teach" rel="section"><i class="fa fa-address-card fa-fw"></i>教程</a></li>
+        <li class="menu-item menu-item-site"><a href="/site" rel="section"><i class="fa fa-star fa-fw"></i>站点</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-BEM%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">什么是 BEM？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Block%E3%80%81Element%E3%80%81Modifier"><span class="nav-number">2.</span> <span class="nav-text">Block、Element、Modifier</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Block-%E5%9D%97"><span class="nav-number">2.1.</span> <span class="nav-text">Block (块)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%89%B9%E7%82%B9"><span class="nav-number">2.1.1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Example"><span class="nav-number">2.1.2.</span> <span class="nav-text">Example</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Element-%E5%85%83%E7%B4%A0"><span class="nav-number">2.2.</span> <span class="nav-text">Element(元素)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Example-1"><span class="nav-number">2.2.1.</span> <span class="nav-text">Example</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%89%B9%E7%82%B9-1"><span class="nav-number">2.2.2.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Example-2"><span class="nav-number">2.2.3.</span> <span class="nav-text">Example</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Modifier-%E4%BF%AE%E9%A5%B0%E8%AF%AD"><span class="nav-number">2.2.4.</span> <span class="nav-text">Modifier(修饰语)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%89%B9%E7%82%B9-2"><span class="nav-number">2.2.5.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Example-3"><span class="nav-number">2.2.6.</span> <span class="nav-text">Example</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E9%80%89%E6%8B%A9-BEM%EF%BC%9F"><span class="nav-number">3.</span> <span class="nav-text">为什么要选择 BEM？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ElementUI"><span class="nav-number">3.1.</span> <span class="nav-text">ElementUI</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Example-4"><span class="nav-number">3.1.1.</span> <span class="nav-text">Example</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AntDesign-%E4%BD%BF%E7%94%A8-BEM-%E7%9A%84%E6%80%9D%E6%83%B3%EF%BC%8C%E4%BD%86%E6%98%AF%E4%BD%BF%E7%94%A8%E7%9F%AD%E6%A8%AA%E7%BA%BF%E6%9D%A5%E8%BF%9E%E6%8E%A5%E5%91%BD%E5%90%8D%E8%A7%84%E8%8C%83"><span class="nav-number">3.2.</span> <span class="nav-text">AntDesign(使用 BEM 的思想，但是使用短横线来连接命名规范)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8-CSS-%E9%A2%84%E5%A4%84%E7%90%86%E5%99%A8%E4%B8%AD%E4%BD%BF%E7%94%A8-BEM-%E6%A0%BC%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">在 CSS 预处理器中使用 BEM 格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%BF%E5%85%8D-block-element1-element2-%E7%9A%84%E6%A0%BC%E5%BC%8F"><span class="nav-number">5.</span> <span class="nav-text">避免 .block__element1__element2 的格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Colorfuls</p>
+  <div class="site-description" itemprop="description">前路浩浩荡荡，万事皆可期待。</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/maogecarry" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;maogecarry" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/06/27/BEM/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Colorfuls">
+      <meta itemprop="description" content="前路浩浩荡荡，万事皆可期待。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Colorfuls-Blogs">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          BEM
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-06-27 10:08:48 / 修改时间：10:11:28" itemprop="dateCreated datePublished" datetime="2023-06-27T10:08:48+08:00">2023-06-27</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="什么是-BEM？"><a href="#什么是-BEM？" class="headerlink" title="什么是 BEM？"></a>什么是 BEM？</h2><p>BEM（块（Block）、元素（Element）、修饰符（Modifier））是一种基于组件的网页开发方法。其理念是将用户界面划分为独立的块。这样即使在复杂的界面下，界面开发也变得简单快捷，并且可以重复使用现有的代码，无需复制粘贴——Yandex</p>
+<a id="more"></a>
+
+<h2 id="Block、Element、Modifier"><a href="#Block、Element、Modifier" class="headerlink" title="Block、Element、Modifier"></a>Block、Element、Modifier</h2><ol>
+<li><h3 id="Block-块"><a href="#Block-块" class="headerlink" title="Block (块)"></a>Block (块)</h3><p>一个可以重复使用的功能独立的页面组件。在 HTML 中，块由 <code>class</code> 属性表示。</p>
+<h4 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h4><p>区块的名称描述了它的用途（“它是什么？”- <code>menu</code> 或 <code>button</code> ），而不是它的状态（“它是什么样子？”- <code>red</code> 或 <code>big</code> ）。</p>
+<h4 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h4><pre class="line-numbers language-css" data-language="css"><code class="language-css"><span class="token selector">.dialog</span> <span class="token punctuation">&#123;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
+<li><h3 id="Element-元素"><a href="#Element-元素" class="headerlink" title="Element(元素)"></a>Element(元素)</h3><p>块中的任意元素，不可单独使用。</p>
+<p>元素之间可以相互嵌套，但是，<strong>一个元素总是属于一个块，而不是另一个元素。这意味着元素名称不能定义类似于 <code>block__elem1__elem2</code> 的层次结构。</strong></p>
+<h4 id="Example-1"><a href="#Example-1" class="headerlink" title="Example"></a>Example</h4><pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token comment">&lt;!--
+    Correct. The structure of the full element name follows the pattern:
+    `block-name__element-name`
+--></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>form</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>search-form<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>search-form__content<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>search-form__input<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>search-form__button<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Search<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>form</span><span class="token punctuation">></span></span>
+
+<span class="token comment">&lt;!--
+    Incorrect. The structure of the full element name doesn't follow the pattern:
+    `block-name__element-name`
+--></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>form</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>search-form<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>search-form__content<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token comment">&lt;!-- Recommended: `search-form__input` or `search-form__content-input` --></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>search-form__content__input<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+
+    <span class="token comment">&lt;!-- Recommended: `search-form__button` or `search-form__content-button` --></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>search-form__content__button<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Search<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>form</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="特点-1"><a href="#特点-1" class="headerlink" title="特点"></a>特点</h4><p>元素的名称描述了它的用途（“这是什么？”- <code>item</code> ， <code>text</code> 等），而不是它的状态（“是什么类型，或者它是什么样子？”- <code>red</code> ， <code>big</code> 等）。</p>
+<h4 id="Example-2"><a href="#Example-2" class="headerlink" title="Example"></a>Example</h4><pre class="line-numbers language-css" data-language="css"><code class="language-css"><span class="token selector">.dialog__title</span> <span class="token punctuation">&#123;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
+<li><h4 id="Modifier-修饰语"><a href="#Modifier-修饰语" class="headerlink" title="Modifier(修饰语)"></a>Modifier(修饰语)</h4><p>用于修改现有元素样式的标志，无需创建单独的 CSS 类。</p>
+<h4 id="特点-2"><a href="#特点-2" class="headerlink" title="特点"></a>特点</h4><p>修饰符名称描述了它的外观（”多大尺寸？”或”选择哪个主题？”等等 — <code>size_s</code> 或 <code>theme_islands</code> ），它的状态（”与其他的有什么不同？” — <code>disabled</code> ， <code>focused</code> 等等）以及它的行为（”它如何表现？”或”它如何响应用户？” — 例如 <code>directions_left-top</code> ）。</p>
+<h4 id="Example-3"><a href="#Example-3" class="headerlink" title="Example"></a>Example</h4><pre class="line-numbers language-css" data-language="css"><code class="language-css"><span class="token selector">.dialog__title--primary</span> <span class="token punctuation">&#123;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h2 id="为什么要选择-BEM？"><a href="#为什么要选择-BEM？" class="headerlink" title="为什么要选择 BEM？"></a>为什么要选择 BEM？</h2></li>
+</ol>
+<ul>
+<li>可读性：通过约定的命名方式，可以清晰地了解每个类的用途和作用范围。</li>
+<li>可维护性：每个块和元素都是独立的，修改一个块不会影响其他部分，使得代码易于维护和修改。</li>
+<li>可复用性：通过将块和元素设计为独立的组件，可以在不同的页面和项目中重用。</li>
+<li>可扩展性：通过添加修饰符来表示不同的状态或变体，可以轻松扩展和定制组件。</li>
+</ul>
+<p>使用 BEM 命名规范的范例：</p>
+<ul>
+<li><h3 id="ElementUI"><a href="#ElementUI" class="headerlink" title="ElementUI"></a>ElementUI</h3><h4 id="Example-4"><a href="#Example-4" class="headerlink" title="Example"></a>Example</h4><p><img src="/images/image-20230616105708504.png" alt="image-20230616105708504"></p>
+<img src="/images/image-20230616105940692.png" alt="image-20230616105940692" style="zoom:150%;" />
+</li>
+<li><h3 id="AntDesign-使用-BEM-的思想，但是使用短横线来连接命名规范"><a href="#AntDesign-使用-BEM-的思想，但是使用短横线来连接命名规范" class="headerlink" title="AntDesign(使用 BEM 的思想，但是使用短横线来连接命名规范)"></a>AntDesign(使用 BEM 的思想，但是使用短横线来连接命名规范)</h3><img src="/images/image-20230616113518133.png" alt="image-20230616113518133" style="zoom:150%;" />
+
+</li>
+</ul>
+<h2 id="在-CSS-预处理器中使用-BEM-格式"><a href="#在-CSS-预处理器中使用-BEM-格式" class="headerlink" title="在 CSS 预处理器中使用 BEM 格式"></a>在 CSS 预处理器中使用 BEM 格式</h2><pre class="line-numbers language-less" data-language="less"><code class="language-less"><span class="token selector">.aics-agreement</span> <span class="token punctuation">&#123;</span>
+  <span class="token property">padding</span><span class="token punctuation">:</span> 22px 20px<span class="token punctuation">;</span>
+
+  <span class="token selector">&amp;__button</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">padding</span><span class="token punctuation">:</span> 5px 8px<span class="token punctuation">;</span>
+
+    <span class="token selector">&amp;--primary</span> <span class="token punctuation">&#123;</span>
+      <span class="token property">background</span><span class="token punctuation">:</span> blue<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token selector">&amp;--success</span> <span class="token punctuation">&#123;</span>
+      <span class="token property">background</span><span class="token punctuation">:</span> green<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span>
+
+  <span class="token selector">&amp;__header</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">display</span><span class="token punctuation">:</span> flex<span class="token punctuation">;</span>
+    <span class="token property">justify-content</span><span class="token punctuation">:</span> center<span class="token punctuation">;</span>
+    <span class="token property">align-items</span><span class="token punctuation">:</span> center<span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+
+  <span class="token selector">&amp;__content</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">margin-top</span><span class="token punctuation">:</span> 16px<span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+
+  <span class="token selector">&amp;__footer</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">margin-top</span><span class="token punctuation">:</span> 53px<span class="token punctuation">;</span>
+    <span class="token property">text-align</span><span class="token punctuation">:</span> center<span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="避免-block-element1-element2-的格式"><a href="#避免-block-element1-element2-的格式" class="headerlink" title="避免 .block__element1__element2 的格式"></a>避免 <code>.block__element1__element2</code> 的格式</h2><ul>
+<li>在深层次嵌套的 DOM</li>
+<li>结构下，应避免过长的样式名称定义。</li>
+<li>层级最后不要超过 4 级，不然增加阅读的理解难度</li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://en.bem.info/methodology/quick-start/">BEM 官方网站</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903672162304013">CSS — BEM 命名规范</a></li>
+<li><a href="https://link.juejin.cn/?target=http://getbem.com">GETBEM</a></li>
+<li><a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=https://css-tricks.com/bem-101/">BEM 101</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/CSS/" rel="tag"># CSS</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/11/05/vue%E7%89%88%E6%9C%AC%E5%8D%87%E7%BA%A7%E4%BB%A5%E5%8F%8A%E6%94%AF%E6%8C%81ts%E8%AF%AD%E6%B3%95/" rel="prev" title="vue版本升级以及支持ts语法">
+                  <i class="fa fa-chevron-left"></i> vue版本升级以及支持ts语法
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/06/27/JSDoc/" rel="next" title="JSDoc">
+                  JSDoc <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Colorfuls</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共86.2k字</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+    <div class="pjax">
+
+
+  
+    </div>
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+</body>
+</html>
